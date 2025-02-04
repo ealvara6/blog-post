@@ -1,0 +1,14 @@
+0000000000000000000000000000000000000000 e20a29ca0f95fd97bd56e803aa4080c78eda8ddf Eduardo Alvarado <ealvara73@gmail.com> 1736480387 -0600	clone: from github.com:ealvara6/blog-post.git
+e20a29ca0f95fd97bd56e803aa4080c78eda8ddf 3c82ef45f0fc9863a6589a86a74a9d1b8cd59a1d Eduardo Alvarado <ealvara73@gmail.com> 1736482442 -0600	commit: Init backend server
+3c82ef45f0fc9863a6589a86a74a9d1b8cd59a1d 71b84163730bed84aad258de85415e41e979c7f7 Eduardo Alvarado <ealvara73@gmail.com> 1736894514 -0600	commit: Create prisma schema and grab all users with prisma client at '/' endpoint
+71b84163730bed84aad258de85415e41e979c7f7 4cf8b7c96f123e39af5e2ae1146843aa149915b7 Eduardo Alvarado <ealvara73@gmail.com> 1736894554 -0600	commit: Add jest test file and test api health endpoint
+4cf8b7c96f123e39af5e2ae1146843aa149915b7 a16f16ee0ab9639a7d5fe85f7d6b994322140b25 Eduardo Alvarado <ealvara73@gmail.com> 1736894581 -0600	commit: Add addtional packages and create server.js file that runs app module
+a16f16ee0ab9639a7d5fe85f7d6b994322140b25 036e62c4e9482f913957980e519afc01a943d3d2 Eduardo Alvarado <ealvara73@gmail.com> 1737340279 -0600	commit: Create a prisma script to create a new user into the database
+036e62c4e9482f913957980e519afc01a943d3d2 cc6529c04e8c2b70463b1a283ece6d90ceae6f84 Eduardo Alvarado <ealvara73@gmail.com> 1737340333 -0600	commit: Add user route into the project and create a getUsers function with a jest test to verify it
+cc6529c04e8c2b70463b1a283ece6d90ceae6f84 17e597487817cf56c1fa27477feb5134cfca9782 Eduardo Alvarado <ealvara73@gmail.com> 1737399067 -0600	commit: Refactor code to add a live prisma object and a test prisma object for testing and create addtional jest user tests
+17e597487817cf56c1fa27477feb5134cfca9782 329164dcdec5b1a12d476e45bd8b2bbafe71f2df Eduardo Alvarado <ealvara73@gmail.com> 1737517009 -0600	commit: Add find one user api call and create jest test for it
+329164dcdec5b1a12d476e45bd8b2bbafe71f2df 21afe51efe6fe4c8197afcd927c4a429a2b25887 Eduardo Alvarado <ealvara73@gmail.com> 1737517040 -0600	commit: Add a create user api call with a validateUser middleware and hashpassword helper
+21afe51efe6fe4c8197afcd927c4a429a2b25887 162dc4b763aafa2b7263b3ab64612782a717b3b2 Eduardo Alvarado <ealvara73@gmail.com> 1738088135 -0600	commit: Adjust prisma model to align with business standards
+162dc4b763aafa2b7263b3ab64612782a717b3b2 aa1fe0abbac3a8f68d37955929819cb6174cbb6b Eduardo Alvarado <ealvara73@gmail.com> 1738088196 -0600	commit: Update createUser function and add test files for it
+aa1fe0abbac3a8f68d37955929819cb6174cbb6b 05963bac30e08b322d605cd4b51575628179bb35 Eduardo Alvarado <ealvara73@gmail.com> 1738650377 -0600	commit: Add update user routes and tests
+05963bac30e08b322d605cd4b51575628179bb35 88bd98cef3237bacf0f43e9c0bdb7535342682cc Eduardo Alvarado <ealvara73@gmail.com> 1738650387 -0600	commit: Refactor some code
