@@ -14,14 +14,17 @@ const {
 const createUserRoutes = (prisma) => {
   const router = express.Router();
 
-  router.get('/', getUsers(prisma));
-  router.get('/:id', getOneUser(prisma));
+  router.use((req, res, next) => {
+    req.prisma = prisma;
+    next();
+  });
 
-  router.put('/:id', validateUpdateFields, updateUser(prisma));
-
-  router.post('/register', validateUser, createUser(prisma));
-
-  router.delete('/:id', deleteUser(prisma));
+  router.route('/').get(getUsers).post(validateUser, createUser);
+  router
+    .route('/:id')
+    .get(getOneUser)
+    .put(validateUpdateFields, updateUser)
+    .delete(deleteUser);
 
   return router;
 };

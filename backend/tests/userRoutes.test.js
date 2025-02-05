@@ -1,5 +1,5 @@
 const request = require('supertest');
-const createTestServer = require('../src/testServer');
+const createTestServer = require('../src/config/testServer');
 
 jest.mock('@prisma/client', () => {
   const PrismaClient = jest.fn().mockImplementation(() => ({
@@ -127,7 +127,10 @@ describe('GET /api/users', () => {
     const res = await request(app).get('/api/users');
 
     expect(res.statusCode).toBe(500);
-    expect(res.body).toEqual({ error: 'Failed to fetch users' });
+    expect(res.body).toEqual({
+      error: 'Failed to fetch users',
+      details: 'Database error',
+    });
   });
 });
 
@@ -189,7 +192,10 @@ describe('GET /api/users/:id', () => {
 
     expect(res.statusCode).toBe(500);
 
-    expect(res.body).toEqual({ error: 'Failed to fetch user' });
+    expect(res.body).toEqual({
+      error: 'Failed to fetch user',
+      details: 'Database error',
+    });
   });
 });
 
@@ -205,7 +211,7 @@ describe('POST /api/users/register', () => {
     prismaMock.user.findFirst.mockResolvedValue(null);
 
     const res = await request(app)
-      .post('/api/users/register')
+      .post('/api/users')
       .send({ ...mockUser, confirmPassword: 'mockpassword' });
 
     expect(res.statusCode).toBe(201);
@@ -235,7 +241,7 @@ describe('POST /api/users/register', () => {
     });
 
     const res = await request(app)
-      .post('/api/users/register')
+      .post('/api/users')
       .send({ ...mockUser, confirmPassword: 'mockpassword' });
 
     expect(res.statusCode).toBe(409);
@@ -253,7 +259,7 @@ describe('POST /api/users/register', () => {
     });
 
     const res = await request(app)
-      .post('/api/users/register')
+      .post('/api/users')
       .send({ ...mockUser, confirmPassword: 'mockpassword' });
 
     expect(res.statusCode).toBe(409);
@@ -269,7 +275,7 @@ describe('POST /api/users/register', () => {
     prismaMock.user.findFirst.mockRejectedValue(new Error('Database error'));
 
     const res = await request(app)
-      .post('/api/users/register')
+      .post('/api/users')
       .send({ ...mockUser, confirmPassword: 'mockpassword' });
 
     expect(res.statusCode).toBe(500);
@@ -464,7 +470,6 @@ describe('DELETE /api/users/:id', () => {
       new Error('Failed to delete user')
     );
     const res = await request(app).delete('/api/users/1');
-    console.log(res.body);
 
     expect(res.statusCode).toBe(500);
 

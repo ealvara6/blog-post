@@ -17,7 +17,7 @@ const createUserInDatabase = async (prisma, userData) => {
 };
 
 const findUser = async (prisma, id) => {
-  const user = prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { id },
   });
   return user;

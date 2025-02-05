@@ -1,5 +1,5 @@
 const express = require('express');
-const createRoutes = require('./routes');
+const createRoutes = require('../routes');
 
 const createTestServer = (prismaMock) => {
   const app = express();

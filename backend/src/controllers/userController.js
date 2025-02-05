@@ -5,8 +5,9 @@ const {
   findUser,
 } = require('../services/userService');
 
-const getUsers = (prisma) => async (req, res) => {
+const getUsers = async (req, res) => {
   try {
+    const prisma = req.prisma;
     let users = await prisma.user.findMany({
       include: { posts: true, comments: true },
     });
@@ -14,12 +15,15 @@ const getUsers = (prisma) => async (req, res) => {
       users,
     });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch users' });
+    res
+      .status(500)
+      .json({ error: 'Failed to fetch users', details: err.message });
   }
 };
 
-const getOneUser = (prisma) => async (req, res) => {
+const getOneUser = async (req, res) => {
   try {
+    const prisma = req.prisma;
     const id = Number(req.params.id);
     if (isNaN(id)) return res.status(404).json({ error: 'Invalid id input' });
     const user = await prisma.user.findUnique({
@@ -32,12 +36,15 @@ const getOneUser = (prisma) => async (req, res) => {
 
     return res.status(200).json({ user });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch user' });
+    res
+      .status(500)
+      .json({ error: 'Failed to fetch user', details: err.message });
   }
 };
 
-const createUser = (prisma) => async (req, res) => {
+const createUser = async (req, res) => {
   try {
+    const prisma = req.prisma;
     const { username, email, password } = req.body;
 
     const existingUser = await checkIfUserExists(req.body, prisma);
@@ -67,8 +74,9 @@ const createUser = (prisma) => async (req, res) => {
   }
 };
 
-const updateUser = (prisma) => async (req, res) => {
+const updateUser = async (req, res) => {
   try {
+    const prisma = req.prisma;
     const id = Number(req.params.id);
     if (isNaN(id)) return res.status(404).json({ error: 'Invalid id input' });
     const userUpdate = req.body;
@@ -94,8 +102,9 @@ const updateUser = (prisma) => async (req, res) => {
   }
 };
 
-const deleteUser = (prisma) => async (req, res) => {
+const deleteUser = async (req, res) => {
   try {
+    const prisma = req.prisma;
     const id = Number(req.params.id);
     if (isNaN(id)) return res.status(404).json({ error: 'Invalid id input' });
     const user = await findUser(prisma, id);
