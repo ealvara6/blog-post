@@ -1,12 +1,14 @@
 const express = require('express');
 const userRoutes = require('./userRoutes');
 const authRoutes = require('./authRoutes');
+const postRoutes = require('./postRoutes');
 const passport = require('passport');
 
 const createRoutes = (prisma) => {
   const router = express.Router();
   router.use('/users', userRoutes(prisma));
   router.use('/login', authRoutes(prisma));
+  router.use('/posts', postRoutes(prisma));
 
   router.get('/health', (req, res) => {
     res.status(200).json({ status: 'This is a public health check' });
