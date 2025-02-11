@@ -6,6 +6,7 @@ jest.mock('@prisma/client', () => {
     post: {
       findMany: jest.fn(),
       findUnique: jest.fn(),
+      create: jest.fn(),
     },
   }));
 
@@ -160,6 +161,123 @@ describe('GET /api/posts/:id', () => {
     expect(res.body).toEqual({
       error: 'Failed to fetch post',
       details: 'Database error',
+    });
+  });
+});
+
+describe('POST /api/posts', () => {
+  let app;
+  beforeEach(() => {
+    jest.clearAllMocks();
+    app = createTestServer(prismaMock);
+  });
+
+  it('should create a new post', async () => {
+    const newPost = {
+      title: 'mock_post_title',
+      content: 'mock_post_content',
+      userId: 1,
+    };
+
+    prismaMock.post.create.mockResolvedValue({
+      id: 201,
+      ...newPost,
+      published: true,
+      createdAt: new Date(),
+    });
+
+    const res = await request(app).post('/api/posts').send(newPost);
+
+    expect(res.statusCode).toBe(201);
+
+    expect(res.body).toEqual(
+      expect.objectContaining({
+        message: 'Post created successfully',
+        post: expect.objectContaining({
+          id: expect.any(Number),
+          title: expect.any(String),
+          content: expect.any(String),
+          published: expect.any(Boolean),
+          userId: expect.any(Number),
+          createdAt: expect.any(String),
+        }),
+      })
+    );
+  });
+
+  it('should create a new post with no content added', async () => {
+    const newPost = {
+      title: 'post_mock_title',
+      userId: 1,
+    };
+
+    prismaMock.post.create.mockResolvedValue({
+      id: 201,
+      ...newPost,
+      published: true,
+      createdAt: new Date(),
+    });
+
+    const res = await request(app).post('/api/posts').send(newPost);
+
+    expect(res.statusCode).toBe(201);
+
+    expect(res.body).toEqual(
+      expect.objectContaining({
+        message: 'Post created successfully',
+        post: expect.objectContaining({
+          id: expect.any(Number),
+          title: expect.any(String),
+          published: expect.any(Boolean),
+          userId: expect.any(Number),
+          createdAt: expect.any(String),
+        }),
+      })
+    );
+  });
+
+  it('should throw a 400 erorr when a title is not given', async () => {
+    const newPost = {
+      title: '',
+      userId: 1,
+    };
+
+    prismaMock.post.create.mockResolvedValue({
+      id: 201,
+      ...newPost,
+      published: true,
+      createdAt: new Date(),
+    });
+
+    const res = await request(app).post('/api/posts').send(newPost);
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.errors.length).toBeGreaterThan(0);
+
+    expect(res.body.errors[0]).toEqual(
+      expect.objectContaining({
+        type: 'field',
+        value: '',
+        msg: 'Post must have a title',
+        path: 'title',
+        location: 'body',
+      })
+    );
+  });
+
+  it('should handle database errors gracefully', async () => {
+    prismaMock.post.create.mockRejectedValue(new Error('database error'));
+
+    const res = await request(app)
+      .post('/api/posts')
+      .send({ title: 'mock_post_title' });
+    console.log(res.body);
+
+    expect(res.statusCode).toBe(500);
+
+    expect(res.body).toEqual({
+      error: 'Failed to create new post',
+      details: 'database error',
     });
   });
 });
