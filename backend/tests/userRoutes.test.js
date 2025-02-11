@@ -199,7 +199,7 @@ describe('GET /api/users/:id', () => {
   });
 });
 
-describe('POST /api/users/register', () => {
+describe('POST /api/users', () => {
   let app;
 
   beforeEach(() => {

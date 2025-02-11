@@ -1,5 +1,10 @@
 const express = require('express');
-const { getPosts, getOnePost } = require('../controllers/postController');
+const {
+  getPosts,
+  getOnePost,
+  createPost,
+} = require('../controllers/postController');
+const { validatePost } = require('../middleware/validatePost');
 
 const createPostRoutes = (prisma) => {
   const router = express.Router();
@@ -9,7 +14,8 @@ const createPostRoutes = (prisma) => {
     next();
   });
 
-  router.get('/', getPosts);
+  router.route('/').get(getPosts).post(validatePost, createPost);
+
   router.get('/:id', getOnePost);
 
   return router;
