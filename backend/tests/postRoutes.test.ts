@@ -1,5 +1,6 @@
-const request = require('supertest');
-const createTestServer = require('../src/config/testServer');
+import request from 'supertest';
+import { Express } from 'express';
+import createTestServer from '../src/config/testServer';
 
 jest.mock('@prisma/client', () => {
   const PrismaClient = jest.fn().mockImplementation(() => ({
@@ -34,7 +35,7 @@ const mockPost = {
 const prismaMock = require('@prisma/client').PrismaClient();
 
 describe('GET /api/posts', () => {
-  let app;
+  let app: Express;
   beforeEach(() => {
     jest.clearAllMocks();
     app = createTestServer(prismaMock);
@@ -97,7 +98,7 @@ describe('GET /api/posts', () => {
 });
 
 describe('GET /api/posts/:id', () => {
-  let app;
+  let app: Express;
   beforeEach(() => {
     jest.clearAllMocks();
     app = createTestServer(prismaMock);
@@ -166,7 +167,7 @@ describe('GET /api/posts/:id', () => {
 });
 
 describe('POST /api/posts', () => {
-  let app;
+  let app: Express;
   beforeEach(() => {
     jest.clearAllMocks();
     app = createTestServer(prismaMock);
@@ -193,7 +194,7 @@ describe('POST /api/posts', () => {
     expect(res.body).toEqual(
       expect.objectContaining({
         message: 'Post created successfully',
-        post: expect.objectContaining({
+        data: expect.objectContaining({
           id: expect.any(Number),
           title: expect.any(String),
           content: expect.any(String),
@@ -225,7 +226,7 @@ describe('POST /api/posts', () => {
     expect(res.body).toEqual(
       expect.objectContaining({
         message: 'Post created successfully',
-        post: expect.objectContaining({
+        data: expect.objectContaining({
           id: expect.any(Number),
           title: expect.any(String),
           published: expect.any(Boolean),

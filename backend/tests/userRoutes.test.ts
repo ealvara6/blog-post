@@ -1,5 +1,7 @@
-const request = require('supertest');
-const createTestServer = require('../src/config/testServer');
+import request from 'supertest';
+import { Express } from 'express';
+import createTestServer from '../src/config/testServer';
+import { User } from '@prisma/client';
 
 jest.mock('@prisma/client', () => {
   const PrismaClient = jest.fn().mockImplementation(() => ({
@@ -45,7 +47,7 @@ const mockUser = {
 const prismaMock = require('@prisma/client').PrismaClient();
 
 describe('GET /api/users', () => {
-  let app;
+  let app: Express;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -109,7 +111,7 @@ describe('GET /api/users', () => {
 
     expect(res.statusCode).toBe(200);
 
-    res.body.users.forEach((user) => {
+    res.body.users.forEach((user: User) => {
       expect(user).toHaveProperty('id');
       expect(user).toHaveProperty('username');
       expect(user).toHaveProperty('email');
@@ -135,7 +137,7 @@ describe('GET /api/users', () => {
 });
 
 describe('GET /api/users/:id', () => {
-  let app;
+  let app: Express;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -200,7 +202,7 @@ describe('GET /api/users/:id', () => {
 });
 
 describe('POST /api/users', () => {
-  let app;
+  let app: Express;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -288,7 +290,7 @@ describe('POST /api/users', () => {
 });
 
 describe('PUT /api/users/:id', () => {
-  let app;
+  let app: Express;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -414,7 +416,7 @@ describe('PUT /api/users/:id', () => {
 });
 
 describe('DELETE /api/users/:id', () => {
-  let app;
+  let app: Express;
   beforeEach(() => {
     jest.clearAllMocks();
     app = createTestServer(prismaMock);

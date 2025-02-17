@@ -1,4 +1,4 @@
-const { body, validationResult } = require('express-validator');
+import { body, ValidationChain } from 'express-validator';
 
 const validateUsername = () => {
   return body('username')
@@ -23,14 +23,6 @@ const validatePassword = () => {
     .withMessage('password must be at least 7 characters long');
 };
 
-const handleErrors = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  next();
-};
-
 const validateUser = [
   validateUsername(),
   validateEmail(),
@@ -41,14 +33,12 @@ const validateUser = [
     }
     return true;
   }),
-  handleErrors,
 ];
 
-const validateUpdateFields = [
+const validateUpdateFields: ValidationChain[] = [
   validateUsername(),
   validateEmail(),
   validatePassword(),
-  handleErrors,
 ];
 
-module.exports = { validateUser, validateUpdateFields };
+export { validateUser, validateUpdateFields };

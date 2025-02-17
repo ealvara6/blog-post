@@ -1,5 +1,5 @@
-const request = require('supertest');
-const app = require('../src/app');
+import request from 'supertest';
+import app from '../src/app';
 
 describe('Health Check Endpoint', () => {
   it('should return the health status', async () => {
