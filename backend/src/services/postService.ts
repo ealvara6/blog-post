@@ -1,4 +1,4 @@
-import { Post } from '@prisma/client';
+import { Post, Prisma } from '@prisma/client';
 import { PrismaClient } from '@prisma/client/extension';
 
 interface CreatePostDTO {
@@ -35,4 +35,13 @@ const findPost = async (prisma: PrismaClient, id: number): Promise<Post> => {
   });
 };
 
-export { createNewPost, getAllPosts, findPost };
+const deletePostService = async (
+  prisma: PrismaClient,
+  id: number
+): Promise<Post> => {
+  return await prisma.post.delete({
+    where: { id: id },
+  });
+};
+
+export { createNewPost, getAllPosts, findPost, deletePostService };

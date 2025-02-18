@@ -8,6 +8,7 @@ jest.mock('@prisma/client', () => {
       findMany: jest.fn(),
       findUnique: jest.fn(),
       create: jest.fn(),
+      delete: jest.fn(),
     },
   }));
 
@@ -272,12 +273,77 @@ describe('POST /api/posts', () => {
     const res = await request(app)
       .post('/api/posts')
       .send({ title: 'mock_post_title' });
-    console.log(res.body);
 
     expect(res.statusCode).toBe(500);
 
     expect(res.body).toEqual({
       error: 'Failed to create new post',
+      details: 'database error',
+    });
+  });
+});
+
+describe('DELETE /api/posts/:id', () => {
+  let app: Express;
+  beforeEach(() => {
+    jest.clearAllMocks();
+    app = createTestServer(prismaMock);
+  });
+
+  it("should successfully delete a user's post", async () => {
+    prismaMock.post.delete.mockResolvedValue(mockPost);
+
+    const res = await request(app).delete('/api/posts/101');
+
+    expect(res.statusCode).toBe(200);
+
+    expect(res.body).toEqual({
+      message: 'Post successfully deleted',
+      data: expect.objectContaining({
+        id: expect.any(Number),
+        title: expect.any(String),
+        content: expect.any(String),
+        published: expect.any(Boolean),
+        userId: expect.any(Number),
+        createdAt: expect.any(String),
+        comments: expect.arrayContaining([expect.any(Object)]),
+      }),
+    });
+  });
+
+  it('Should return a 404 error when the post does not exist', async () => {
+    prismaMock.post.delete.mockResolvedValue(null);
+
+    const res = await request(app).delete('/api/posts/101');
+
+    expect(res.statusCode).toBe(404);
+
+    expect(res.body).toEqual({
+      error: 'No post found',
+    });
+  });
+
+  it('Should return a 404 error when an invalid id input is given', async () => {
+    prismaMock.post.delete.mockResolvedValue(mockPost);
+
+    const res = await request(app).delete('/api/posts/invalid_id_input');
+
+    expect(res.statusCode).toBe(404);
+
+    expect(res.body).toEqual({
+      error: 'Invalid id input',
+    });
+  });
+
+  it('should gracefully handle a 500 status code database error', async () => {
+    prismaMock.post.delete.mockRejectedValue(new Error('database error'));
+
+    const res = await request(app).delete('/api/posts/101');
+
+    expect(res.statusCode).toBe(500);
+
+    expect(res.body).toEqual({
+      error: 'Failed to delete post',
       details: 'database error',
     });
   });

@@ -1,5 +1,10 @@
 import { Request, Response } from 'express';
-import { createNewPost, findPost, getAllPosts } from '../services/postService';
+import {
+  createNewPost,
+  findPost,
+  getAllPosts,
+  deletePostService,
+} from '../services/postService';
 
 const createPost = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -69,4 +74,32 @@ const getOnePost = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export { getPosts, getOnePost, createPost };
+const deletePost = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+    const id = Number(req.params.id);
+    if (isNaN(id)) {
+      res.status(404).json({ error: 'Invalid id input' });
+      return;
+    }
+    let post = await deletePostService(prisma, id);
+    if (!post) {
+      res.status(404).json({ error: 'No post found' });
+      return;
+    }
+    res.status(200).json({
+      message: 'Post successfully deleted',
+      data: post,
+    });
+  } catch (err) {
+    if (err instanceof Error) {
+      res
+        .status(500)
+        .json({ error: 'Failed to delete post', details: err.message });
+      return;
+    }
+    res.status(500).json({ error: 'An unknown error occured' });
+  }
+};
+
+export { getPosts, getOnePost, createPost, deletePost };
