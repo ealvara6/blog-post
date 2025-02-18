@@ -13,11 +13,6 @@ import checkValidationResults from '../middleware/checkValidation';
 const createUserRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
 
-  router.use((req: Request, res: Response, next: NextFunction): void => {
-    req.prisma = prisma;
-    next();
-  });
-
   router
     .route('/')
     .get(getUsers)

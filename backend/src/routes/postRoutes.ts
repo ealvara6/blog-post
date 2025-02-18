@@ -3,6 +3,7 @@ import {
   getPosts,
   getOnePost,
   createPost,
+  deletePost,
 } from '../controllers/postController';
 import postValidationRules from '../middleware/validatePost';
 import { PrismaClient } from '@prisma/client';
@@ -11,17 +12,12 @@ import checkValidationResults from '../middleware/checkValidation';
 const createPostRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
 
-  router.use((req: Request, res: Response, next: NextFunction): void => {
-    req.prisma = prisma;
-    next();
-  });
-
   router
     .route('/')
     .get(getPosts)
     .post([...postValidationRules, checkValidationResults], createPost);
 
-  router.get('/:id', getOnePost);
+  router.route('/:id').get(getOnePost).delete(deletePost);
 
   return router;
 };

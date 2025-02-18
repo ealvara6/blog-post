@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import userRoutes from './userRoutes';
 import authRoutes from './authRoutes';
 import postRoutes from './postRoutes';
@@ -7,6 +7,12 @@ import { PrismaClient } from '@prisma/client';
 
 const createRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
+
+  router.use((req: Request, res: Response, next: NextFunction): void => {
+    req.prisma = prisma;
+    next();
+  });
+
   router.use('/users', userRoutes(prisma));
   router.use('/login', authRoutes(prisma));
   router.use('/posts', postRoutes(prisma));

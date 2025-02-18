@@ -7,11 +7,6 @@ import loginValidationRules from '../middleware/validateLogin';
 const createAuthRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
 
-  router.use((req: Request, res: Response, next: NextFunction): void => {
-    req.prisma = prisma;
-    next();
-  });
-
   router.post(
     '/',
     [...loginValidationRules, checkValidationResults],
