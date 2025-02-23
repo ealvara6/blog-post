@@ -7,7 +7,7 @@ interface LoginBody {
   password: string;
 }
 
-const verifyLogin = async (req: Request, res: Response) => {
+export const verifyLogin = async (req: Request, res: Response) => {
   try {
     const prisma = req.prisma;
     const { email, password }: LoginBody = req.body;
@@ -42,5 +42,3 @@ const verifyLogin = async (req: Request, res: Response) => {
     res.status(500).json({ details: 'An unknown error occured' });
   }
 };
-
-export default verifyLogin;

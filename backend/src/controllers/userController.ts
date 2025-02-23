@@ -8,7 +8,7 @@ import {
   updateUserService,
 } from '../services/userService';
 
-const getUsers = async (req: Request, res: Response): Promise<void> => {
+export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {
     const prisma = req.prisma;
     let users = await getUsersService(prisma);
@@ -26,7 +26,10 @@ const getUsers = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const getOneUser = async (req: Request, res: Response): Promise<void> => {
+export const getOneUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const prisma = req.prisma;
     const id = Number(req.params.id);
@@ -55,7 +58,10 @@ interface CreateUserDTO {
   password: string;
 }
 
-const createUser = async (req: Request, res: Response): Promise<void> => {
+export const createUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const prisma = req.prisma;
     const { username, email, password }: CreateUserDTO = req.body;
@@ -92,7 +98,10 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const updateUser = async (req: Request, res: Response): Promise<void> => {
+export const updateUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const prisma = req.prisma;
     const id = Number(req.params.id);
@@ -121,7 +130,10 @@ const updateUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const deleteUser = async (req: Request, res: Response): Promise<void> => {
+export const deleteUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const prisma = req.prisma;
     const id = Number(req.params.id);
@@ -150,5 +162,3 @@ const deleteUser = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ error: 'an unknown error occured' });
   }
 };
-
-export { getUsers, getOneUser, createUser, updateUser, deleteUser };

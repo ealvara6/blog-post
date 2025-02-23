@@ -9,9 +9,9 @@ import {
 import { validateId } from '../middleware/validators';
 import { validateUser, validateUpdateFields } from '../middleware/validateUser';
 import { PrismaClient } from '@prisma/client';
-import checkValidationResults from '../middleware/checkValidation';
+import { checkValidationResults } from '../middleware/checkValidation';
 
-const createUserRoutes = (prisma: PrismaClient): Router => {
+export const createUserRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
 
   router

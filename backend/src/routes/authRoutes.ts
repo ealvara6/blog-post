@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction, Router } from 'express';
-import verifyLogin from '../controllers/authController';
+import { verifyLogin } from '../controllers/authController';
 import { PrismaClient } from '@prisma/client';
-import checkValidationResults from '../middleware/checkValidation';
-import loginValidationRules from '../middleware/validateLogin';
+import { checkValidationResults } from '../middleware/checkValidation';
+import { loginValidationRules } from '../middleware/validateLogin';
 
-const createAuthRoutes = (prisma: PrismaClient): Router => {
+export const createAuthRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
 
   router.post(

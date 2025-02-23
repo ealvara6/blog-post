@@ -1,6 +1,6 @@
 import { body, ValidationChain } from 'express-validator';
 
-const loginValidationRules: ValidationChain[] = [
+export const loginValidationRules: ValidationChain[] = [
   body('email')
     .trim()
     .isEmail()
@@ -9,5 +9,3 @@ const loginValidationRules: ValidationChain[] = [
 
   body('password').notEmpty().withMessage('Please enter a password'),
 ];
-
-export default loginValidationRules;

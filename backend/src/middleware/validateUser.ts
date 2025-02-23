@@ -23,7 +23,7 @@ const validatePassword = () => {
     .withMessage('password must be at least 7 characters long');
 };
 
-const validateUser = [
+export const validateUser = [
   validateUsername(),
   validateEmail(),
   validatePassword(),
@@ -35,10 +35,8 @@ const validateUser = [
   }),
 ];
 
-const validateUpdateFields: ValidationChain[] = [
+export const validateUpdateFields: ValidationChain[] = [
   validateUsername(),
   validateEmail(),
   validatePassword(),
 ];
-
-export { validateUser, validateUpdateFields };

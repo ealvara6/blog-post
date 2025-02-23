@@ -5,7 +5,7 @@ import postRoutes from './postRoutes';
 import passport from 'passport';
 import { PrismaClient } from '@prisma/client';
 
-const createRoutes = (prisma: PrismaClient): Router => {
+export const createRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
 
   router.use((req: Request, res: Response, next: NextFunction): void => {

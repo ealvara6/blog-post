@@ -1,23 +1,33 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Router } from 'express';
 import {
   getPosts,
-  getOnePost,
+  getPost,
   createPost,
   deletePost,
+  updatePost,
 } from '../controllers/postController';
-import postValidationRules from '../middleware/validatePost';
-import { PrismaClient } from '@prisma/client';
-import checkValidationResults from '../middleware/checkValidation';
+import { validateId } from '../middleware/validators';
+import { checkValidationResults } from '../middleware/checkValidation';
+import { validatePost } from '../middleware/validatePost';
+import { validateEmptyBody } from '../middleware/validators';
+import { PrismaClient } from '@prisma/client/extension';
 
-const createPostRoutes = (prisma: PrismaClient): Router => {
+export const createPostRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
 
   router
     .route('/')
     .get(getPosts)
-    .post([...postValidationRules, checkValidationResults], createPost);
+    .post([...validatePost, checkValidationResults], createPost);
 
-  router.route('/:id').get(getOnePost).delete(deletePost);
+  router
+    .route('/:id')
+    .get(validateId, getPost)
+    .delete(validateId, deletePost)
+    .put(
+      [validateId, validateEmptyBody, ...validatePost, checkValidationResults],
+      updatePost
+    );
 
   return router;
 };

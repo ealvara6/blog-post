@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 
-const checkValidationResults = (
+export const checkValidationResults = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -12,5 +12,3 @@ const checkValidationResults = (
   }
   next();
 };
-
-export default checkValidationResults;
