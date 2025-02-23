@@ -8,6 +8,7 @@ jest.mock('@prisma/client', () => {
       findMany: jest.fn(),
       findUnique: jest.fn(),
       create: jest.fn(),
+      update: jest.fn(),
       delete: jest.fn(),
     },
   }));
@@ -279,6 +280,128 @@ describe('POST /api/posts', () => {
     expect(res.body).toEqual({
       error: 'Failed to create new post',
       details: 'database error',
+    });
+  });
+});
+
+describe('PUT /api/posts/:id', () => {
+  let app: Express;
+  beforeEach(() => {
+    jest.clearAllMocks();
+    app = createTestServer(prismaMock);
+  });
+
+  it('Should successfully update a post', async () => {
+    prismaMock.post.update.mockResolvedValue({
+      ...mockPost,
+      title: 'Updated title',
+    });
+
+    const res = await request(app)
+      .put('/api/posts/101')
+      .send({ title: 'Updated title' });
+
+    expect(res.statusCode).toBe(200);
+
+    expect(res.body).toEqual({
+      message: 'Post successfully updated',
+      data: expect.objectContaining({
+        title: 'Updated title',
+      }),
+    });
+  });
+
+  it('Should successfully update only provided fields', async () => {
+    prismaMock.post.update.mockResolvedValue({
+      ...mockPost,
+      title: 'Updated Title',
+    });
+
+    const res = await request(app)
+      .put('/api/posts/101')
+      .send({ title: 'Updated Title' });
+
+    expect(res.statusCode).toBe(200);
+
+    expect(res.body.data.title).toBe('Updated Title');
+    expect(res.body.data.content).toBe(mockPost.content);
+  });
+
+  it('Should validate title length', async () => {
+    const res = await request(app)
+      .put('/api/posts/101')
+      .send({ title: 'a'.repeat(100) });
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.errors[0].msg).toBe(
+      'Title must be less than 50 characters long'
+    );
+  });
+
+  it('Should return 400 if no update data is provided', async () => {
+    const res = await request(app).put('/api/posts/101').send({});
+    console.log(res.body);
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body).toEqual({
+      error: 'Request body cannot be empty',
+      message: 'Please provide data to update',
+    });
+  });
+
+  it('Should return a 400 status code if the data is invalid', async () => {
+    prismaMock.post.update.mockResolvedValue({ ...mockPost, title: '' });
+
+    const res = await request(app).put('/api/posts/101').send({ title: '' });
+
+    expect(res.statusCode).toBe(400);
+
+    expect(res.body).toEqual({
+      errors: [
+        {
+          type: 'field',
+          value: '',
+          msg: 'Post must have a title',
+          path: 'title',
+          location: 'body',
+        },
+      ],
+    });
+  });
+
+  it('Should return a 404 status code if id input is invalid', async () => {
+    const res = await request(app)
+      .put('/api/posts/invalid-id-input')
+      .send(mockPost);
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it('Should return a 404 status code if a post is not found', async () => {
+    prismaMock.post.update.mockResolvedValue(null);
+
+    const res = await request(app)
+      .put('/api/posts/101')
+      .send({ title: 'Mock title' });
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body).toEqual({
+      error: 'Post not found',
+    });
+  });
+
+  it('Should hand database errors gracefully', async () => {
+    prismaMock.post.update.mockRejectedValue(new Error('Database error'));
+
+    const res = await request(app)
+      .put('/api/posts/101')
+      .send({ title: 'Updated title ' });
+
+    expect(res.statusCode).toBe(500);
+
+    expect(res.body).toEqual({
+      error: 'Failed to update post',
+      details: 'Database error',
     });
   });
 });
