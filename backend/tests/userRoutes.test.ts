@@ -466,7 +466,7 @@ describe('DELETE /api/users/:id', () => {
     });
   });
 
-  it('should gracefully hand a 500 status code database error', async () => {
+  it('should gracefully handle a 500 status code database error', async () => {
     prismaMock.user.findUnique.mockResolvedValue(mockUser);
     prismaMock.user.delete.mockRejectedValue(
       new Error('Failed to delete user')

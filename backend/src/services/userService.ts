@@ -6,7 +6,15 @@ interface CheckUserDTO {
   email: string;
 }
 
-const checkIfUserExists = async (
+export const getUsersService = async (
+  prisma: PrismaClient
+): Promise<User[]> => {
+  return await prisma.user.findMany({
+    include: { posts: true, comments: true },
+  });
+};
+
+export const checkIfUserExists = async (
   { username, email }: CheckUserDTO,
   prisma: PrismaClient
 ): Promise<User> => {
@@ -23,7 +31,7 @@ interface CreateUserDTO {
   password: string;
 }
 
-const createUserInDatabase = async (
+export const createUserInDatabase = async (
   prisma: PrismaClient,
   userData: CreateUserDTO
 ): Promise<User> => {
@@ -36,11 +44,22 @@ const createUserInDatabase = async (
   });
 };
 
-const findUser = async (prisma: PrismaClient, id: number): Promise<User> => {
-  const user = await prisma.user.findUnique({
+export const updateUserService = async (
+  prisma: PrismaClient,
+  id: number,
+  updateData: Partial<User>
+): Promise<User> => {
+  return await prisma.user.update({
     where: { id },
+    data: updateData,
   });
-  return user;
 };
 
-export { checkIfUserExists, createUserInDatabase, findUser };
+export const findUser = async (
+  prisma: PrismaClient,
+  id: number
+): Promise<User> => {
+  return await prisma.user.findUnique({
+    where: { id },
+  });
+};
