@@ -7,7 +7,7 @@ interface CreatePostDTO {
   userId: number;
 }
 
-const createNewPost = async (
+export const createPostService = async (
   prisma: PrismaClient,
   { title, content, userId }: CreatePostDTO
 ): Promise<Post> => {
@@ -20,7 +20,9 @@ const createNewPost = async (
   });
 };
 
-const getAllPosts = async (prisma: PrismaClient): Promise<Post[]> => {
+export const getPostsService = async (
+  prisma: PrismaClient
+): Promise<Post[]> => {
   return await prisma.post.findMany({
     include: {
       user: true,
@@ -29,13 +31,27 @@ const getAllPosts = async (prisma: PrismaClient): Promise<Post[]> => {
   });
 };
 
-const findPost = async (prisma: PrismaClient, id: number): Promise<Post> => {
+export const getPostService = async (
+  prisma: PrismaClient,
+  id: number
+): Promise<Post> => {
   return await prisma.post.findUnique({
     where: { id: id },
   });
 };
 
-const deletePostService = async (
+export const updatePostService = async (
+  prisma: PrismaClient,
+  id: number,
+  data: Object
+): Promise<Post> => {
+  return await prisma.post.update({
+    where: { id },
+    data: data,
+  });
+};
+
+export const deletePostService = async (
   prisma: PrismaClient,
   id: number
 ): Promise<Post> => {
@@ -43,5 +59,3 @@ const deletePostService = async (
     where: { id: id },
   });
 };
-
-export { createNewPost, getAllPosts, findPost, deletePostService };

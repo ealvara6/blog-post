@@ -140,7 +140,7 @@ describe('GET /api/posts/:id', () => {
 
     expect(res.statusCode).toBe(404);
     expect(res.body).toEqual({
-      error: 'No post found',
+      error: 'Post not found',
     });
   });
 
@@ -340,7 +340,6 @@ describe('PUT /api/posts/:id', () => {
 
   it('Should return 400 if no update data is provided', async () => {
     const res = await request(app).put('/api/posts/101').send({});
-    console.log(res.body);
 
     expect(res.statusCode).toBe(400);
     expect(res.body).toEqual({
@@ -442,7 +441,7 @@ describe('DELETE /api/posts/:id', () => {
     expect(res.statusCode).toBe(404);
 
     expect(res.body).toEqual({
-      error: 'No post found',
+      error: 'Post not found',
     });
   });
 

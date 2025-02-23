@@ -1,17 +1,20 @@
 import { Request, Response } from 'express';
 import {
-  createNewPost,
-  findPost,
-  getAllPosts,
+  createPostService,
+  getPostService,
+  getPostsService,
   deletePostService,
   updatePostService,
 } from '../services/postService';
 
-const createPost = async (req: Request, res: Response): Promise<void> => {
+export const createPost = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const prisma = req.prisma;
 
-    const newPost = await createNewPost(prisma, req.body);
+    const newPost = await createPostService(prisma, req.body);
 
     res
       .status(201)
@@ -27,10 +30,10 @@ const createPost = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const getPosts = async (req: Request, res: Response): Promise<void> => {
+export const getPosts = async (req: Request, res: Response): Promise<void> => {
   try {
     const prisma = req.prisma;
-    let posts = await getAllPosts(prisma);
+    let posts = await getPostsService(prisma);
 
     res.status(200).json({
       posts,
@@ -46,18 +49,14 @@ const getPosts = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const getOnePost = async (req: Request, res: Response): Promise<void> => {
+export const getPost = async (req: Request, res: Response): Promise<void> => {
   try {
     const prisma = req.prisma;
     const id = Number(req.params.id);
-    if (isNaN(id)) {
-      res.status(404).json({ error: 'Invalid id input' });
-      return;
-    }
-    let post = await findPost(prisma, id);
+    let post = await getPostService(prisma, id);
 
     if (!post) {
-      res.status(404).json({ error: 'No post found' });
+      res.status(404).json({ error: 'Post not found' });
       return;
     }
 
@@ -75,16 +74,16 @@ const getOnePost = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const updatePost = async (req: Request, res: Response): Promise<void> => {
+export const updatePost = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const prisma = req.prisma;
     const id = Number(req.params.id);
-    if (isNaN(id)) {
-      res.status(404).json({ error: 'Invalid id input ' });
-      return;
-    }
     const data: Object = req.body;
     const post = await updatePostService(prisma, id, data);
+
     if (!post) {
       res.status(404).json({ error: 'Post not found' });
       return;
@@ -103,17 +102,17 @@ const updatePost = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const deletePost = async (req: Request, res: Response): Promise<void> => {
+export const deletePost = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const prisma = req.prisma;
     const id = Number(req.params.id);
-    if (isNaN(id)) {
-      res.status(404).json({ error: 'Invalid id input' });
-      return;
-    }
     const post = await deletePostService(prisma, id);
+
     if (!post) {
-      res.status(404).json({ error: 'No post found' });
+      res.status(404).json({ error: 'Post not found' });
       return;
     }
     res.status(200).json({
@@ -130,5 +129,3 @@ const deletePost = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ error: 'An unknown error occured' });
   }
 };
-
-export { getPosts, getOnePost, createPost, deletePost, updatePost };
