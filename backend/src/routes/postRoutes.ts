@@ -7,8 +7,8 @@ import {
   updatePost,
 } from '../controllers/postController';
 import { validateId } from '../middleware/validators';
-import { checkValidationResults } from '../middleware/checkValidation';
-import { validatePost } from '../middleware/validatePost';
+import { checkValidationResults } from '../middleware/validators/checkValidation.validator';
+import { validatePost } from '../middleware/validators';
 import { validateEmptyBody } from '../middleware/validators';
 import { PrismaClient } from '@prisma/client/extension';
 

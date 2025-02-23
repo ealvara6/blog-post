@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
 import {
   getUsers,
   getOneUser,
@@ -7,9 +7,9 @@ import {
   deleteUser,
 } from '../controllers/userController';
 import { validateId } from '../middleware/validators';
-import { validateUser, validateUpdateFields } from '../middleware/validateUser';
+import { validateUser, validateUpdateFields } from '../middleware/validators';
 import { PrismaClient } from '@prisma/client';
-import { checkValidationResults } from '../middleware/checkValidation';
+import { checkValidationResults } from '../middleware/validators/checkValidation.validator';
 
 export const createUserRoutes = (prisma: PrismaClient): Router => {
   const router = Router();

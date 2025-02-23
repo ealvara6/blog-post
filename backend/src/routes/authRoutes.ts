@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction, Router } from 'express';
+import { Router } from 'express';
 import { verifyLogin } from '../controllers/authController';
 import { PrismaClient } from '@prisma/client';
-import { checkValidationResults } from '../middleware/checkValidation';
-import { loginValidationRules } from '../middleware/validateLogin';
+import { checkValidationResults } from '../middleware/validators/checkValidation.validator';
+import { loginValidationRules } from '../middleware/validators/validateLogin.validator';
 
 export const createAuthRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
