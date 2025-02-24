@@ -4,14 +4,12 @@ import authRoutes from './authRoutes';
 import postRoutes from './postRoutes';
 import passport from 'passport';
 import { PrismaClient } from '@prisma/client';
+import { prismaMiddleWare } from '../middleware/prismaMiddleware';
 
 export const createRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
 
-  router.use((req: Request, res: Response, next: NextFunction): void => {
-    req.prisma = prisma;
-    next();
-  });
+  router.use(prismaMiddleWare(prisma));
 
   router.use('/users', userRoutes(prisma));
   router.use('/login', authRoutes(prisma));
