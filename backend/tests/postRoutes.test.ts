@@ -239,7 +239,7 @@ describe('POST /api/posts', () => {
     );
   });
 
-  it('should throw a 400 erorr when a title is not given', async () => {
+  it('should throw a 400 error when a title is not given', async () => {
     const newPost = {
       title: '',
       userId: 1,
