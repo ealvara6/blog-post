@@ -11,7 +11,12 @@ import { checkValidationResults } from '../middleware/validators/checkValidation
 import { validatePost } from '../middleware/validators';
 import { validateEmptyBody } from '../middleware/validators';
 import { PrismaClient } from '@prisma/client/extension';
-import { getComments, getComment } from '../controllers/commentController';
+import {
+  getComments,
+  getComment,
+  createComment,
+} from '../controllers/commentController';
+import { validateComment } from '../middleware/validators/validateComment.validator';
 
 export const createPostRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
@@ -32,7 +37,8 @@ export const createPostRoutes = (prisma: PrismaClient): Router => {
 
   router
     .route('/:id/comments')
-    .get([validateId, checkValidationResults], getComments);
+    .get([validateId, checkValidationResults], getComments)
+    .post([...validateComment, checkValidationResults], createComment);
 
   router
     .route('/:id/comments/:commentId')

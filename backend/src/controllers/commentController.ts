@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import {
   getCommentsService,
   getCommentService,
+  createCommentService,
 } from '../services/commentService';
 import { handleError } from '../utils/errorhandler';
 
@@ -49,6 +50,27 @@ export const getComment = async (
   } catch (err) {
     handleError(err, res, {
       errorMessage: 'Failed to fetch comment',
+    });
+  }
+};
+
+export const createComment = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+    const data = req.body;
+
+    const comment = await createCommentService(prisma, data);
+
+    res
+      .status(201)
+      .json({ message: 'Comment created successfully', data: comment });
+    return;
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to create comment',
     });
   }
 };

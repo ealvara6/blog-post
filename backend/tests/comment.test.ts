@@ -8,6 +8,7 @@ jest.mock('@prisma/client', () => {
     comment: {
       findMany: jest.fn(),
       findUnique: jest.fn(),
+      create: jest.fn(),
     },
   }));
 
@@ -43,6 +44,7 @@ describe('Comment Routes', () => {
         expect(res.body.data[0]).toEqual({
           id: expect.any(Number),
           postId: expect.any(Number),
+          content: expect.any(String),
           userId: expect.any(Number),
           createdAt: expect.any(String),
           user: {
@@ -65,7 +67,7 @@ describe('Comment Routes', () => {
       });
     });
 
-    describe('Faliure scenarios', () => {
+    describe('Failure scenarios', () => {
       it('Should handle database errors gracefully', async () => {
         prismaMock.comment.findMany.mockRejectedValue(
           new Error('Database error')
@@ -111,6 +113,7 @@ describe('Comment Routes', () => {
         expect(res.body.data).toEqual({
           id: expect.any(Number),
           postId: expect.any(Number),
+          content: expect.any(String),
           userId: expect.any(Number),
           createdAt: expect.any(String),
           user: {
@@ -160,6 +163,85 @@ describe('Comment Routes', () => {
         expect(res.statusCode).toBe(404);
         expect(res.body).toHaveProperty('error');
         expect(res.body.error).toEqual('Invalid id input');
+      });
+    });
+  });
+
+  describe('POST /api/posts/:id/comments', () => {
+    describe('Successful scenarios', () => {
+      it('Should create a new comment with a status 201', async () => {
+        prismaMock.comment.create.mockResolvedValue(mockComment);
+
+        const res = await request(app)
+          .post(`/api/posts/${TEST_POST_ID}/comments`)
+          .send(mockComment);
+
+        expect(res.statusCode).toBe(201);
+        expect(res.body).toHaveProperty('data');
+        expect(res.body).toEqual({
+          message: 'Comment created successfully',
+          data: {
+            id: expect.any(Number),
+            postId: expect.any(Number),
+            content: expect.any(String),
+            userId: expect.any(Number),
+            createdAt: expect.any(String),
+            user: {
+              username: expect.any(String),
+            },
+          },
+        });
+      });
+    });
+
+    describe('Failure scenarios', () => {
+      it('should handle database errors gracefully', async () => {
+        prismaMock.comment.create.mockRejectedValue(
+          new Error('Database error')
+        );
+
+        const res = await request(app)
+          .post(`/api/posts/${TEST_POST_ID}/comments`)
+          .send(mockComment);
+
+        expect(res.statusCode).toBe(500);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body).toEqual({
+          error: 'Failed to create comment',
+          details: 'Database error',
+        });
+      });
+    });
+
+    describe('Validation scenarios', () => {
+      it('Should return an error when no content is provided with a status 400', async () => {
+        const res = await request(app)
+          .post(`/api/posts/${TEST_POST_ID}/comments`)
+          .send({ content: '' });
+
+        console.log(res.body);
+
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toHaveProperty('errors');
+        expect(res.body.errors[0]).toEqual(
+          expect.objectContaining({
+            msg: 'Comment must have content',
+          })
+        );
+      });
+
+      it('should return an error when content exceeds 300 characters and return a status 400', async () => {
+        const res = await request(app)
+          .post(`/api/posts/${TEST_POST_ID}/comments`)
+          .send({ content: 'a'.repeat(301) });
+
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toHaveProperty('errors');
+        expect(res.body.errors[0]).toEqual(
+          expect.objectContaining({
+            msg: 'Comment cannot exceed 300 characters',
+          })
+        );
       });
     });
   });
