@@ -389,7 +389,7 @@ describe('PUT /api/posts/:id', () => {
     });
   });
 
-  it('Should hand database errors gracefully', async () => {
+  it('Should handle database errors gracefully', async () => {
     prismaMock.post.update.mockRejectedValue(new Error('Database error'));
 
     const res = await request(app)
