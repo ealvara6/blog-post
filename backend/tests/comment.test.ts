@@ -9,6 +9,7 @@ jest.mock('@prisma/client', () => {
       findMany: jest.fn(),
       findUnique: jest.fn(),
       create: jest.fn(),
+      update: jest.fn(),
     },
   }));
 
@@ -19,6 +20,7 @@ const TEST_POST_ID = 101;
 const TEST_COMMENT_ID = 201;
 const INVALID_POST_ID = 'Invalid_post_id';
 const INVALID_COMMENT_ID = 'Invalid_comment_id';
+const UPDATED_MOCK_CONTENT = 'updated_mock_content';
 
 const prismaMock = require('@prisma/client').PrismaClient();
 
@@ -242,6 +244,64 @@ describe('Comment Routes', () => {
             msg: 'Comment cannot exceed 300 characters',
           })
         );
+      });
+    });
+  });
+
+  describe('PUT /api/posts/:id/comments/:commentId', () => {
+    describe('Successful scenarios', () => {
+      it('should successfully update a comment and return status 200', async () => {
+        prismaMock.comment.update.mockResolvedValue({
+          ...mockComment,
+          content: UPDATED_MOCK_CONTENT,
+        });
+
+        const res = await request(app)
+          .put(`/api/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
+          .send({ content: 'updated_mock_content' });
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toHaveProperty('data');
+        expect(res.body).toEqual({
+          message: 'Comment updated successfully',
+          data: expect.objectContaining({
+            content: 'updated_mock_content',
+          }),
+        });
+      });
+
+      it('should successfully updated only provided fields and return status 200', async () => {
+        prismaMock.comment.update.mockResolvedValue({
+          ...mockComment,
+          content: UPDATED_MOCK_CONTENT,
+        });
+
+        const res = await request(app)
+          .put(`/api/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
+          .send({ content: UPDATED_MOCK_CONTENT });
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body.data.content).toBe(UPDATED_MOCK_CONTENT);
+        expect(res.body.data.id).toBe(201);
+      });
+    });
+
+    describe('Failure scenarios', () => {
+      it('should handle database errors gracefully', async () => {
+        prismaMock.comment.update.mockRejectedValue(
+          new Error('Database error')
+        );
+
+        const res = await request(app)
+          .put(`/api/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
+          .send({ content: UPDATED_MOCK_CONTENT });
+
+        expect(res.statusCode).toBe(500);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body).toEqual({
+          error: 'Failed to update comment',
+          details: 'Database error',
+        });
       });
     });
   });

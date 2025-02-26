@@ -3,6 +3,7 @@ import {
   getCommentsService,
   getCommentService,
   createCommentService,
+  updateCommentService,
 } from '../services/commentService';
 import { handleError } from '../utils/errorhandler';
 
@@ -60,9 +61,9 @@ export const createComment = async (
 ): Promise<void> => {
   try {
     const prisma = req.prisma;
-    const data = req.body;
+    const createData = req.body;
 
-    const comment = await createCommentService(prisma, data);
+    const comment = await createCommentService(prisma, createData);
 
     res
       .status(201)
@@ -71,6 +72,27 @@ export const createComment = async (
   } catch (err) {
     handleError(err, res, {
       errorMessage: 'Failed to create comment',
+    });
+  }
+};
+
+export const updateComment = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+    const id = Number(req.params.commentId);
+    const updateData = req.body;
+
+    const updatedComment = await updateCommentService(prisma, updateData, id);
+
+    res
+      .status(200)
+      .json({ message: 'Comment updated successfully', data: updatedComment });
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to update comment',
     });
   }
 };

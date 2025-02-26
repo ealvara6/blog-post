@@ -40,3 +40,14 @@ export const createCommentService = async (
     data: commentData,
   });
 };
+
+export const updateCommentService = async (
+  prisma: PrismaClient,
+  updateData: Partial<CommentData>,
+  id: number
+): Promise<Comment> => {
+  return await prisma.comment.update({
+    where: { id },
+    data: updateData,
+  });
+};
