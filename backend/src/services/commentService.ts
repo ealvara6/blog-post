@@ -51,3 +51,12 @@ export const updateCommentService = async (
     data: updateData,
   });
 };
+
+export const deleteCommentService = async (
+  prisma: PrismaClient,
+  id: number
+): Promise<Comment> => {
+  return await prisma.comment.delete({
+    where: { id },
+  });
+};

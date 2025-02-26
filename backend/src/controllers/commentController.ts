@@ -4,6 +4,7 @@ import {
   getCommentService,
   createCommentService,
   updateCommentService,
+  deleteCommentService,
 } from '../services/commentService';
 import { handleError } from '../utils/errorhandler';
 
@@ -87,12 +88,42 @@ export const updateComment = async (
 
     const updatedComment = await updateCommentService(prisma, updateData, id);
 
+    if (!updatedComment) {
+      res.status(404).json({ error: 'Comment not found' });
+      return;
+    }
+
     res
       .status(200)
       .json({ message: 'Comment updated successfully', data: updatedComment });
   } catch (err) {
     handleError(err, res, {
       errorMessage: 'Failed to update comment',
+    });
+  }
+};
+
+export const deleteComment = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+    const id = Number(req.params.commentId);
+
+    const deletedComment = await deleteCommentService(prisma, id);
+
+    if (!deletedComment) {
+      res.status(404).json({ error: 'Comment not found' });
+      return;
+    }
+
+    res
+      .status(200)
+      .json({ message: 'Comment deleted successfully', data: deletedComment });
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to delete comment',
     });
   }
 };

@@ -10,6 +10,7 @@ jest.mock('@prisma/client', () => {
       findUnique: jest.fn(),
       create: jest.fn(),
       update: jest.fn(),
+      delete: jest.fn(),
     },
   }));
 
@@ -300,6 +301,77 @@ describe('Comment Routes', () => {
         expect(res.body).toHaveProperty('error');
         expect(res.body).toEqual({
           error: 'Failed to update comment',
+          details: 'Database error',
+        });
+      });
+
+      it('should return an error if comment is not found and return a status 404', async () => {
+        prismaMock.comment.update.mockResolvedValue(null);
+
+        const res = await request(app)
+          .put(`/api/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
+          .send({ content: UPDATED_MOCK_CONTENT });
+
+        expect(res.statusCode).toBe(404);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error).toBe('Comment not found');
+      });
+    });
+  });
+
+  describe('DELETE /api/posts/:id/comments/:commentId', () => {
+    describe('Successful scenarios', () => {
+      it('should successfully delete a comment and return a status 200', async () => {
+        prismaMock.comment.delete.mockResolvedValue(mockComment);
+
+        const res = await request(app).delete(
+          `/api/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`
+        );
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toHaveProperty('data');
+        expect(res.body).toEqual({
+          message: 'Comment deleted successfully',
+          data: {
+            id: expect.any(Number),
+            content: expect.any(String),
+            createdAt: expect.any(String),
+            postId: expect.any(Number),
+            userId: expect.any(Number),
+            user: {
+              username: expect.any(String),
+            },
+          },
+        });
+      });
+    });
+
+    describe('Failure scenarios', () => {
+      it('should return an error if comment is not found and return a status 404', async () => {
+        prismaMock.comment.delete.mockResolvedValue(null);
+
+        const res = await request(app).delete(
+          `/api/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`
+        );
+
+        expect(res.statusCode).toBe(404);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error).toBe('Comment not found');
+      });
+
+      it('should handle database errors gracefully', async () => {
+        prismaMock.comment.delete.mockRejectedValue(
+          new Error('Database error')
+        );
+
+        const res = await request(app).delete(
+          `/api/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`
+        );
+
+        expect(res.statusCode).toBe(500);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body).toEqual({
+          error: 'Failed to delete comment',
           details: 'Database error',
         });
       });

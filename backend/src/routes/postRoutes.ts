@@ -16,6 +16,7 @@ import {
   getComment,
   createComment,
   updateComment,
+  deleteComment,
 } from '../controllers/commentController';
 import { validateComment } from '../middleware/validators/validateComment.validator';
 
@@ -53,6 +54,10 @@ export const createPostRoutes = (prisma: PrismaClient): Router => {
         checkValidationResults,
       ],
       updateComment
+    )
+    .delete(
+      [validateId, validateCommentId, checkValidationResults],
+      deleteComment
     );
 
   return router;
