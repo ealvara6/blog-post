@@ -1,8 +1,5 @@
 import { Request, Response } from 'express';
-import hashpassword from '../utils/hashPassword';
 import {
-  checkIfUserExists,
-  createUserInDatabase,
   findUser,
   getUsersService,
   updateUserService,
@@ -46,52 +43,6 @@ export const getOneUser = async (
       res
         .status(500)
         .json({ error: 'Failed to fetch user', details: err.message });
-      return;
-    }
-    res.status(500).json({ error: 'An unknown error occured ' });
-  }
-};
-
-interface CreateUserDTO {
-  username: string;
-  email: string;
-  password: string;
-}
-
-export const createUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    const prisma = req.prisma;
-    const { username, email, password }: CreateUserDTO = req.body;
-
-    const existingUser = await checkIfUserExists(req.body, prisma);
-    if (existingUser) {
-      const field = existingUser.username === username ? 'username' : 'email';
-      res.status(409).json({
-        error: `${field} is already associated with an existing account`,
-      });
-      return;
-    }
-
-    const hashedpassword = await hashpassword(password);
-
-    const newUser = await createUserInDatabase(prisma, {
-      username,
-      email,
-      password: hashedpassword,
-    });
-
-    res.status(201).json({
-      message: 'User created successfully',
-      user: newUser,
-    });
-  } catch (err) {
-    if (err instanceof Error) {
-      res
-        .status(500)
-        .json({ error: 'Failed to register user', details: err.message });
       return;
     }
     res.status(500).json({ error: 'An unknown error occured ' });

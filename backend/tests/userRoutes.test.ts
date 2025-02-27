@@ -213,7 +213,7 @@ describe('POST /api/users', () => {
     prismaMock.user.findFirst.mockResolvedValue(null);
 
     const res = await request(app)
-      .post('/api/users')
+      .post('/api/auth/register')
       .send({ ...mockUser, confirmPassword: 'mockpassword' });
 
     expect(res.statusCode).toBe(201);
@@ -243,7 +243,7 @@ describe('POST /api/users', () => {
     });
 
     const res = await request(app)
-      .post('/api/users')
+      .post('/api/auth/register')
       .send({ ...mockUser, confirmPassword: 'mockpassword' });
 
     expect(res.statusCode).toBe(409);
@@ -261,7 +261,7 @@ describe('POST /api/users', () => {
     });
 
     const res = await request(app)
-      .post('/api/users')
+      .post('/api/auth/register')
       .send({ ...mockUser, confirmPassword: 'mockpassword' });
 
     expect(res.statusCode).toBe(409);
@@ -277,7 +277,7 @@ describe('POST /api/users', () => {
     prismaMock.user.findFirst.mockRejectedValue(new Error('Database error'));
 
     const res = await request(app)
-      .post('/api/users')
+      .post('/api/auth/register')
       .send({ ...mockUser, confirmPassword: 'mockpassword' });
 
     expect(res.statusCode).toBe(500);

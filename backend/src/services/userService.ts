@@ -25,25 +25,6 @@ export const checkIfUserExists = async (
   });
 };
 
-interface CreateUserDTO {
-  username: string;
-  email: string;
-  password: string;
-}
-
-export const createUserInDatabase = async (
-  prisma: PrismaClient,
-  userData: CreateUserDTO
-): Promise<User> => {
-  return prisma.user.create({
-    data: userData,
-    include: {
-      posts: true,
-      comments: true,
-    },
-  });
-};
-
 export const updateUserService = async (
   prisma: PrismaClient,
   id: number,

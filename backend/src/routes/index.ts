@@ -12,7 +12,7 @@ export const createRoutes = (prisma: PrismaClient): Router => {
   router.use(prismaMiddleWare(prisma));
 
   router.use('/users', userRoutes(prisma));
-  router.use('/login', authRoutes(prisma));
+  router.use('/auth', authRoutes(prisma));
   router.use('/posts', postRoutes(prisma));
 
   router.get('/health', (req: Request, res: Response): void => {
