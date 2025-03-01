@@ -4,6 +4,7 @@ import { compare } from 'bcrypt';
 import { checkIfUserExists } from '../services/userService';
 import { createUserService } from '../services/authService';
 import hashPassword from '../utils/hashPassword';
+import { handleError } from '../utils/errorhandler';
 
 interface LoginBody {
   email: string;
@@ -46,13 +47,10 @@ export const createUser = async (
       newUser,
     });
   } catch (err) {
-    if (err instanceof Error) {
-      res
-        .status(500)
-        .json({ error: 'Failed to register user', details: err.message });
-      return;
-    }
-    res.status(500).json({ error: 'An unknown error occured ' });
+    handleError(err, res, {
+      errorMessage: 'Failed to register user',
+    });
+    return;
   }
 };
 
@@ -84,10 +82,9 @@ export const verifyLogin = async (req: Request, res: Response) => {
 
     res.status(200).json({ token, user });
   } catch (err) {
-    if (err instanceof Error) {
-      res.status(500).json({ details: err.message });
-      return;
-    }
-    res.status(500).json({ details: 'An unknown error occured' });
+    handleError(err, res, {
+      errorMessage: ' failed to verify login',
+    });
+    return;
   }
 };
