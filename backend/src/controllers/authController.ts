@@ -43,7 +43,7 @@ export const createUser = async (
 
     res.status(201).json({
       message: 'User created successfully',
-      user: newUser,
+      newUser,
     });
   } catch (err) {
     if (err instanceof Error) {
@@ -82,7 +82,7 @@ export const verifyLogin = async (req: Request, res: Response) => {
       expiresIn: '1h',
     });
 
-    res.json({ token });
+    res.status(200).json({ token, user });
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({ details: err.message });

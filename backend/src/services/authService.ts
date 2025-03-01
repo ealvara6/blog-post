@@ -10,11 +10,7 @@ export const createUserService = async (
   prisma: PrismaClient,
   userData: CreateUserDTO
 ): Promise<User> => {
-  return prisma.user.create({
+  return await prisma.user.create({
     data: userData,
-    include: {
-      posts: true,
-      comments: true,
-    },
   });
 };

@@ -68,7 +68,7 @@ export const updateUser = async (
 
     res.status(200).json({
       message: 'User successfully updated',
-      user: updatedUser,
+      updatedUser,
     });
   } catch (err) {
     if (err instanceof Error) {
@@ -99,9 +99,7 @@ export const deleteUser = async (
       where: { id },
     });
 
-    res
-      .status(200)
-      .json({ message: 'User successfully deleted', user: deletedUser });
+    res.status(200).json({ message: 'User successfully deleted', deletedUser });
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({

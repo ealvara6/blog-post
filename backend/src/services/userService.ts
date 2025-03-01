@@ -18,7 +18,7 @@ export const checkIfUserExists = async (
   { username, email }: CheckUserDTO,
   prisma: PrismaClient
 ): Promise<User> => {
-  return prisma.user.findFirst({
+  return await prisma.user.findFirst({
     where: {
       OR: [{ username }, { email }],
     },

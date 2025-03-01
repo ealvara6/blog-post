@@ -222,8 +222,6 @@ describe('Comment Routes', () => {
           .post(`/api/posts/${TEST_POST_ID}/comments`)
           .send({ content: '' });
 
-        console.log(res.body);
-
         expect(res.statusCode).toBe(400);
         expect(res.body).toHaveProperty('errors');
         expect(res.body.errors[0]).toEqual(
