@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { createUser, verifyLogin } from '../controllers/authController';
+import { createUser, verifyLogin } from '../../controllers/authController';
 import { PrismaClient } from '@prisma/client';
-import { checkValidationResults } from '../middleware/validators/checkValidation.validator';
-import { loginValidationRules } from '../middleware/validators/validateLogin.validator';
-import { validateUser } from '../middleware/validators';
+import { checkValidationResults } from '../../middleware/validators/checkValidation.validator';
+import { loginValidationRules } from '../../middleware/validators/validateLogin.validator';
+import { validateUser } from '../../middleware/validators';
 
 export const createAuthRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
