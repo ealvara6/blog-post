@@ -4,8 +4,6 @@ import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
 import multer from 'multer';
 import passport from './config/passport';
-import dotenv from 'dotenv';
-dotenv.config();
 
 const prisma = new PrismaClient();
 const app = express();

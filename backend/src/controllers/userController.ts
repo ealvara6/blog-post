@@ -23,10 +23,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const getOneUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const getUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const prisma = req.prisma;
     const id = Number(req.params.id);
