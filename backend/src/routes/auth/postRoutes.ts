@@ -1,63 +1,41 @@
 import { Router } from 'express';
-import { authenticateToken } from '../../middleware/authenticateToken';
-import {
-  checkValidationResults,
-  validateCommentId,
-  validateEmptyBody,
-  validateId,
-  validatePost,
-} from '../../middleware/validators';
 import {
   createPost,
   deletePost,
   updatePost,
 } from '../../controllers/postController';
 import { PrismaClient } from '@prisma/client/extension';
-import { validateComment } from '../../middleware/validators/validateComment.validator';
 import {
   createComment,
   deleteComment,
   updateComment,
 } from '../../controllers/commentController';
 
+import {
+  validateCommentCreation,
+  validateCommentDeletion,
+  validateCommentUpdate,
+  validatePostCreation,
+  validatePostDeletion,
+  validatePostUpdate,
+} from '../../middleware/validators/validationMiddleware';
+
 export const authPostRoutes = (prisma: PrismaClient) => {
   const router = Router();
 
-  router.post(
-    '/',
-    authenticateToken,
-    [...validatePost, checkValidationResults],
-    createPost
-  );
+  router.post('/', validatePostCreation, createPost);
 
   router
     .route('/:id')
-    .put(
-      authenticateToken,
-      validateId,
-      [validateEmptyBody, ...validatePost, checkValidationResults],
-      updatePost
-    )
-    .delete(authenticateToken, validateId, deletePost);
+    .put(validatePostUpdate, updatePost)
+    .delete(validatePostDeletion, deletePost);
 
-  router.post(
-    '/:id/comments',
-    authenticateToken,
-    validateId,
-    [...validateComment, checkValidationResults],
-    createComment
-  );
+  router.post('/:id/comments', validateCommentCreation, createComment);
 
   router
     .route('/:id/comments/:commentId')
-    .put(
-      authenticateToken,
-      validateId,
-      validateComment,
-      [validateEmptyBody, ...validateComment, checkValidationResults],
-      updateComment
-    )
-    .delete(authenticateToken, validateId, validateCommentId, deleteComment);
+    .put(validateCommentUpdate, updateComment)
+    .delete(validateCommentDeletion, deleteComment);
 
   return router;
 };

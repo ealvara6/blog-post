@@ -5,6 +5,9 @@ declare global {
     interface Request {
       prisma: PrismaClient;
     }
+    interface User {
+      id: string;
+    }
   }
 }
 

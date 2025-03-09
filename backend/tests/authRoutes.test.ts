@@ -19,11 +19,13 @@ jest.mock('@prisma/client', () => {
       create: jest.fn(),
       update: jest.fn(),
       delete: jest.fn(),
+      findUnique: jest.fn(),
     },
     comment: {
       create: jest.fn(),
       update: jest.fn(),
       delete: jest.fn(),
+      findUnique: jest.fn(),
     },
   }));
 
@@ -318,7 +320,6 @@ describe('Auth Routes', () => {
           const res = await request(app)
             .post(`/api/auth/posts/${TEST_POST_ID}/comments`)
             .set('Authorization', `Bearer ${authToken}`)
-            .set('Authorization', `Bearer ${authToken}`)
             .send(mockComment);
 
           expect(res.statusCode).toBe(201);
@@ -348,7 +349,6 @@ describe('Auth Routes', () => {
           const res = await request(app)
             .post(`/api/auth/posts/${TEST_POST_ID}/comments`)
             .set('Authorization', `Bearer ${authToken}`)
-            .set('Authorization', `Bearer ${authToken}`)
             .send(mockComment);
 
           expect(res.statusCode).toBe(500);
@@ -365,7 +365,6 @@ describe('Auth Routes', () => {
           const res = await request(app)
             .post(`/api/auth/posts/${TEST_POST_ID}/comments`)
             .set('Authorization', `Bearer ${authToken}`)
-            .set('Authorization', `Bearer ${authToken}`)
             .send({ content: '' });
 
           expect(res.statusCode).toBe(400);
@@ -380,7 +379,6 @@ describe('Auth Routes', () => {
         it('should return an error when content exceeds 300 characters and return a status 400', async () => {
           const res = await request(app)
             .post(`/api/auth/posts/${TEST_POST_ID}/comments`)
-            .set('Authorization', `Bearer ${authToken}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: 'a'.repeat(301) });
 
@@ -407,7 +405,6 @@ describe('Auth Routes', () => {
 
         const res = await request(app)
           .put('/api/auth/users/1')
-          .set('Authorization', `Bearer ${authToken}`)
           .set('Authorization', `Bearer ${authToken}`)
           .send({
             ...testUser,
@@ -493,7 +490,7 @@ describe('Auth Routes', () => {
         prismaMock.user.findUnique.mockResolvedValue();
 
         const res = await request(app)
-          .put(`/api/auth/users/9999`)
+          .put(`/api/auth/users/1`)
           .set('Authorization', `Bearer ${authToken}`)
           .set('Authorization', `Bearer ${authToken}`)
           .send({ ...testUser, email: 'updated@email.com ' });
@@ -524,6 +521,18 @@ describe('Auth Routes', () => {
           details: 'Failed to update user',
         });
       });
+
+      it('should return a 403 error if the logged-in user is not authorized to update the user', async () => {
+        const res = await request(app)
+          .put('/api/auth/users/2')
+          .set('Authorization', `Bearer ${authToken}`);
+
+        expect(res.statusCode).toBe(403);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error).toBe(
+          'Unauthorized: You can only modify your own account'
+        );
+      });
     });
 
     describe('PUT /api/auth/posts/:id', () => {
@@ -534,6 +543,7 @@ describe('Auth Routes', () => {
       });
 
       it('Should successfully update a post', async () => {
+        prismaMock.post.findUnique.mockResolvedValue(mockPost);
         prismaMock.post.update.mockResolvedValue({
           ...mockPost,
           title: 'Updated title',
@@ -541,7 +551,6 @@ describe('Auth Routes', () => {
 
         const res = await request(app)
           .put('/api/auth/posts/101')
-          .set('Authorization', `Bearer ${authToken}`)
           .set('Authorization', `Bearer ${authToken}`)
           .send({ title: 'Updated title' });
 
@@ -564,7 +573,6 @@ describe('Auth Routes', () => {
         const res = await request(app)
           .put('/api/auth/posts/101')
           .set('Authorization', `Bearer ${authToken}`)
-          .set('Authorization', `Bearer ${authToken}`)
           .send({ title: 'Updated Title' });
 
         expect(res.statusCode).toBe(200);
@@ -577,7 +585,6 @@ describe('Auth Routes', () => {
         const res = await request(app)
           .put('/api/auth/posts/101')
           .set('Authorization', `Bearer ${authToken}`)
-          .set('Authorization', `Bearer ${authToken}`)
           .send({ title: 'a'.repeat(100) });
 
         expect(res.statusCode).toBe(400);
@@ -589,7 +596,6 @@ describe('Auth Routes', () => {
       it('Should return 400 if no update data is provided', async () => {
         const res = await request(app)
           .put('/api/auth/posts/101')
-          .set('Authorization', `Bearer ${authToken}`)
           .set('Authorization', `Bearer ${authToken}`)
           .send({});
 
@@ -605,7 +611,6 @@ describe('Auth Routes', () => {
 
         const res = await request(app)
           .put('/api/auth/posts/101')
-          .set('Authorization', `Bearer ${authToken}`)
           .set('Authorization', `Bearer ${authToken}`)
           .send({ title: '' });
 
@@ -628,7 +633,6 @@ describe('Auth Routes', () => {
         const res = await request(app)
           .put('/api/auth/posts/invalid-id-input')
           .set('Authorization', `Bearer ${authToken}`)
-          .set('Authorization', `Bearer ${authToken}`)
           .send(mockPost);
 
         expect(res.statusCode).toBe(404);
@@ -639,7 +643,6 @@ describe('Auth Routes', () => {
 
         const res = await request(app)
           .put('/api/auth/posts/101')
-          .set('Authorization', `Bearer ${authToken}`)
           .set('Authorization', `Bearer ${authToken}`)
           .send({ title: 'Mock title' });
 
@@ -655,7 +658,6 @@ describe('Auth Routes', () => {
         const res = await request(app)
           .put('/api/auth/posts/101')
           .set('Authorization', `Bearer ${authToken}`)
-          .set('Authorization', `Bearer ${authToken}`)
           .send({ title: 'Updated title ' });
 
         expect(res.statusCode).toBe(500);
@@ -665,11 +667,30 @@ describe('Auth Routes', () => {
           details: 'Database error',
         });
       });
+
+      it('should return a 403 error if the logged-in user is not authorized to update the post', async () => {
+        prismaMock.post.findUnique.mockResolvedValue({
+          ...mockPost,
+          userId: 2,
+        });
+
+        const res = await request(app)
+          .put('/api/auth/posts/201')
+          .set('Authorization', `Bearer ${authToken}`)
+          .send({ title: 'updated_title' });
+
+        expect(res.statusCode).toBe(403);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error).toBe(
+          'Unauthorized: You can only modify your own posts'
+        );
+      });
     });
 
     describe('PUT /api/auth/posts/:id/comments/:commentId', () => {
       describe('Successful scenarios', () => {
         it('should successfully update a comment and return status 200', async () => {
+          prismaMock.comment.findUnique.mockResolvedValue(mockComment);
           prismaMock.comment.update.mockResolvedValue({
             ...mockComment,
             content: UPDATED_MOCK_CONTENT,
@@ -677,7 +698,6 @@ describe('Auth Routes', () => {
 
           const res = await request(app)
             .put(`/api/auth/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
-            .set('Authorization', `Bearer ${authToken}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: 'updated_mock_content' });
 
@@ -700,7 +720,6 @@ describe('Auth Routes', () => {
           const res = await request(app)
             .put(`/api/auth/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`)
-            .set('Authorization', `Bearer ${authToken}`)
             .send({ content: UPDATED_MOCK_CONTENT });
 
           expect(res.statusCode).toBe(200);
@@ -718,7 +737,6 @@ describe('Auth Routes', () => {
           const res = await request(app)
             .put(`/api/auth/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`)
-            .set('Authorization', `Bearer ${authToken}`)
             .send({ content: UPDATED_MOCK_CONTENT });
 
           expect(res.statusCode).toBe(500);
@@ -735,12 +753,29 @@ describe('Auth Routes', () => {
           const res = await request(app)
             .put(`/api/auth/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`)
-            .set('Authorization', `Bearer ${authToken}`)
             .send({ content: UPDATED_MOCK_CONTENT });
 
           expect(res.statusCode).toBe(404);
           expect(res.body).toHaveProperty('error');
           expect(res.body.error).toBe('Comment not found');
+        });
+
+        it('should return a 403 error if the logged-in user is not authorized to update the comment', async () => {
+          prismaMock.comment.findUnique.mockResolvedValue({
+            ...mockComment,
+            userId: 2,
+          });
+
+          const res = await request(app)
+            .put('/api/auth/posts/201/comments/301')
+            .set('Authorization', `Bearer ${authToken}`)
+            .send({ content: 'updated_content' });
+
+          expect(res.statusCode).toBe(403);
+          expect(res.body).toHaveProperty('error');
+          expect(res.body.error).toBe(
+            'Unauthorized: You can only modify your own comment'
+          );
         });
       });
     });
@@ -777,7 +812,7 @@ describe('Auth Routes', () => {
         prismaMock.user.findUnique.mockResolvedValue(null);
 
         const res = await request(app)
-          .delete('/api/auth/users/9999')
+          .delete('/api/auth/users/1')
           .set('Authorization', `Bearer ${authToken}`);
 
         expect(res.statusCode).toBe(404);
@@ -814,6 +849,18 @@ describe('Auth Routes', () => {
           details: 'Failed to delete user',
         });
       });
+
+      it('should return a 403 error if the logged-in user is not authorized to delete the user', async () => {
+        const res = await request(app)
+          .delete('/api/auth/users/2')
+          .set('Authorization', `Bearer ${authToken}`);
+
+        expect(res.statusCode).toBe(403);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error).toBe(
+          'Unauthorized: You can only modify your own account'
+        );
+      });
     });
 
     describe('DELETE /api/auth/posts/:id', () => {
@@ -824,6 +871,7 @@ describe('Auth Routes', () => {
       });
 
       it("should successfully delete a user's post", async () => {
+        prismaMock.post.findUnique.mockResolvedValue(mockPost);
         prismaMock.post.delete.mockResolvedValue(mockPost);
 
         const res = await request(app)
@@ -888,11 +936,29 @@ describe('Auth Routes', () => {
           details: 'database error',
         });
       });
+
+      it('should return a 403 error if the logged-in user is not authorized to delete the post', async () => {
+        prismaMock.post.findUnique.mockResolvedValue({
+          ...mockPost,
+          userId: 2,
+        });
+
+        const res = await request(app)
+          .delete('/api/auth/posts/101')
+          .set('Authorization', `Bearer ${authToken}`);
+
+        expect(res.statusCode).toBe(403);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error).toBe(
+          'Unauthorized: You can only modify your own posts'
+        );
+      });
     });
 
     describe('DELETE /api/auth/posts/:id/comments/:commentId', () => {
       describe('Successful scenarios', () => {
         it('should successfully delete a comment and return a status 200', async () => {
+          prismaMock.comment.findUnique.mockResolvedValue(mockComment);
           prismaMock.comment.delete.mockResolvedValue(mockComment);
 
           const res = await request(app)
@@ -951,6 +1017,23 @@ describe('Auth Routes', () => {
             error: 'Failed to delete comment',
             details: 'Database error',
           });
+        });
+
+        it('should return a 403 error if the logged-in user is not authorized to delete the comment', async () => {
+          prismaMock.comment.findUnique.mockResolvedValue({
+            ...mockComment,
+            userId: 2,
+          });
+
+          const res = await request(app)
+            .delete('/api/auth/posts/101/comments/301')
+            .set('Authorization', `Bearer ${authToken}`);
+
+          expect(res.statusCode).toBe(403);
+          expect(res.body).toHaveProperty('error');
+          expect(res.body.error).toBe(
+            'Unauthorized: You can only modify your own comment'
+          );
         });
       });
     });
