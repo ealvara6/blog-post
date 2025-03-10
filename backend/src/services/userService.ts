@@ -10,7 +10,13 @@ export const getUsersService = async (
   prisma: PrismaClient
 ): Promise<User[]> => {
   return await prisma.user.findMany({
-    include: { posts: true, comments: true },
+    select: {
+      id: true,
+      username: true,
+      blogAuthor: true,
+      posts: true,
+      comments: true,
+    },
   });
 };
 
@@ -42,5 +48,12 @@ export const findUser = async (
 ): Promise<User> => {
   return await prisma.user.findUnique({
     where: { id },
+    select: {
+      id: true,
+      username: true,
+      blogAuthor: true,
+      posts: true,
+      comments: true,
+    },
   });
 };

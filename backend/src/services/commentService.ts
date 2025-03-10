@@ -11,8 +11,13 @@ export const getCommentsService = async (
 ): Promise<Comment[]> => {
   return await prisma.comment.findMany({
     where: { postId: id },
-    user: {
-      select: { username: true },
+    select: {
+      content: true,
+      user: {
+        select: {
+          username: true,
+        },
+      },
     },
   });
 };

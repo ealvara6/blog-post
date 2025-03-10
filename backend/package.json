@@ -7,7 +7,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "start": "nodemon src/config/server.ts",
-    "dev": "ts-node src/config/server.ts",
+    "dev": "ts-node src/config/server.ts --watch",
     "format": "prettier --write ."
   },
   "keywords": [],
@@ -48,5 +48,8 @@
     "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
