@@ -1,5 +1,22 @@
 @import 'tailwindcss';
 
-body {
-  background-color: darkgrey;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary-light: #0056b3;
+  --color-primary-dark: #3d8bff;
+
+  --color-secondary-light: #f57c00;
+  --color-secondary-dark: #ffa726;
+
+  --color-background-light: #f9fafc;
+  --color-background-dark: #121212;
+
+  --color-text-light: #333333;
+  --color-text-dark: #e0e0e0;
+
+  --color-border-light: #e0e4e8;
+  --color-border-dark: #303030;
+
+  --color-accent: #50e3c2;
 }

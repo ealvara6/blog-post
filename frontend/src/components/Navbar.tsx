@@ -1,5 +1,9 @@
 const Navbar = () => {
-  return <nav>This is the navbar.</nav>
+  return (
+    <nav className="border-border-dark border border-solid">
+      This is the navbar.
+    </nav>
+  )
 }
 
 export default Navbar
