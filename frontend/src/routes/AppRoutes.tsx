@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import Home from '../pages/Home'
+import { ThemeProvider } from '../context/ThemeProvider/ThemeProvider'
 
 const AppRoutes = () => {
   return (
-    <div className="dark bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+    <ThemeProvider>
       <Router>
         <Routes>
           <Route element={<MainLayout />}>
@@ -12,7 +13,7 @@ const AppRoutes = () => {
           </Route>
         </Routes>
       </Router>
-    </div>
+    </ThemeProvider>
   )
 }
 
