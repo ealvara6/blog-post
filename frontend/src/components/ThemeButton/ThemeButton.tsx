@@ -1,7 +1,7 @@
-import { useTheme } from '../context/ThemeProvider/useTheme'
+import { useTheme } from '../../context/ThemeProvider/useTheme'
 
 const ThemeButton = () => {
-  const { dispatch } = useTheme()
+  const { theme, dispatch } = useTheme()
 
   const onClick = () => {
     dispatch({ type: 'toggle' })
@@ -12,7 +12,7 @@ const ThemeButton = () => {
       onClick={() => onClick()}
       className="bg-primary-light text-text-dark dark:bg-primary-dark cursor-pointer rounded-md p-1"
     >
-      Change Theme
+      {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
     </button>
   )
 }

@@ -1,4 +1,4 @@
-import ThemeButton from './ThemeButton'
+import ThemeButton from './ThemeButton/ThemeButton'
 
 const Navbar = () => {
   return (
