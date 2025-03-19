@@ -75,12 +75,12 @@ export const verifyLogin = async (req: Request, res: Response) => {
       return;
     }
 
-    const payload = { id: user.id, email: user.email };
-    const token = sign(payload, process.env.JWT_SECRET || 'jwt_secrect', {
+    const payload = { id: user.id, email: user.email, username: user.username };
+    const token = sign(payload, process.env.JWT_SECRET || 'jwt_secret', {
       expiresIn: '1h',
     });
 
-    res.status(200).json({ token, user });
+    res.status(200).json({ token });
   } catch (err) {
     handleError(err, res, {
       errorMessage: ' failed to verify login',

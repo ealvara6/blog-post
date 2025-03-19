@@ -5,6 +5,12 @@ import { getPostService } from '../services/postService';
 import { getCommentService } from '../services/commentService';
 require('dotenv').config();
 
+interface UserType {
+  id: number;
+  username: string;
+  email: string;
+}
+
 export const authenticateToken = (
   req: Request,
   res: Response,
@@ -21,7 +27,7 @@ export const authenticateToken = (
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
 
-    req.user = decoded as { id: string };
+    req.user = decoded as UserType;
     next();
   } catch (err) {
     handleError(err, res, {

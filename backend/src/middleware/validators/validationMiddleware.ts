@@ -9,7 +9,9 @@ import { validateEmptyBody } from './emptyBody.validator';
 import { validateCommentId, validateId } from './invalidId.validator';
 import { validateComment } from './validateComment.validator';
 import { validatePost } from './validatePost.validator';
-import { validateUpdateFields } from './validateUser.validator';
+import { validateUpdateFields, validateUser } from './validateUser.validator';
+
+export const validateUserProfile = [authenticateToken, checkValidationResults];
 
 export const validatePostCreation = [
   authenticateToken,

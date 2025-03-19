@@ -4,6 +4,35 @@ import {
   getUsersService,
   updateUserService,
 } from '../services/userService';
+import { handleError } from '../utils/errorhandler';
+
+export const getAuthUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+
+    if (!req.user) {
+      res.status(401).json({ error: 'User not authenticated ' });
+      return;
+    }
+
+    const id = req.user?.id;
+
+    const user = await findUser(prisma, id);
+
+    if (!user) {
+      res.status(404).json({ error: 'User not found' });
+      return;
+    }
+    res.status(200).json({ user });
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to get user profile',
+    });
+  }
+};
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {

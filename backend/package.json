@@ -7,7 +7,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "start": "nodemon src/config/server.ts",
-    "dev": "ts-node src/config/server.ts --watch",
+    "dev": "nodemon src/config/server.ts",
     "format": "prettier --write ."
   },
   "keywords": [],

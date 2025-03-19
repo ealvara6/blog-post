@@ -55,6 +55,61 @@ describe('Auth Routes', () => {
     authToken = loginRes.body.token;
   });
 
+  describe('GET api calls', () => {
+    describe('GET api/auth/me', () => {
+      describe('Successful scenarios', () => {
+        it('should return status 200 and retrive user information', async () => {
+          prismaMock.user.findUnique.mockResolvedValue(testUser);
+
+          const res = await request(app)
+            .get('/api/auth/me')
+            .set('Authorization', `Bearer ${authToken}`);
+
+          expect(res.statusCode).toBe(200);
+          expect(res.body).toHaveProperty('user');
+        });
+      });
+
+      describe('Failure scenarios', () => {
+        it('should return a status 401 if user is not authenticated', async () => {
+          const res = await request(app).get('/api/auth/me');
+
+          expect(res.statusCode).toBe(401);
+          expect(res.body).toHaveProperty('error');
+        });
+
+        it('should return a status 404 when no user is found', async () => {
+          prismaMock.user.findUnique.mockResolvedValue(null);
+
+          const res = await request(app)
+            .get('/api/auth/me')
+            .set('Authorization', `Bearer ${authToken}`);
+
+          expect(res.statusCode).toBe(404);
+          expect(res.body).toHaveProperty('error');
+          expect(res.body.error).toBe('User not found');
+        });
+
+        it('should handle database errors gracefully', async () => {
+          prismaMock.user.findUnique.mockRejectedValue(
+            new Error('Database error')
+          );
+
+          const res = await request(app)
+            .get('/api/auth/me')
+            .set('Authorization', `Bearer ${authToken}`);
+
+          expect(res.statusCode).toBe(500);
+          expect(res.body).toHaveProperty('error');
+          expect(res.body).toEqual({
+            error: 'Failed to get user profile',
+            details: 'Database error',
+          });
+        });
+      });
+    });
+  });
+
   describe('POST api calls', () => {
     describe('POST api/auth/register', () => {
       describe('Sucessful scenarios', () => {
@@ -171,7 +226,6 @@ describe('Auth Routes', () => {
 
         expect(res.statusCode).toBe(200);
         expect(res.body).toHaveProperty('token');
-        expect(res.body).toHaveProperty('user');
       });
 
       it('should reject invalid credentials', async () => {
