@@ -3,6 +3,7 @@ import { AuthContext } from './AuthContext'
 import { User } from './AuthContext'
 import api from '../../api/axios'
 import { jwtDecode } from 'jwt-decode'
+import { SignUpInterface } from '../../components/Signup'
 
 const LOCAL_STORAGE_KEY = 'user'
 
@@ -43,10 +44,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [])
 
+  const signup = async ({
+    username,
+    email,
+    password,
+    confirmPassword,
+  }: SignUpInterface) => {
+    const response = await api.post('/register', {
+      username,
+      email,
+      password,
+      confirmPassword,
+    })
+    if (!response.data.error) {
+      console.log(response.data)
+      login(email, password)
+    }
+  }
+
   if (loading) return null
 
   return (
-    <AuthContext.Provider value={{ authUser, login, logout }}>
+    <AuthContext.Provider value={{ authUser, login, logout, signup }}>
       {children}
     </AuthContext.Provider>
   )

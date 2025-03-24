@@ -1,4 +1,5 @@
 import { createContext } from 'react'
+import { SignUpInterface } from '../../components/Signup'
 
 export type User = {
   id: number
@@ -13,6 +14,7 @@ interface AuthContextType {
   authUser: User | null
   login: (email: string, password: string) => Promise<void>
   logout: () => void
+  signup: (formData: SignUpInterface) => Promise<void>
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null)

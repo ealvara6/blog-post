@@ -5,6 +5,7 @@ import { ThemeProvider } from '../context/ThemeProvider/ThemeProvider'
 import { AuthProvider } from '../context/AuthProvider/AuthProvider'
 import Profile from '../components/Profile/Profile'
 import Login from '../components/Login'
+import Signup from '../components/Signup'
 
 const AppRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AppRoutes = () => {
               <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
             </Route>
           </Routes>
         </Router>

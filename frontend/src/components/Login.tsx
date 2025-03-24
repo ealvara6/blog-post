@@ -24,30 +24,38 @@ const Login = () => {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="border-border-light bg-background-dark flex size-fit w-2xl flex-col gap-2 border p-4"
-    >
-      <input
-        type="text"
-        className="bg-background-light text-text-light"
-        name="email"
-        id="email"
-        placeholder="email"
-        onChange={(e) => onEmailChange(e.target.value)}
-      />
-      <input
-        type="password"
-        className="bg-background-light text-text-light"
-        name="password"
-        id="password"
-        placeholder="password"
-        onChange={(e) => onPasswordChange(e.target.value)}
-      />
-      <button className="bg-primary-dark" type="submit">
-        Submit
-      </button>
-    </form>
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        className="border-border-light bg-background-dark text-text-dark flex size-fit w-2xl flex-col gap-2 border p-4"
+      >
+        <input
+          type="text"
+          className="bg-background-light text-text-light"
+          name="email"
+          id="email"
+          placeholder="email"
+          onChange={(e) => onEmailChange(e.target.value)}
+        />
+        <input
+          type="password"
+          className="bg-background-light text-text-light"
+          name="password"
+          id="password"
+          placeholder="password"
+          onChange={(e) => onPasswordChange(e.target.value)}
+        />
+        <button className="bg-primary-dark" type="submit">
+          Submit
+        </button>
+        <div className="self-center">
+          Don't have an account?{' '}
+          <a className="text-accent" href="/signup">
+            Sign Up
+          </a>
+        </div>
+      </form>
+    </div>
   )
 }
 
