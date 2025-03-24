@@ -15,12 +15,6 @@ export const createAuthRoutes = (prisma: PrismaClient): Router => {
     [...validateUserProfile, checkValidationResults],
     getAuthUser
   );
-
-  router.post(
-    '/register',
-    [...validateUser, checkValidationResults],
-    createUser
-  );
   router.post(
     '/login',
     [...loginValidationRules, checkValidationResults],

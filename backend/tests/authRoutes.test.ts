@@ -118,7 +118,7 @@ describe('Auth Routes', () => {
           prismaMock.user.create.mockResolvedValue(testUser);
 
           const res = await request(app)
-            .post('/api/auth/register')
+            .post('/api/register')
             .set('Authorization', `Bearer ${authToken}`)
             .send({
               ...testUser,
@@ -152,7 +152,7 @@ describe('Auth Routes', () => {
           });
 
           const res = await request(app)
-            .post('/api/auth/register')
+            .post('/api/register')
             .set('Authorization', `Bearer ${authToken}`)
             .send({
               ...testUser,
@@ -175,7 +175,7 @@ describe('Auth Routes', () => {
           });
 
           const res = await request(app)
-            .post('/api/auth/register')
+            .post('/api/register')
             .set('Authorization', `Bearer ${authToken}`)
             .send({
               ...testUser,
@@ -198,7 +198,7 @@ describe('Auth Routes', () => {
           );
 
           const res = await request(app)
-            .post('/api/auth/register')
+            .post('/api/register')
             .set('Authorization', `Bearer ${authToken}`)
             .send({
               ...testUser,
