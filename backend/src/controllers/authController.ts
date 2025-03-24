@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import { compare } from 'bcrypt';
-import { checkIfUserExists } from '../services/userService';
+import { checkIfUserExists, findUserOnEmail } from '../services/userService';
 import { createUserService } from '../services/authService';
 import hashPassword from '../utils/hashPassword';
 import { handleError } from '../utils/errorhandler';
@@ -59,9 +59,7 @@ export const verifyLogin = async (req: Request, res: Response) => {
     const prisma = req.prisma;
     const { email, password }: LoginBody = req.body;
 
-    const user = await prisma.user.findUnique({
-      where: { email },
-    });
+    const user = await findUserOnEmail(prisma, email);
 
     if (!user) {
       res.status(401).json({ error: 'Email is incorrect' });
@@ -79,8 +77,9 @@ export const verifyLogin = async (req: Request, res: Response) => {
     const token = sign(payload, process.env.JWT_SECRET || 'jwt_secret', {
       expiresIn: '1h',
     });
+    console.log(payload);
 
-    res.status(200).json({ token });
+    res.status(200).json({ payload, token });
   } catch (err) {
     handleError(err, res, {
       errorMessage: ' failed to verify login',
