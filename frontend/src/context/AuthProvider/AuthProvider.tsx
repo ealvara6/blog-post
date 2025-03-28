@@ -4,6 +4,7 @@ import { User } from './AuthContext'
 import api from '../../api/axios'
 import { jwtDecode } from 'jwt-decode'
 import { SignUpInterface } from '../../components/Signup'
+import { AxiosError } from 'axios'
 
 const LOCAL_STORAGE_KEY = 'user'
 
@@ -32,15 +33,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [logout])
 
   const login = useCallback(async (email: string, password: string) => {
-    const response = await api.post('/auth/login', { email, password })
-    if (!response.data.error) {
-      console.log(response.data.payload)
+    try {
+      const response = await api.post('/auth/login', { email, password })
       localStorage.setItem('token', response.data.token)
       localStorage.setItem(
         LOCAL_STORAGE_KEY,
         JSON.stringify(response.data.payload),
       )
       setAuthUser(response.data.payload)
+    } catch (err) {
+      const error = err as AxiosError<{ errors: string }>
+      const message =
+        error.response?.data.errors || error.message || 'Login failed'
+
+      throw message
     }
   }, [])
 
@@ -50,15 +56,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     password,
     confirmPassword,
   }: SignUpInterface) => {
-    const response = await api.post('/register', {
-      username,
-      email,
-      password,
-      confirmPassword,
-    })
-    if (!response.data.error) {
-      console.log(response.data)
-      login(email, password)
+    try {
+      await api.post('/register', {
+        username,
+        email,
+        password,
+        confirmPassword,
+      })
+      await login(email, password)
+    } catch (err) {
+      const error = err as AxiosError<{ errors: string }>
+      const message =
+        error.response?.data.errors || error.message || 'Signup failed'
+      throw message
     }
   }
 
