@@ -3,9 +3,8 @@ import MainLayout from '../layouts/MainLayout'
 import Home from '../pages/Home'
 import { ThemeProvider } from '../context/ThemeProvider/ThemeProvider'
 import { AuthProvider } from '../context/AuthProvider/AuthProvider'
-import Profile from '../components/Profile/Profile'
-import Login from '../components/Login/Login'
-import Signup from '../components/Signup'
+import Login from '../components/Auth/Login/Login'
+import Signup from '../components/Auth/Signup'
 
 const AppRoutes = () => {
   return (
@@ -15,7 +14,6 @@ const AppRoutes = () => {
           <Routes>
             <Route element={<MainLayout />}>
               <Route path="/" element={<Home />} />
-              <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
             </Route>

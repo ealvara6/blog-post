@@ -1,8 +1,8 @@
-import { loginMock } from '../../__mocks__/useAuth'
+import { loginMock } from '../../../__mocks__/useAuth'
 import { screen } from '@testing-library/react'
 import Login from './Login'
 import { it, expect, describe, vi } from 'vitest'
-import { customRender } from '../../utils/test-utils'
+import { customRender } from '../../../utils/test-utils'
 import userEvent from '@testing-library/user-event'
 
 describe('Login', () => {

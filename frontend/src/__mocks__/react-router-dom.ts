@@ -1,9 +1,11 @@
-import * as ReactRouterDom from 'react-router-dom'
 import { vi } from 'vitest'
 
-export const mockNavigate = vi.fn()
+export const mockedNavigate = vi.fn()
 
-export default {
-  ...ReactRouterDom,
-  useNavigate: () => mockNavigate,
-}
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: () => mockedNavigate,
+  }
+})

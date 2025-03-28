@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { useAuth } from '../../context/AuthProvider/useAuth'
+import { useAuth } from '../../../context/AuthProvider/useAuth'
 import { useNavigate } from 'react-router-dom'
-import { FormErrors } from '../../types/errors'
+import { FormErrors } from '../../../types/errors'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -29,8 +29,7 @@ const Login = () => {
       if (Array.isArray(err)) {
         setErrors(err as FormErrors[])
       } else {
-        console.error('Unexpected error: ', err)
-        setErrors([{ msg: 'An unexpected error occoured ' }])
+        setErrors([{ msg: 'An unexpected error occurred' }])
       }
     } finally {
       setLoading(false)

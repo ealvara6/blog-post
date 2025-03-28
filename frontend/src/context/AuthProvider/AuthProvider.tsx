@@ -3,7 +3,7 @@ import { AuthContext } from './AuthContext'
 import { User } from './AuthContext'
 import api from '../../api/axios'
 import { jwtDecode } from 'jwt-decode'
-import { SignUpInterface } from '../../components/Signup'
+import { SignUpInterface } from '../../components/Auth/Signup'
 import { AxiosError } from 'axios'
 
 const LOCAL_STORAGE_KEY = 'user'
