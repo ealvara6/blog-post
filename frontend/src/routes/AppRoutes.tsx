@@ -4,7 +4,7 @@ import Home from '../pages/Home'
 import { ThemeProvider } from '../context/ThemeProvider/ThemeProvider'
 import { AuthProvider } from '../context/AuthProvider/AuthProvider'
 import Profile from '../components/Profile/Profile'
-import Login from '../components/Login'
+import Login from '../components/Login/Login'
 import Signup from '../components/Signup'
 
 const AppRoutes = () => {

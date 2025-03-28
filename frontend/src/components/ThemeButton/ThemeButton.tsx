@@ -10,7 +10,7 @@ const ThemeButton = () => {
   return (
     <button
       onClick={() => onClick()}
-      className="bg-primary-light text-text-dark dark:bg-primary-dark cursor-pointer rounded-md p-1"
+      className="bg-primary-light text-text-dark dark:bg-primary-dark p1 cursor-pointer rounded-md p-2"
     >
       {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
     </button>

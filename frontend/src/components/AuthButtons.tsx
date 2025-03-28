@@ -6,7 +6,7 @@ export const Login = () => {
   return (
     <button
       onClick={() => navigate('/login')}
-      className="bg-primary-light dark:bg-primary-dark text-text-dark w-auto cursor-pointer rounded-md p-2 px-5"
+      className="bg-primary-light dark:bg-primary-dark text-text-dark cursor-pointer rounded-md px-5 py-2"
     >
       Login
     </button>
@@ -25,7 +25,7 @@ export const Logout = () => {
   return (
     <button
       onClick={() => handleLogout()}
-      className="bg-primary-light dark:bg-primary-dark text-text-dark w-auto cursor-pointer rounded-md p-2 px-5"
+      className="bg-primary-light dark:bg-primary-dark text-text-dark cursor-pointer rounded-md px-5 py-2"
     >
       Logout
     </button>
