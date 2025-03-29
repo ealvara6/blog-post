@@ -1,3 +1,3 @@
-import '@testing-library/jest-dom/vitest'
+import '@testing-library/react'
 
 console.log('Vitest setup file loaded!')

@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { useAuth } from '../../../context/AuthProvider/useAuth'
+import { useAuth } from '@/context/AuthProvider/useAuth'
+import { FormErrors } from '@/types/errors'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FormErrors } from '../../../types/errors'
 
 const Login = () => {
   const [email, setEmail] = useState('')

@@ -1,10 +1,12 @@
-import { loginMock } from '../../../__mocks__/useAuth'
-import { mockedNavigate } from '../../../__mocks__/react-router-dom'
-import Login from './Login'
-import { screen, waitFor } from '@testing-library/react'
-import { customRender } from '../../../utils/test-utils'
+import { mockFormData } from '@/__mocks__/mockFormData'
+import { mockedNavigate } from '@/__mocks__/react-router-dom'
+import { loginMock } from '@/__mocks__/useAuth'
+import { customRender } from '@/utils/test-utils'
+import { waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { vi, describe, expect, it } from 'vitest'
+import { vi } from 'vitest'
+import { Login } from '../AuthButtons'
+import { screen } from '@testing-library/react'
 
 describe('Login form integration', () => {
   let user: ReturnType<typeof userEvent.setup>
@@ -22,8 +24,8 @@ describe('Login form integration', () => {
   })
 
   it('successfully logs in user with valid credentials', async () => {
-    await user.type(emailInput, 'mock@gmail.com')
-    await user.type(passwordInput, 'mock_password')
+    await user.type(emailInput, mockFormData.email)
+    await user.type(passwordInput, mockFormData.password)
     await user.click(submitButton)
 
     expect(loginMock).toHaveBeenCalledWith('mock@gmail.com', 'mock_password')
@@ -56,8 +58,8 @@ describe('Login form integration', () => {
 
   it('should handle unexpected errors gracefully', async () => {
     loginMock.mockRejectedValueOnce(new Error('Unexpected error'))
-    await user.type(emailInput, 'mock@gmail.com')
-    await user.type(passwordInput, 'mock_password')
+    await user.type(emailInput, mockFormData.email)
+    await user.type(passwordInput, mockFormData.password)
     await user.click(submitButton)
 
     expect(

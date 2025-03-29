@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import ThemeButton from './ThemeButton'
-import * as useThemeModule from '../../context/ThemeProvider/useTheme'
+import * as useThemeModule from '@/context/ThemeProvider/useTheme'
 import { vi, it, expect, describe, MockedFunction } from 'vitest'
 
 vi.mock('../../context/ThemeProvider/useTheme.ts', () => ({

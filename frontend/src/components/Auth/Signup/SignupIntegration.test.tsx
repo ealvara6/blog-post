@@ -1,10 +1,11 @@
+import { mockFormData } from '@/__mocks__/mockFormData'
 import { signupMock } from '@/__mocks__/useAuth'
-import { screen, waitFor } from '@testing-library/react'
+import { customRender } from '@/utils/test-utils'
+import { waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { vi, it, describe, expect } from 'vitest'
-import { customRender } from '../../../utils/test-utils'
+import { vi } from 'vitest'
 import Signup from './Signup'
-import { mockFormData } from '../../../__mocks__/mockFormData'
+import { screen } from '@testing-library/react'
 
 describe('Sign up form integration', () => {
   let user: ReturnType<typeof userEvent.setup>

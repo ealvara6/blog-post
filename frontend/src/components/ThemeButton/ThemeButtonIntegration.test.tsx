@@ -1,6 +1,6 @@
 import { screen, render, fireEvent } from '@testing-library/react'
 import { vi } from 'vitest'
-import { ThemeProvider } from '../../context/ThemeProvider/ThemeProvider'
+import { ThemeProvider } from '@/context/ThemeProvider/ThemeProvider'
 import ThemeButton from './ThemeButton'
 import '@testing-library/jest-dom'
 

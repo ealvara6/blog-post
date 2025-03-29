@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { AuthContext } from './AuthContext'
-import { User } from './AuthContext'
-import api from '../../api/axios'
-import { jwtDecode } from 'jwt-decode'
-import { SignUpInterface } from '../../components/Auth/Signup'
+import api from '@/api/axios'
+import { SignUpInterface } from '@/components/Auth/Signup/Signup'
 import { AxiosError } from 'axios'
+import { jwtDecode } from 'jwt-decode'
+import { useState, useCallback, useEffect } from 'react'
+import { User, AuthContext } from './AuthContext'
 
 const LOCAL_STORAGE_KEY = 'user'
 

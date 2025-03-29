@@ -1,4 +1,4 @@
-import { useTheme } from '../../context/ThemeProvider/useTheme'
+import { useTheme } from '@/context/ThemeProvider/useTheme'
 
 const ThemeButton = () => {
   const { theme, dispatch } = useTheme()

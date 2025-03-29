@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import MainLayout from '../layouts/MainLayout'
-import Home from '../pages/Home'
-import { ThemeProvider } from '../context/ThemeProvider/ThemeProvider'
-import { AuthProvider } from '../context/AuthProvider/AuthProvider'
-import Login from '../components/Auth/Login/Login'
-import Signup from '../components/Auth/Signup'
+import MainLayout from '@/layouts/MainLayout'
+import Home from '@/pages/Home'
+import { ThemeProvider } from '@/context/ThemeProvider/ThemeProvider'
+import { AuthProvider } from '@/context/AuthProvider/AuthProvider'
+import Login from '@/components/Auth/Login/Login'
+import Signup from '@/components/Auth/Signup/Signup'
 
 const AppRoutes = () => {
   return (

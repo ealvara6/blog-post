@@ -1,9 +1,9 @@
-import { describe, it, expect, vi } from 'vitest'
-import { screen } from '@testing-library/react'
-import { customRender } from '../../../utils/test-utils'
-import Signup from './Signup'
+import { mockFormData } from '@/__mocks__/mockFormData'
+import { customRender } from '@/utils/test-utils'
 import userEvent from '@testing-library/user-event'
-import { mockFormData } from '../../../__mocks__/mockFormData'
+import { vi } from 'vitest'
+import Signup from './Signup'
+import { screen } from '@testing-library/react'
 
 describe('sign up', () => {
   let usernameInput: HTMLInputElement

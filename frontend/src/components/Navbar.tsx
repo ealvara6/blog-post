@@ -1,6 +1,6 @@
-import { useAuth } from '../context/AuthProvider/useAuth'
+import { useAuth } from '@/context/AuthProvider/useAuth'
+import { Logout, Login } from './Auth/AuthButtons'
 import ThemeButton from './ThemeButton/ThemeButton'
-import { Login, Logout } from './Auth/AuthButtons'
 
 const Navbar = () => {
   const { authUser } = useAuth()

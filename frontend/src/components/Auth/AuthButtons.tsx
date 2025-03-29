@@ -1,5 +1,5 @@
+import { useAuth } from '@/context/AuthProvider/useAuth'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthProvider/useAuth'
 
 export const Login = () => {
   const navigate = useNavigate()
