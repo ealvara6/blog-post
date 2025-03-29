@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthProvider/useAuth'
-import { FormErrors } from '../../types/errors'
+import { FormErrors } from '@/types/errors'
+import { useAuth } from '@/context/AuthProvider/useAuth'
 
 export interface SignUpInterface {
   username: string
@@ -32,12 +32,12 @@ const Signup = () => {
     setLoading(true)
     try {
       await signup(formData)
+
       navigate('/')
     } catch (err: unknown) {
       if (Array.isArray(err)) {
         setErrors(err as FormErrors[])
       } else {
-        console.log('An unexpected error occurred: ', err)
         setErrors([{ msg: 'An unexpected error occurred' }])
       }
     } finally {
@@ -46,7 +46,7 @@ const Signup = () => {
   }
   return (
     <form
-      className="border-border-light bg-background-dark text-text-dark flex size-fit w-full w-md flex-col gap-2 border p-4"
+      className="border-border-light bg-background-dark text-text-dark flex size-fit w-md flex-col gap-2 border p-4"
       onSubmit={handleSubmit}
     >
       <input
