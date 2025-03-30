@@ -5,7 +5,7 @@ import { customRender } from '@/utils/test-utils'
 import { waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
-import { Login } from '../AuthButtons'
+import Login from '@/components/Auth/Login/Login'
 import { screen } from '@testing-library/react'
 
 describe('Login form integration', () => {
@@ -18,9 +18,9 @@ describe('Login form integration', () => {
     vi.clearAllMocks()
     customRender(<Login />)
     user = userEvent.setup()
-    emailInput = screen.getByPlaceholderText('email')
-    passwordInput = screen.getByPlaceholderText('password')
-    submitButton = screen.getByRole('button')
+    emailInput = screen.getByPlaceholderText(/email/i)
+    passwordInput = screen.getByPlaceholderText(/password/i)
+    submitButton = screen.getByRole('button', { name: /login/i })
   })
 
   it('successfully logs in user with valid credentials', async () => {
@@ -46,11 +46,13 @@ describe('Login form integration', () => {
   })
 
   it('submit button to be disables and re-enabled after submit request has finished', async () => {
+    await user.type(emailInput, mockFormData.email)
+    await user.type(passwordInput, mockFormData.password)
     await user.click(submitButton)
 
     expect(submitButton).toBeDisabled()
     expect(screen.getByText(/logging in.../i)).toBeInTheDocument()
-    waitFor(() => {
+    await waitFor(() => {
       expect(submitButton).not.toBeDisabled()
       expect(screen.getByText(/login/i)).toBeInTheDocument()
     })
@@ -65,5 +67,12 @@ describe('Login form integration', () => {
     expect(
       await screen.findByText(/An unexpected error occurred/i),
     ).toBeInTheDocument()
+  })
+
+  it('shows validation errors when fields are empty', async () => {
+    await user.click(submitButton)
+
+    expect(await screen.findByText(/email is required/i)).toBeInTheDocument()
+    expect(await screen.findByText(/password is required/i)).toBeInTheDocument()
   })
 })

@@ -2,7 +2,7 @@ import { mockFormData } from '@/__mocks__/mockFormData'
 import { customRender } from '@/utils/test-utils'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
-import { Login } from '../AuthButtons'
+import Login from './Login'
 import { screen } from '@testing-library/react'
 
 describe('Login', () => {
@@ -14,8 +14,8 @@ describe('Login', () => {
     vi.clearAllMocks()
     customRender(<Login />)
     user = userEvent.setup()
-    emailInput = screen.getByPlaceholderText('email')
-    passwordInput = screen.getByPlaceholderText('password')
+    emailInput = screen.getByPlaceholderText(/email/i)
+    passwordInput = screen.getByPlaceholderText(/password/i)
   })
 
   it('renders the login form component', () => {

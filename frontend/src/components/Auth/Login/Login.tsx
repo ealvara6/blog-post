@@ -2,69 +2,79 @@ import { useAuth } from '@/context/AuthProvider/useAuth'
 import { FormErrors } from '@/types/errors'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import loginSchema from '@/validations/authValidations'
+
+type FormData = z.infer<typeof loginSchema>
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [errors, setErrors] = useState<FormErrors[]>([])
+  const [serverErrors, setServerErrors] = useState<FormErrors[]>([])
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({ resolver: zodResolver(loginSchema) })
+
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const onEmailChange = (value: string) => {
-    setEmail(value)
-  }
-
-  const onPasswordChange = (value: string) => {
-    setPassword(value)
-  }
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
-    setLoading(true)
+  const onSubmit = async (data: FormData) => {
     try {
-      await login(email, password)
+      await login(data.email, data.password)
       navigate('/')
     } catch (err: unknown) {
       if (Array.isArray(err)) {
-        setErrors(err as FormErrors[])
+        setServerErrors(err as FormErrors[])
       } else {
-        setErrors([{ msg: 'An unexpected error occurred' }])
+        setServerErrors([{ msg: 'An unexpected error occurred' }])
       }
-    } finally {
-      setLoading(false)
     }
   }
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className="border-border-light bg-background-dark text-text-dark flex size-fit w-full flex-col gap-2 border p-4 sm:w-lg"
     >
-      <label htmlFor="email">Email:</label>
-      <input
-        type="text"
-        className="bg-background-light text-text-light"
-        name="email"
-        id="email"
-        placeholder="email"
-        onChange={(e) => onEmailChange(e.target.value)}
-      />
-      <label htmlFor="password">Password:</label>
-      <input
-        type="password"
-        className="bg-background-light text-text-light"
-        name="password"
-        id="password"
-        placeholder="password"
-        onChange={(e) => onPasswordChange(e.target.value)}
-      />
-      <button className="bg-primary-dark" type="submit" disabled={loading}>
-        {loading ? 'Logging in...' : 'Login'}
+      <div className="flex flex-col gap-1">
+        <label htmlFor="email">Email:</label>
+        <input
+          {...register('email')}
+          type="text"
+          className={`bg-background-light text-text-light rounded border-2 p-1 ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+          name="email"
+          id="email"
+          placeholder="Email"
+        />
+        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+      </div>
+      <div className="flex flex-col gap-1">
+        <label htmlFor="password">Password:</label>
+        <input
+          {...register('password')}
+          type="password"
+          className={`bg-background-light text-text-light rounded border-2 p-1 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+          name="password"
+          id="password"
+          placeholder="Password"
+        />
+        {errors.password && (
+          <p className="text-red-500">{errors.password.message}</p>
+        )}
+      </div>
+      <button
+        className="bg-primary-dark cursor-pointer rounded p-1 text-lg font-semibold"
+        type="submit"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Logging in...' : 'Login'}
       </button>
-      {errors.length !== 0 && (
+      {serverErrors.length !== 0 && (
         <div>
-          {errors.map((error, key) => (
+          {serverErrors.map((error, key) => (
             <div className="text-red-500" key={key}>
               {error.msg}
             </div>
