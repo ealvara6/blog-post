@@ -1,92 +1,84 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FormErrors } from '@/types/errors'
 import { useAuth } from '@/context/AuthProvider/useAuth'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { signupSchema } from '@/validations/authValidations'
+
+type FormData = z.infer<typeof signupSchema>
+type FieldName = keyof FormData
 
 export interface SignUpInterface {
   username: string
   email: string
   password: string
-  confirmPassword: string
 }
+
+const fields = [
+  { name: 'username', label: 'Username', type: 'text' },
+  { name: 'email', label: 'Email', type: 'text' },
+  { name: 'password', label: 'Password', type: 'password' },
+  { name: 'confirmPassword', label: 'ConfirmPassword', type: 'password' },
+] satisfies { name: FieldName; label: string; type: string }[]
 
 const Signup = () => {
   const { signup } = useAuth()
-  const [formData, setFormData] = useState<SignUpInterface>({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  })
-  const [errors, setErrors] = useState<FormErrors[]>([])
-  const [loading, setLoading] = useState(false)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({ resolver: zodResolver(signupSchema) })
+
+  const [serverErrors, setServerErrors] = useState<FormErrors[]>([])
   const navigate = useNavigate()
 
-  const onChange = (data: { name: string; value: string }) => {
-    const { name, value } = data
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
-    setLoading(true)
+  const onSubmit = async (data: FormData) => {
     try {
-      await signup(formData)
-
+      await signup(data)
       navigate('/')
     } catch (err: unknown) {
       if (Array.isArray(err)) {
-        setErrors(err as FormErrors[])
+        setServerErrors(err as FormErrors[])
       } else {
-        setErrors([{ msg: 'An unexpected error occurred' }])
+        setServerErrors([{ msg: 'An unexpected error occurred' }])
       }
-    } finally {
-      setLoading(false)
     }
   }
   return (
     <form
       className="border-border-light bg-background-dark text-text-dark flex size-fit w-md flex-col gap-2 border p-4"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
     >
-      <input
-        className="bg-background-light text-text-light"
-        type="text"
-        name="username"
-        id="username"
-        placeholder="username"
-        onChange={(e) => onChange(e.target)}
-      />
-      <input
-        className="bg-background-light text-text-light"
-        type="text"
-        name="email"
-        id="email"
-        placeholder="email"
-        onChange={(e) => onChange(e.target)}
-      />
-      <input
-        className="bg-background-light text-text-light"
-        type="password"
-        name="password"
-        id="password"
-        placeholder="password"
-        onChange={(e) => onChange(e.target)}
-      />
-      <input
-        className="bg-background-light text-text-light"
-        type="password"
-        name="confirmPassword"
-        id="confirmPassword"
-        placeholder="Confirm Password"
-        onChange={(e) => onChange(e.target)}
-      />
-      <button type="submit" className="bg-primary-dark" disabled={loading}>
-        {loading ? 'Signing up...' : 'Sign up'}
+      {fields.map(({ name, label, type }) => {
+        return (
+          <div className="flex flex-col gap-1">
+            <label htmlFor={label}>{label}: </label>
+            <input
+              {...register(name)}
+              className={`bg-background-light text-text-light rounded border-2 p-1 ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
+              type={type}
+              name={name}
+              id={name}
+              placeholder={name}
+            />
+            {errors[name] && (
+              <p className="text-red-500">{errors[name]?.message}</p>
+            )}
+          </div>
+        )
+      })}
+      <button
+        type="submit"
+        className={`mt-2 rounded p-1 text-lg font-semibold ${isSubmitting ? 'bg-gray-600' : 'bg-primary-dark'}`}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Signing up...' : 'Sign up'}
       </button>
-      {errors.length !== 0 && (
+      {serverErrors.length !== 0 && (
         <div className="text-red-500">
-          {errors.map((error, key) => (
+          {serverErrors.map((error, key) => (
             <div key={key}>{error.msg}</div>
           ))}
         </div>

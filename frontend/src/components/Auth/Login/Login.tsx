@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import loginSchema from '@/validations/authValidations'
+import { loginSchema } from '@/validations/authValidations'
 
 type FormData = z.infer<typeof loginSchema>
 
