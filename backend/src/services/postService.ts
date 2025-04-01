@@ -24,9 +24,26 @@ export const getPostsService = async (
   prisma: PrismaClient
 ): Promise<Post[]> => {
   return await prisma.post.findMany({
-    include: {
-      user: true,
-      comments: true,
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      published: true,
+      userId: true,
+      user: {
+        select: {
+          id: true,
+          username: true,
+        },
+      },
+      createdAt: true,
+      comments: {
+        select: {
+          content: true,
+          id: true,
+          userId: true,
+        },
+      },
     },
   });
 };
