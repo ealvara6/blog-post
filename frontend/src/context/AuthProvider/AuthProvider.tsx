@@ -4,6 +4,7 @@ import { AxiosError } from 'axios'
 import { jwtDecode } from 'jwt-decode'
 import { useState, useCallback, useEffect } from 'react'
 import { User, AuthContext } from './AuthContext'
+import handleErrors from '@/utils/handleErrors'
 
 const LOCAL_STORAGE_KEY = 'user'
 
@@ -42,10 +43,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setAuthUser(response.data.payload)
     } catch (err) {
       const error = err as AxiosError<{ errors: string }>
-      const message =
-        error.response?.data.errors || error.message || 'Login failed'
-
-      throw message
+      handleErrors(error)
     }
   }, [])
 
