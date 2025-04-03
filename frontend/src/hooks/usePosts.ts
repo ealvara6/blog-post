@@ -1,5 +1,7 @@
 import api from '@/api/axios'
 import { Post } from '@/types/posts'
+import handleErrors from '@/utils/handleErrors'
+import { AxiosError } from 'axios'
 import { useState, useEffect } from 'react'
 
 export const usePosts = () => {
@@ -8,11 +10,15 @@ export const usePosts = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      setLoading(true)
-      const result = await api.get('/posts')
-      console.log(result.data.posts)
-      setPosts(result.data.posts)
-      setLoading(false)
+      try {
+        const result = await api.get('/posts')
+        setPosts(result.data.posts)
+      } catch (err: unknown) {
+        const error = err as AxiosError<{ errors: string }>
+        handleErrors(error)
+      } finally {
+        setLoading(false)
+      }
     }
     fetchPosts()
   }, [])
