@@ -22,7 +22,7 @@ describe('Sign up form integration', () => {
     usernameInput = screen.getByPlaceholderText('username')
     emailInput = screen.getByPlaceholderText('email')
     passwordInput = screen.getByPlaceholderText('password')
-    passwordConfirmInput = screen.getByPlaceholderText('Confirm Password')
+    passwordConfirmInput = screen.getByPlaceholderText('confirmPassword')
     submitButton = screen.getByRole('button', { name: /Sign up/i })
   })
 
@@ -36,17 +36,20 @@ describe('Sign up form integration', () => {
     expect(signupMock).toHaveBeenCalled()
   })
 
-  it('returns an error when user enters invalid inputs', async () => {
+  it('returns an error when user enters mismatching passwords', async () => {
     await user.type(usernameInput, mockFormData.username)
     await user.type(emailInput, mockFormData.email)
     await user.type(passwordInput, mockFormData.password)
     await user.type(passwordConfirmInput, 'incorrect_password')
     await user.click(submitButton)
-    expect(signupMock).toHaveBeenCalled()
-    expect(await screen.findByText(/Invalid input/i))
+    expect(await screen.findByText(/passwords do not match/i))
   })
 
   it('disables and re-enables sign up button while sign up is being proccessed', async () => {
+    await user.type(usernameInput, mockFormData.username)
+    await user.type(emailInput, mockFormData.email)
+    await user.type(passwordInput, mockFormData.password)
+    await user.type(passwordConfirmInput, mockFormData.password)
     await user.click(submitButton)
     expect(submitButton).toBeDisabled()
     expect(screen.getByText(/signing up.../i)).toBeInTheDocument()

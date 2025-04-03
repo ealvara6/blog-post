@@ -14,13 +14,14 @@ export interface SignUpInterface {
   username: string
   email: string
   password: string
+  confirmPassword: string
 }
 
 const fields = [
   { name: 'username', label: 'Username', type: 'text' },
   { name: 'email', label: 'Email', type: 'text' },
   { name: 'password', label: 'Password', type: 'password' },
-  { name: 'confirmPassword', label: 'ConfirmPassword', type: 'password' },
+  { name: 'confirmPassword', label: 'Confirm Password', type: 'password' },
 ] satisfies { name: FieldName; label: string; type: string }[]
 
 const Signup = () => {

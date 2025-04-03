@@ -20,7 +20,7 @@ describe('ThemeButton', () => {
     vi.restoreAllMocks()
   })
 
-  it('renders the button with correct label in light mode', () => {
+  it('renders the button with correct label in light mode', async () => {
     const mockDispatch = vi.fn()
     const mockUseTheme = useThemeModule.useTheme as MockedFunction<
       typeof useThemeModule.useTheme
@@ -33,7 +33,7 @@ describe('ThemeButton', () => {
 
     render(<ThemeButton />)
 
-    const button = screen.getByRole('button')
+    const button = await screen.findByRole('button')
     expect(button).toBeInTheDocument()
     expect(button).toHaveTextContent('Dark Mode')
   })

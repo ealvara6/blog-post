@@ -20,7 +20,7 @@ describe('sign up', () => {
     usernameInput = screen.getByPlaceholderText('username')
     emailInput = screen.getByPlaceholderText('email')
     passwordInput = screen.getByPlaceholderText('password')
-    confirmPasswordInput = screen.getByPlaceholderText('Confirm Password')
+    confirmPasswordInput = screen.getByPlaceholderText('confirmPassword')
     submitButton = screen.getByRole('button', { name: /sign up/i })
   })
 

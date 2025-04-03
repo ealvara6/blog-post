@@ -66,7 +66,7 @@ const Login = () => {
         )}
       </div>
       <button
-        className="bg-primary-dark cursor-pointer rounded p-1 text-lg font-semibold"
+        className={`cursor-pointer rounded p-1 text-lg font-semibold ${isSubmitting ? 'bg-gray-600' : 'bg-primary-dark'}`}
         type="submit"
         disabled={isSubmitting}
       >
