@@ -54,6 +54,7 @@ export const getPostService = async (
 ): Promise<Post> => {
   return await prisma.post.findUnique({
     where: { id: id },
+    include: { comments: true },
   });
 };
 

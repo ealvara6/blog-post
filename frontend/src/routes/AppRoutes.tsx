@@ -8,6 +8,7 @@ import Signup from '@/components/Auth/Signup/Signup'
 import NotFound from '@/pages/NotFound'
 import Profile from '@/pages/Profile'
 import { Posts } from '@/pages/Posts'
+import Post from '@/pages/Post'
 
 const AppRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AppRoutes = () => {
               <Route path="/signup" element={<Signup />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/posts" element={<Posts />} />
+              <Route path="/posts/:id" element={<Post />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
