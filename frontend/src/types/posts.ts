@@ -6,16 +6,17 @@ export interface Post {
   published: boolean
   comments: Comment[]
   user: User
+  userId: number
 }
 
-interface Comment {
+export interface Comment {
   id: number
   content: string
   createdAt: string
   userId: number
 }
 
-interface User {
+export interface User {
   id: number
   username: string
 }

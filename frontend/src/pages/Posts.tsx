@@ -8,7 +8,11 @@ export const Posts = () => {
 
   return (
     <>
-      <GetPosts posts={posts} />
+      {posts.length !== 0 ? (
+        <GetPosts posts={posts} />
+      ) : (
+        <div>No posts found</div>
+      )}
     </>
   )
 }
