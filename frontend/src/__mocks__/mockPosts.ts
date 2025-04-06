@@ -1,13 +1,15 @@
 export const mockPosts = [
   {
     id: 1,
-    published: true,
+    title: 'mock_title',
     content: 'mock_content',
-    createdAt: new Date(),
+    createdAt: new Date().toString(),
+    published: true,
     comments: [
       {
         id: 1,
         content: 'mock_comment_content',
+        createdAt: new Date().toString(),
         userId: 1,
       },
     ],
@@ -18,14 +20,16 @@ export const mockPosts = [
     },
   },
   {
-    id: 1,
-    published: true,
+    id: 2,
+    title: 'mock_title 2',
     content: 'mock_content',
-    createdAt: new Date(),
+    createdAt: new Date().toString(),
+    published: true,
     comments: [
       {
         id: 1,
         content: 'mock_comment_content',
+        createdAt: new Date().toString(),
         userId: 1,
       },
     ],
