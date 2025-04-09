@@ -23,7 +23,7 @@ export const getAuthUser = async (
     const user = await findUser(prisma, id);
 
     if (!user) {
-      res.status(404).json([{ msg: 'User not found' }]);
+      res.status(404).json({error: 'User not found'});
       return;
     }
     res.status(200).json({ user });

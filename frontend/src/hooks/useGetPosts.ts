@@ -4,7 +4,7 @@ import handleErrors from '@/utils/handleErrors'
 import { AxiosError } from 'axios'
 import { useState, useEffect } from 'react'
 
-export const usePosts = () => {
+export const useGetPosts = () => {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
 

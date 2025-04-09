@@ -4,8 +4,8 @@ import api from '@/api/axios'
 import { AxiosError } from 'axios'
 import handleErrors from '@/utils/handleErrors'
 
-export const usePost = (id: string | undefined) => {
-  const [post, setPost] = useState<Post>()
+export const useGetPost = (id: string | undefined) => {
+  const [post, setPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -25,5 +25,3 @@ export const usePost = (id: string | undefined) => {
 
   return { post, loading }
 }
-
-export default usePost

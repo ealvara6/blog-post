@@ -11,7 +11,6 @@ export const useUser = (id: string) => {
     const fetchUser = async () => {
       try {
         const result = await api.get(`users/${id}`)
-        console.log(result.data.user)
         setUser(result.data.user)
       } catch (err: unknown) {
         const error = err as AxiosError<{ errors: string }>

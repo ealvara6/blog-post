@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, vi } from 'vitest'
-import { usePosts } from './usePosts'
+import { useGetPosts } from './useGetPosts'
 import mockPosts from '@/__mocks__/mockPosts'
 import api from '@/api/axios'
 
@@ -19,7 +19,7 @@ describe('blog posts api call', () => {
   it('successfully retrieves blog posts', async () => {
     mockedAxiosGet.mockResolvedValue({ data: { posts: mockPosts } })
 
-    const { result } = renderHook(() => usePosts())
+    const { result } = renderHook(() => useGetPosts())
 
     await waitFor(() => {
       expect(result.current.posts).toEqual(mockPosts)
@@ -29,7 +29,7 @@ describe('blog posts api call', () => {
   it('handles loading state correctly', async () => {
     mockedAxiosGet.mockResolvedValue({ data: { posts: mockPosts } })
 
-    const { result } = renderHook(() => usePosts())
+    const { result } = renderHook(() => useGetPosts())
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false)
@@ -39,7 +39,7 @@ describe('blog posts api call', () => {
   it('handles unexpected errors gracefully', async () => {
     mockedAxiosGet.mockRejectedValue(new Error('unknown error'))
 
-    const { result } = renderHook(() => usePosts())
+    const { result } = renderHook(() => useGetPosts())
 
     await waitFor(() => {
       expect(result.current.posts).toEqual([])

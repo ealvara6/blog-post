@@ -1,8 +1,7 @@
 import useUser from '@/hooks/useUser'
 import { Post, Comment } from '@/types/posts'
 
-const getComments = (comments: Comment[]) => {
-  console.log(comments)
+const getComments = (comments: Comment[] | undefined) => {
   if (!comments) return <div>No comments found</div>
   return comments.map((comment, key) => {
     const { user } = useUser(comment.userId.toString())

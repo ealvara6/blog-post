@@ -1,8 +1,8 @@
 import { GetPosts } from '@/components/GetPosts'
-import { usePosts } from '@/hooks/usePosts'
+import { useGetPosts } from '@/hooks/useGetPosts'
 
 export const Posts = () => {
-  const { posts, loading } = usePosts()
+  const { posts, loading } = useGetPosts()
 
   if (loading) return <p>Loading...</p>
 

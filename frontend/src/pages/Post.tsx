@@ -1,5 +1,5 @@
 import PostItem from '@/components/PostItem'
-import usePost from '@/hooks/usePost'
+import usePost from '@/hooks/useGetPost'
 import { useParams } from 'react-router-dom'
 
 export const Post = () => {

@@ -28,14 +28,7 @@ export const createUser = async (
     const existingUser = await checkIfUserExists(req.body, prisma);
     if (existingUser) {
       const field = existingUser.username === username ? 'username' : 'email';
-      res.status(409).json({
-        errors: [
-          {
-            field: field,
-            msg: `${field} is already associated with an existing account`,
-          },
-        ],
-      });
+      res.status(409).json({error: `${field} is already associated with an existing account`});
       return;
     }
 
@@ -69,7 +62,7 @@ export const verifyLogin = async (req: Request, res: Response) => {
     if (!user) {
       res
         .status(401)
-        .json({ errors: [{ field: 'email', msg: 'Email is incorrect' }] });
+        .json({error: 'Password is incorrect'});
       return;
     }
 
@@ -79,7 +72,7 @@ export const verifyLogin = async (req: Request, res: Response) => {
       res
         .status(401)
         .json({
-          errors: [{ field: 'password', msg: 'Password is incorrect' }],
+         error: 'Password is incorrect'
         });
       return;
     }
@@ -88,7 +81,6 @@ export const verifyLogin = async (req: Request, res: Response) => {
     const token = sign(payload, process.env.JWT_SECRET || 'jwt_secret', {
       expiresIn: '1h',
     });
-    console.log(payload);
 
     res.status(200).json({ payload, token });
   } catch (err) {

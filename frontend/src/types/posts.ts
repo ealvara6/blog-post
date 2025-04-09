@@ -4,7 +4,7 @@ export interface Post {
   content: string
   createdAt: string
   published: boolean
-  comments: Comment[]
+  comments?: Comment[]
   user: User
   userId: number
 }

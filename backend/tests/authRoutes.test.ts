@@ -145,7 +145,7 @@ describe('Auth Routes', () => {
         });
       });
       describe('Failure scenarios', () => {
-        it('should reuturn an error when the given username is already in the database and return a status 409', async () => {
+        it('should return an error when the given username is already in the database and return a status 409', async () => {
           prismaMock.user.findFirst.mockResolvedValue({
             ...testUser,
             username: 'mockUser',
