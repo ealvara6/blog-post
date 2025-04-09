@@ -41,4 +41,17 @@ export const mockPosts = [
   },
 ]
 
+export const postNoComments =   {
+  id: 1,
+  title: 'mock_title',
+  content: 'mock_content',
+  createdAt: new Date().toString(),
+  published: true,
+  userId: 1,
+  user: {
+    id: 1,
+    username: 'mock_username',
+  },
+}
+
 export default mockPosts
