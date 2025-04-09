@@ -9,6 +9,7 @@ import NotFound from '@/pages/NotFound'
 import Profile from '@/pages/Profile'
 import { Posts } from '@/pages/Posts'
 import Post from '@/pages/Post'
+import CreatePost from '@/pages/Createpost'
 
 const AppRoutes = () => {
   return (
@@ -23,6 +24,7 @@ const AppRoutes = () => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/posts" element={<Posts />} />
               <Route path="/posts/:id" element={<Post />} />
+              <Route path='/posts/create' element={<CreatePost />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
