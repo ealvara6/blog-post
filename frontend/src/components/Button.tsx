@@ -1,14 +1,31 @@
 import React from 'react'
+import clsx from 'clsx'
 
 type ButtonProps = {
   children: React.ReactNode
-  isActive: boolean
+  variant?: 'primary' | 'danger'
+  isActive?: boolean
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-export const Button = ({ children, isActive, ...props }: ButtonProps) => {
+const baseStyles = {
+  primary: 'bg-primary-light dark:bg-primary-dark text-white',
+  danger: 'bg-red-600 text-white',
+}
+
+export const Button = ({
+  variant = 'primary',
+  isActive = false,
+  children,
+  className,
+  ...props
+}: ButtonProps) => {
   return (
     <button
-      className={`font-semibold; mt-2 cursor-pointer rounded p-1 text-lg text-white ${isActive ? 'bg-gray-500' : 'bg-primary-light dark:bg-primary-dark'}`}
+      className={clsx(
+        `mt-2 cursor-pointer rounded px-10 py-3 text-lg font-semibold text-white`,
+        isActive ? 'bg-gray-600' : baseStyles[variant],
+        className,
+      )}
       {...props}
     >
       {children}
