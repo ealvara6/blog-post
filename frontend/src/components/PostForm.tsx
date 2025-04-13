@@ -26,7 +26,7 @@ export const PostForm = () => {
 
   useEffect(() => {
     if (!authUser) navigate('/login')
-  })
+  }, [authUser, navigate])
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -54,6 +54,7 @@ export const PostForm = () => {
           className="rounded border"
           type="text"
           id="title"
+          placeholder="Title"
         />
       </div>
       <div>
@@ -67,6 +68,7 @@ export const PostForm = () => {
           spellCheck={true}
           rows={10}
           cols={60}
+          placeholder="Content"
         />
       </div>
       {serverErrors.length !== 0 && (
