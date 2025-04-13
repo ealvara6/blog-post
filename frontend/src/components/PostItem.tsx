@@ -1,8 +1,14 @@
+import { useAuth } from '@/context/AuthProvider/useAuth'
 import useUser from '@/hooks/useUser'
 import { Post, Comment } from '@/types/posts'
+import { Button } from './Button'
+import { useDeletePost } from '@/hooks/useDeletePost'
+import { useNavigate } from 'react-router-dom'
 
 const getComments = (comments: Comment[] | undefined) => {
-  if (!comments) return <div>No comments found</div>
+  if (!comments) return
+  if (comments.length === 0)
+    return <div className="text-center">No comments found</div>
   return comments.map((comment, key) => {
     const { user } = useUser(comment.userId.toString())
     const date = new Date(comment.createdAt)
@@ -20,13 +26,29 @@ const getComments = (comments: Comment[] | undefined) => {
 }
 
 export const PostItem = (post: Post) => {
-  const { title, content, createdAt, comments } = post
+  const { authUser } = useAuth()
+  const deletePost = useDeletePost()
+  const navigate = useNavigate()
+  const { title, content, createdAt, comments, id, user } = post
   const date = new Date(createdAt)
+
+  const handleDelete = async () => {
+    try {
+      console.log('deleting post...')
+      await deletePost(id)
+      console.log('post deleted')
+      navigate('/posts')
+    } catch (err: unknown) {
+      console.log(err)
+    }
+  }
+
   return (
     <div className="flex flex-col gap-8">
-      <div>
-        <div className="border-b-border-dark border p-3 text-2xl font-bold">
-          {title}
+      <div className="flex flex-col">
+        <div className="border-b-border-dark flex border p-3 text-2xl font-bold">
+          <div className="grow">{title}</div>
+          <div>Posted by: {user.username}</div>
         </div>
         <div className="border-b-border-dark border border-t-transparent p-3">
           {content}
@@ -35,6 +57,15 @@ export const PostItem = (post: Post) => {
           <span className="font-semibold">Posted At:</span>{' '}
           {date.toLocaleString()}
         </div>
+        {authUser?.id === post.userId && (
+          <Button
+            variant="danger"
+            className="self-end"
+            onClick={() => handleDelete()}
+          >
+            Delete
+          </Button>
+        )}
       </div>
       <div className="flex flex-col gap-3">
         <div className="text-4xl font-bold">Comments</div>
