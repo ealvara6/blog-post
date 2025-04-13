@@ -1,5 +1,4 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
-import { FormErrors } from '@/types/errors'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -10,7 +9,7 @@ import { loginSchema } from '@/validations/authValidations'
 type FormData = z.infer<typeof loginSchema>
 
 const Login = () => {
-  const [serverErrors, setServerErrors] = useState<FormErrors[]>([])
+  const [serverError, setServerError] = useState({ msg: '' })
 
   const {
     register,
@@ -26,11 +25,13 @@ const Login = () => {
       await login(data.email, data.password)
       navigate('/')
     } catch (err: unknown) {
-      if (Array.isArray(err)) {
-        setServerErrors(err as FormErrors[])
-      } else {
-        setServerErrors([{ msg: 'An unexpected error occurred' }])
-      }
+      const errorMessage =
+        typeof err === 'string'
+          ? err
+          : err instanceof Error
+            ? err.message
+            : 'An unexpected error occurred'
+      setServerError({ msg: errorMessage })
     }
   }
 
@@ -72,15 +73,7 @@ const Login = () => {
       >
         {isSubmitting ? 'Logging in...' : 'Login'}
       </button>
-      {serverErrors.length !== 0 && (
-        <div>
-          {serverErrors.map((error, key) => (
-            <div className="text-red-500" key={key}>
-              {error.msg}
-            </div>
-          ))}
-        </div>
-      )}
+      {serverError && <div className="text-red-500">{serverError.msg}</div>}
       <div className="self-center">
         Don't have an account?{' '}
         <a className="text-accent" href="/signup">

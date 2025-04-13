@@ -28,7 +28,9 @@ export const createUser = async (
     const existingUser = await checkIfUserExists(req.body, prisma);
     if (existingUser) {
       const field = existingUser.username === username ? 'username' : 'email';
-      res.status(409).json({error: `${field} is already associated with an existing account`});
+      res.status(409).json({
+        error: `${field} is already associated with an existing account`,
+      });
       return;
     }
 
@@ -58,22 +60,20 @@ export const verifyLogin = async (req: Request, res: Response) => {
     const { email, password }: LoginBody = req.body;
 
     const user = await findUserOnEmail(prisma, email);
+    console.log(user);
 
     if (!user) {
-      res
-        .status(401)
-        .json({error: 'Password is incorrect'});
+      res.status(401).json({ error: 'Email is incorrect' });
       return;
     }
 
     const isMatch = await compare(password, user.password);
+    console.log(isMatch);
 
     if (!isMatch) {
-      res
-        .status(401)
-        .json({
-         error: 'Password is incorrect'
-        });
+      res.status(401).json({
+        error: 'Password is incorrect',
+      });
       return;
     }
 

@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       )
       setAuthUser(response.data.payload)
     } catch (err) {
-      const error = err as AxiosError<{ errors: string }>
+      const error = err as AxiosError<{ error: string }>
       handleErrors(error)
     }
   }, [])
