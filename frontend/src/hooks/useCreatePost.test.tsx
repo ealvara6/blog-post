@@ -1,4 +1,4 @@
-import mockPosts from '@/__mocks__/mockPosts'
+import { mockPosts } from '@/__mocks__/mockPosts'
 import api from '@/api/axios'
 import { renderHook } from '@testing-library/react'
 import { vi } from 'vitest'

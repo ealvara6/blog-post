@@ -41,10 +41,11 @@ export const mockPosts = [
   },
 ]
 
-export const postNoComments =   {
+export const postNoComments = {
   id: 1,
   title: 'mock_title',
   content: 'mock_content',
+  comments: [],
   createdAt: new Date().toString(),
   published: true,
   userId: 1,
@@ -53,5 +54,3 @@ export const postNoComments =   {
     username: 'mock_username',
   },
 }
-
-export default mockPosts

@@ -1,10 +1,10 @@
 import PostItem from '@/components/PostItem'
-import usePost from '@/hooks/useGetPost'
+import { useGetPost } from '@/hooks/useGetPost'
 import { useParams } from 'react-router-dom'
 
 export const Post = () => {
   const { id } = useParams()
-  const { post, loading } = usePost(id)
+  const { post, loading } = useGetPost(id)
 
   if (loading) return <p>Loading...</p>
 

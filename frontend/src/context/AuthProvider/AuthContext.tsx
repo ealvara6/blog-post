@@ -5,9 +5,6 @@ export type User = {
   id: number
   username: string
   email: string
-  password: string
-  createdAt: Date
-  blogAuth: boolean
 } | null
 
 interface AuthContextType {

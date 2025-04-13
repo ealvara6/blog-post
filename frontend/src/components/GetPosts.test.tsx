@@ -1,7 +1,7 @@
 import { customRender } from '@/utils/test-utils'
 import { vi } from 'vitest'
 import GetPosts from './GetPosts'
-import mockPosts from '@/__mocks__/mockPosts'
+import { mockPosts } from '@/__mocks__/mockPosts'
 import { screen } from '@testing-library/react'
 
 describe('get posts', () => {

@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, vi } from 'vitest'
 import { useGetPosts } from './useGetPosts'
-import mockPosts from '@/__mocks__/mockPosts'
+import { mockPosts } from '@/__mocks__/mockPosts'
 import api from '@/api/axios'
 
 vi.mock('@/api/axios')

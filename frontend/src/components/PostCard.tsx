@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom'
 
 export const PostCard = ({ post }: { post: Post }) => {
   const Navigate = useNavigate()
-  const { title, content, createdAt, id } = post
+  const { title, content, createdAt, id, user } = post
   const date = new Date(createdAt)
+  console.log(user)
   return (
     <div className="flex flex-col" onClick={() => Navigate(`/posts/${id}`)}>
-      <div className="border-b-border-dark border p-3 text-2xl font-bold">
-        {title}
+      <div className="border-b-border-dark flex border p-3 text-2xl font-bold">
+        <div className="grow">{title}</div>
+        <div>Posted by: {user.username}</div>
       </div>
       <div className="border-b-border-dark border border-t-transparent p-3">
         {content}
