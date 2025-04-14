@@ -5,7 +5,6 @@ export const PostCard = ({ post }: { post: Post }) => {
   const Navigate = useNavigate()
   const { title, content, createdAt, id, user } = post
   const date = new Date(createdAt)
-  console.log(user)
   return (
     <div className="flex flex-col" onClick={() => Navigate(`/posts/${id}`)}>
       <div className="border-b-border-dark flex border p-3 text-2xl font-bold">
