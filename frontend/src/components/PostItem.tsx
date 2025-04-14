@@ -1,4 +1,5 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
+import { useState } from 'react'
 import useUser from '@/hooks/useUser'
 import { Post, Comment } from '@/types/posts'
 import { Button } from './Button'
@@ -25,11 +26,18 @@ const getComments = (comments: Comment[] | undefined) => {
   })
 }
 
-export const PostItem = (post: Post) => {
+export const PostItem = ({
+  title,
+  content,
+  createdAt,
+  comments,
+  id,
+  userId,
+  user,
+}: Post) => {
   const { authUser } = useAuth()
   const deletePost = useDeletePost()
   const navigate = useNavigate()
-  const { title, content, createdAt, comments, id, user } = post
   const date = new Date(createdAt)
 
   const handleDelete = async () => {
@@ -41,6 +49,23 @@ export const PostItem = (post: Post) => {
     } catch (err: unknown) {
       console.log(err)
     }
+  }
+
+  const handleEdit = () => {
+    navigate(`/posts/${id}/edit`, { state: { title, content, userId, id } })
+  }
+
+  const AuthButtons = () => {
+    if (authUser?.id !== userId) return null
+
+    return (
+      <div className="flex gap-4 self-end">
+        <Button onClick={() => handleEdit()}>Edit</Button>
+        <Button variant="danger" onClick={() => handleDelete()}>
+          Delete
+        </Button>
+      </div>
+    )
   }
 
   return (
@@ -57,15 +82,7 @@ export const PostItem = (post: Post) => {
           <span className="font-semibold">Posted At:</span>{' '}
           {date.toLocaleString()}
         </div>
-        {authUser?.id === post.userId && (
-          <Button
-            variant="danger"
-            className="self-end"
-            onClick={() => handleDelete()}
-          >
-            Delete
-          </Button>
-        )}
+        <AuthButtons />
       </div>
       <div className="flex flex-col gap-3">
         <div className="text-4xl font-bold">Comments</div>

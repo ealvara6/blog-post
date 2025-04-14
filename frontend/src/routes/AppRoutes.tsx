@@ -10,6 +10,7 @@ import Profile from '@/pages/Profile'
 import { Posts } from '@/pages/Posts'
 import Post from '@/pages/Post'
 import CreatePost from '@/pages/Createpost'
+import { EditPost } from '@/pages/EditPost'
 
 const AppRoutes = () => {
   return (
@@ -24,7 +25,8 @@ const AppRoutes = () => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/posts" element={<Posts />} />
               <Route path="/posts/:id" element={<Post />} />
-              <Route path='/posts/create' element={<CreatePost />} />
+              <Route path="/posts/create" element={<CreatePost />} />
+              <Route path="/posts/:id/edit" element={<EditPost />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
