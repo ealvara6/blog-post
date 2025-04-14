@@ -1,7 +1,6 @@
 import api from '@/api/axios'
 import { Post } from '@/types/posts'
-import handleErrors from '@/utils/handleErrors'
-import { AxiosError } from 'axios'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { useState, useEffect } from 'react'
 
 export const useGetPosts = () => {
@@ -13,9 +12,8 @@ export const useGetPosts = () => {
       try {
         const result = await api.get('/posts')
         setPosts(result.data.posts)
-      } catch (err: unknown) {
-        const error = err as AxiosError<{ errors: string }>
-        handleErrors(error)
+      } catch (err) {
+        parseErrorMessage(err)
       } finally {
         setLoading(false)
       }

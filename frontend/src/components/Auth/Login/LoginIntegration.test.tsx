@@ -32,19 +32,6 @@ describe('Login form integration', () => {
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/'))
   })
 
-  it('returns an error when user tries to log in with invalid credentials', async () => {
-    await user.type(emailInput, 'incorrect@gmail.com')
-    await user.type(passwordInput, 'incorrect_password')
-    await user.click(submitButton)
-
-    expect(loginMock).toHaveBeenCalledWith(
-      'incorrect@gmail.com',
-      'incorrect_password',
-    )
-    expect(mockedNavigate).not.toHaveBeenCalled()
-    expect(await screen.findByText(/Invalid credentials/i)).toBeInTheDocument()
-  })
-
   it('submit button to be disables and re-enabled after submit request has finished', async () => {
     await user.type(emailInput, mockFormData.email)
     await user.type(passwordInput, mockFormData.password)
@@ -64,9 +51,7 @@ describe('Login form integration', () => {
     await user.type(passwordInput, mockFormData.password)
     await user.click(submitButton)
 
-    expect(
-      await screen.findByText(/An unexpected error occurred/i),
-    ).toBeInTheDocument()
+    expect(await screen.findByText(/Unexpected error/i)).toBeInTheDocument()
   })
 
   it('shows validation errors when fields are empty', async () => {

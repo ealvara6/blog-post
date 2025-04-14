@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { loginSchema } from '@/validations/authValidations'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 type FormData = z.infer<typeof loginSchema>
 
@@ -24,14 +25,8 @@ const Login = () => {
     try {
       await login(data.email, data.password)
       navigate('/')
-    } catch (err: unknown) {
-      const errorMessage =
-        typeof err === 'string'
-          ? err
-          : err instanceof Error
-            ? err.message
-            : 'An unexpected error occurred'
-      setServerError({ msg: errorMessage })
+    } catch (err) {
+      setServerError({ msg: parseErrorMessage(err) })
     }
   }
 

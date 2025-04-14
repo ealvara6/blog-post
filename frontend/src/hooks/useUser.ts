@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { User } from '@/types/posts'
 import api from '@/api/axios'
-import { AxiosError } from 'axios'
-import handleErrors from '@/utils/handleErrors'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 export const useUser = (id: string) => {
   const [user, setUser] = useState<User>()
@@ -12,9 +11,8 @@ export const useUser = (id: string) => {
       try {
         const result = await api.get(`users/${id}`)
         setUser(result.data.user)
-      } catch (err: unknown) {
-        const error = err as AxiosError<{ errors: string }>
-        handleErrors(error)
+      } catch (err) {
+        parseErrorMessage(err)
       }
     }
     fetchUser()

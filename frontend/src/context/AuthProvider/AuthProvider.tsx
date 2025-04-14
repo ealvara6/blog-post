@@ -4,8 +4,7 @@ import { AxiosError } from 'axios'
 import { jwtDecode } from 'jwt-decode'
 import { useState, useCallback, useEffect } from 'react'
 import { User, AuthContext } from './AuthContext'
-import handleErrors from '@/utils/handleErrors'
-
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
 const LOCAL_STORAGE_KEY = 'user'
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -42,8 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       )
       setAuthUser(response.data.payload)
     } catch (err) {
-      const error = err as AxiosError<{ error: string }>
-      handleErrors(error)
+      parseErrorMessage(err)
     }
   }, [])
 

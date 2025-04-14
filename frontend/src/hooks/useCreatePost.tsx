@@ -1,6 +1,5 @@
 import api from '@/api/axios'
-import handleErrors from '@/utils/handleErrors'
-import { AxiosError } from 'axios'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 interface CreatePost {
   title: string
@@ -14,9 +13,8 @@ export const useCreatePost = () => {
       const response = await api.post('auth/posts', data)
       console.log('post succesfully created!', response.data.data)
       return response.data.data
-    } catch (err: unknown) {
-      const error = err as AxiosError<{ errors: string }>
-      handleErrors(error)
+    } catch (err) {
+      parseErrorMessage(err)
     }
   }
 }

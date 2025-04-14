@@ -3,7 +3,7 @@ import api from '@/api/axios'
 import { renderHook } from '@testing-library/react'
 import { vi } from 'vitest'
 import { useCreatePost } from './useCreatePost'
-import handleErrors from '@/utils/handleErrors'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 vi.mock('@/api/axios')
 vi.mock('@/utils/handleErrors')
@@ -15,7 +15,13 @@ const mockFormdata = {
 }
 
 const mockedAxiosCreate = api.post as unknown as ReturnType<typeof vi.fn>
-const mockedhandleErrors = handleErrors as unknown as ReturnType<typeof vi.fn>
+const mockedhandleErrors = parseErrorMessage as unknown as ReturnType<
+  typeof vi.fn
+>
+
+vi.mock('@/utils/parseErrorMessage', () => ({
+  parseErrorMessage: vi.fn(),
+}))
 
 describe('call blog post api create', () => {
   beforeEach(() => {
@@ -27,7 +33,6 @@ describe('call blog post api create', () => {
     const { result } = renderHook(() => useCreatePost())
 
     const createdPost = await result.current(mockFormdata)
-    console.log(createdPost)
 
     expect(createdPost).toEqual(mockPosts[0])
   })
