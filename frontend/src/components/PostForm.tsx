@@ -1,46 +1,31 @@
 import postSchema from '@/validations/postValidations'
-import { useEffect, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { useNavigate } from 'react-router-dom'
-import { FormErrors } from '@/types/errors'
-import { useAuth } from '@/context/AuthProvider/useAuth'
-import { useCreatePost } from '@/hooks/useCreatePost'
-import { isFormError } from '@/utils/isFormErrors'
 import { Button } from './Button'
 
+interface PostFormProps {
+  defaultValues?: {
+    title: string
+    content: string
+  }
+  submittingLabel?: string
+  submitLabel?: string
+  onSubmit: (data: { title: string; content: string }) => Promise<void>
+}
 type FormData = z.infer<typeof postSchema>
 
-export const PostForm = () => {
-  const navigate = useNavigate()
-  const { authUser } = useAuth()
-  const createPost = useCreatePost()
-
+export const PostForm = ({
+  defaultValues,
+  onSubmit,
+  submittingLabel,
+  submitLabel,
+}: PostFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({ resolver: zodResolver(postSchema) })
-  const [serverErrors, setServerErrors] = useState<FormErrors[]>([])
-
-  useEffect(() => {
-    if (!authUser) navigate('/login')
-  }, [authUser, navigate])
-
-  const onSubmit = async (data: FormData) => {
-    try {
-      if (!authUser) return navigate('/login')
-      const post = await createPost({ ...data, userId: authUser.id })
-      navigate(`/posts/${post.id}`)
-    } catch (err: unknown) {
-      if (isFormError(err)) {
-        setServerErrors(err)
-      } else {
-        setServerErrors([{ msg: 'An unexpected error occurred' }])
-      }
-    }
-  }
+  } = useForm<FormData>({ resolver: zodResolver(postSchema), defaultValues })
 
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
@@ -71,18 +56,11 @@ export const PostForm = () => {
           placeholder="Content"
         />
       </div>
-      {serverErrors.length !== 0 && (
-        <div className="text-red-500">
-          {serverErrors.map((error, key) => (
-            <div key={key}>{error.msg}</div>
-          ))}
-        </div>
-      )}
       <Button isActive={isSubmitting} disabled={isSubmitting}>
-        {isSubmitting ? 'Creating post...' : 'Create Post'}
+        {isSubmitting
+          ? (submittingLabel ?? 'Submitting...')
+          : (submitLabel ?? 'Submit')}
       </Button>
     </form>
   )
 }
-
-export default PostForm

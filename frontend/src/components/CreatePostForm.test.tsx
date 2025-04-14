@@ -1,6 +1,6 @@
 import { customRender } from '@/utils/test-utils'
 import { vi } from 'vitest'
-import PostForm from './PostForm'
+import { CreatePostForm } from './CreatePostForm'
 import userEvent from '@testing-library/user-event'
 import { screen } from '@testing-library/react'
 
@@ -20,7 +20,7 @@ describe('create post', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    customRender(<PostForm />)
+    customRender(<CreatePostForm />)
     user = userEvent.setup()
     titleInput = screen.getByPlaceholderText(/title/i)
     bodyInput = screen.getByPlaceholderText(/content/i)

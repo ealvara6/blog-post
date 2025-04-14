@@ -19,9 +19,7 @@ export const loginMock = vi.fn(async (email: string, password: string) => {
       throw new Error('Invalid credentials')
     }
   } catch (err) {
-    const message = [{ msg: (err as Error).message }]
-
-    throw message
+    return { msg: err }
   }
 })
 
