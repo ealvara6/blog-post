@@ -14,7 +14,7 @@ const baseStyles = {
 
 export const Button = ({
   variant = 'primary',
-  isActive = false,
+  isActive = true,
   children,
   className,
   ...props
@@ -22,8 +22,10 @@ export const Button = ({
   return (
     <button
       className={clsx(
-        `mt-2 cursor-pointer rounded px-10 py-3 text-lg font-semibold text-white`,
-        isActive ? 'bg-gray-600' : baseStyles[variant],
+        `mt-2 rounded px-10 py-3 text-lg font-semibold text-white`,
+        !isActive
+          ? 'cursor-default bg-gray-600'
+          : `cursor-pointer ${baseStyles[variant]}`,
         className,
       )}
       {...props}

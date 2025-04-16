@@ -11,6 +11,10 @@ export const mockPosts = [
         content: 'mock_comment_content',
         createdAt: new Date().toString(),
         userId: 1,
+        user: {
+          id: 2,
+          username: 'mock_username',
+        },
       },
     ],
     userId: 1,
@@ -31,6 +35,10 @@ export const mockPosts = [
         content: 'mock_comment_content',
         createdAt: new Date().toString(),
         userId: 1,
+        user: {
+          id: 2,
+          username: 'mock_username',
+        },
       },
     ],
     userId: 1,
