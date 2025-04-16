@@ -1,8 +1,11 @@
 import { PrismaClient } from '@prisma/client/extension';
 import { Comment } from '@prisma/client';
+import { connect } from 'http2';
 
 interface CommentData {
   content: string;
+  postId: number;
+  userId: number;
 }
 
 export const getCommentsService = async (
@@ -39,10 +42,17 @@ export const getCommentService = async (
 
 export const createCommentService = async (
   prisma: PrismaClient,
-  commentData: CommentData
+  { content, userId, postId }: CommentData
 ): Promise<Comment> => {
   return await prisma.comment.create({
-    data: commentData,
+    data: {
+      content,
+      post: { connect: { id: postId } },
+      user: { connect: { id: userId } },
+    },
+    include: {
+      user: true,
+    },
   });
 };
 

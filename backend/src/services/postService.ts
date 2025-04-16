@@ -73,6 +73,7 @@ export const getPostService = async (
           id: true,
           userId: true,
           createdAt: true,
+          user: true,
         },
       },
     },

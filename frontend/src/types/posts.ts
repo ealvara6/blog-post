@@ -14,6 +14,7 @@ export interface Comment {
   content: string
   createdAt: string
   userId: number
+  user: User
 }
 
 export interface User {
