@@ -1,21 +1,20 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
-import { useState } from 'react'
-import useUser from '@/hooks/useUser'
 import { Post, Comment } from '@/types/posts'
 import { Button } from './Button'
 import { useDeletePost } from '@/hooks/useDeletePost'
 import { useNavigate } from 'react-router-dom'
+import { CommentForm } from './CommentForm'
+import { useEffect, useState } from 'react'
 
 const getComments = (comments: Comment[] | undefined) => {
   if (!comments) return
   if (comments.length === 0)
     return <div className="text-center">No comments found</div>
   return comments.map((comment, key) => {
-    const { user } = useUser(comment.userId.toString())
     const date = new Date(comment.createdAt)
     return (
       <div className="flex flex-col rounded border p-3" key={key}>
-        <div className="text-xl font-bold">{user?.username}</div>
+        <div className="text-xl font-bold">{comment.user.username}</div>
         <div>{comment.content}</div>
         <div className="self-end font-mono font-thin">
           <span className="font-bold">created at: </span>
@@ -35,10 +34,14 @@ export const PostItem = ({
   userId,
   user,
 }: Post) => {
+  if (!comments) comments = []
   const { authUser } = useAuth()
   const deletePost = useDeletePost()
   const navigate = useNavigate()
   const date = new Date(createdAt)
+  const [currentcomments, setCurrentComments] = useState<Comment[]>(comments)
+
+  useEffect(() => {}, [currentcomments])
 
   const handleDelete = async () => {
     try {
@@ -86,7 +89,14 @@ export const PostItem = ({
       </div>
       <div className="flex flex-col gap-3">
         <div className="text-4xl font-bold">Comments</div>
-        {getComments(comments)}
+        {
+          <CommentForm
+            postId={id}
+            setCurrentComments={setCurrentComments}
+            comments={currentcomments}
+          />
+        }
+        {getComments(currentcomments)}
       </div>
     </div>
   )
