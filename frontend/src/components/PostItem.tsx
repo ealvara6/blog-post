@@ -89,13 +89,12 @@ export const PostItem = ({
       </div>
       <div className="flex flex-col gap-3">
         <div className="text-4xl font-bold">Comments</div>
-        {
-          <CommentForm
-            postId={id}
-            setCurrentComments={setCurrentComments}
-            comments={currentcomments}
-          />
-        }
+        {authUser ? (
+          <CommentForm postId={id} setCurrentComments={setCurrentComments} />
+        ) : (
+          ''
+        )}
+
         {getComments(currentcomments)}
       </div>
     </div>
