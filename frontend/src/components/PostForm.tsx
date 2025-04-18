@@ -56,7 +56,7 @@ export const PostForm = ({
           placeholder="Content"
         />
       </div>
-      <Button isActive={isSubmitting} disabled={isSubmitting}>
+      <Button disabled={isSubmitting} isActive={!isSubmitting}>
         {isSubmitting
           ? (submittingLabel ?? 'Submitting...')
           : (submitLabel ?? 'Submit')}

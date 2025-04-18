@@ -14,13 +14,12 @@ export const CommentForm = ({
 }: {
   postId: number
   setCurrentComments: React.Dispatch<React.SetStateAction<Comment[]>>
-  comments: Comment[]
 }) => {
   const [toggleButtons, setToggleButtons] = useState(false)
   const { authUser } = useAuth()
   const {
     register,
-    formState: { isValid },
+    formState: { isValid, isSubmitting },
     handleSubmit,
     reset,
   } = useForm({ resolver: zodResolver(commentSchema) })
@@ -32,6 +31,7 @@ export const CommentForm = ({
 
   const onCancel = () => {
     setToggleButtons(false)
+    reset()
   }
 
   const onSubmit = async (data: { content: string }) => {
@@ -65,8 +65,11 @@ export const CommentForm = ({
           <Button className="px-3" onClick={() => onCancel()}>
             Cancel
           </Button>
-          <Button disabled={!isValid} isActive={isValid}>
-            Comment
+          <Button
+            disabled={!isValid || isSubmitting}
+            isActive={isValid && !isSubmitting}
+          >
+            {isSubmitting ? 'Submiting...' : 'Comment'}
           </Button>
         </div>
       )}
