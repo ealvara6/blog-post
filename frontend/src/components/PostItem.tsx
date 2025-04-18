@@ -5,23 +5,15 @@ import { useDeletePost } from '@/hooks/useDeletePost'
 import { useNavigate } from 'react-router-dom'
 import { CommentForm } from './CommentForm'
 import { useEffect, useState } from 'react'
+import { CommentItem } from './Comment'
 
 const getComments = (comments: Comment[] | undefined) => {
   if (!comments) return
   if (comments.length === 0)
     return <div className="text-center">No comments found</div>
-  return comments.map((comment, key) => {
+  return comments.map((comment, index) => {
     const date = new Date(comment.createdAt)
-    return (
-      <div className="flex flex-col rounded border p-3" key={key}>
-        <div className="text-xl font-bold">{comment.user.username}</div>
-        <div>{comment.content}</div>
-        <div className="self-end font-mono font-thin">
-          <span className="font-bold">created at: </span>
-          {date.toLocaleString()}
-        </div>
-      </div>
-    )
+    return <CommentItem comment={comment} index={index} date={date} />
   })
 }
 
