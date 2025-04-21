@@ -5,17 +5,7 @@ import { useDeletePost } from '@/hooks/useDeletePost'
 import { useNavigate } from 'react-router-dom'
 import { CommentForm } from './CommentForm'
 import { useEffect, useState } from 'react'
-import { CommentItem } from './Comment'
-
-const GetComments = ({ comments }: { comments: Comment[]; userId: number }) => {
-  if (!comments) return ''
-  if (comments.length === 0)
-    return <div className="text-center">No comments found</div>
-  return comments.map((comment, index) => {
-    const date = new Date(comment.createdAt)
-    return <CommentItem comment={comment} index={index} date={date} />
-  })
-}
+import { CommentItem } from './CommentItem'
 
 export const PostItem = ({
   title,
@@ -44,6 +34,23 @@ export const PostItem = ({
     } catch (err: unknown) {
       console.log(err)
     }
+  }
+
+  const GetComments = () => {
+    if (!currentcomments) return ''
+    if (currentcomments.length === 0)
+      return <div className="text-center">No comments found</div>
+    return currentcomments.map((comment, index) => {
+      const date = new Date(comment.createdAt)
+      return (
+        <CommentItem
+          comment={comment}
+          index={index}
+          date={date}
+          setCurrentComments={setCurrentComments}
+        />
+      )
+    })
   }
 
   const handleEdit = () => {
@@ -86,7 +93,7 @@ export const PostItem = ({
         ) : (
           ''
         )}
-        <GetComments comments={currentcomments} userId={userId} />
+        <GetComments />
       </div>
     </div>
   )
