@@ -1,6 +1,6 @@
 import {
   authenticateToken,
-  canModifyComment,
+  // canModifyComment,
   canModifyPost,
   canModifyUser,
 } from '../authMiddleware';
@@ -44,7 +44,7 @@ export const validateCommentCreation = [
 export const validateCommentUpdate = [
   authenticateToken,
   validateId,
-  canModifyComment,
+  // canModifyComment,
   validateEmptyBody,
   ...validateComment,
   checkValidationResults,
@@ -52,9 +52,8 @@ export const validateCommentUpdate = [
 
 export const validateCommentDeletion = [
   authenticateToken,
-  validateId,
   validateCommentId,
-  canModifyComment,
+  // canModifyComment,
 ];
 
 export const validateUserUpdate = [

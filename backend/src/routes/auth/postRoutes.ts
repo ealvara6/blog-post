@@ -33,7 +33,7 @@ export const authPostRoutes = (prisma: PrismaClient) => {
   router.post('/:id/comments', validateCommentCreation, createComment);
 
   router
-    .route('/:id/comments/:commentId')
+    .route('/comments/:commentId')
     .put(validateCommentUpdate, updateComment)
     .delete(validateCommentDeletion, deleteComment);
 
