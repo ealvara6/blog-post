@@ -7,8 +7,8 @@ import { CommentForm } from './CommentForm'
 import { useEffect, useState } from 'react'
 import { CommentItem } from './Comment'
 
-const getComments = (comments: Comment[] | undefined) => {
-  if (!comments) return
+const GetComments = ({ comments }: { comments: Comment[]; userId: number }) => {
+  if (!comments) return ''
   if (comments.length === 0)
     return <div className="text-center">No comments found</div>
   return comments.map((comment, index) => {
@@ -86,8 +86,7 @@ export const PostItem = ({
         ) : (
           ''
         )}
-
-        {getComments(currentcomments)}
+        <GetComments comments={currentcomments} userId={userId} />
       </div>
     </div>
   )
