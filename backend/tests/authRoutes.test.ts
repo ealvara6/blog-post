@@ -751,7 +751,7 @@ describe('Auth Routes', () => {
           });
 
           const res = await request(app)
-            .put(`/api/auth/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
+            .put(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: 'updated_mock_content' });
 
@@ -772,7 +772,7 @@ describe('Auth Routes', () => {
           });
 
           const res = await request(app)
-            .put(`/api/auth/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
+            .put(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: UPDATED_MOCK_CONTENT });
 
@@ -789,7 +789,7 @@ describe('Auth Routes', () => {
           );
 
           const res = await request(app)
-            .put(`/api/auth/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
+            .put(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: UPDATED_MOCK_CONTENT });
 
@@ -805,7 +805,7 @@ describe('Auth Routes', () => {
           prismaMock.comment.update.mockResolvedValue(null);
 
           const res = await request(app)
-            .put(`/api/auth/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`)
+            .put(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: UPDATED_MOCK_CONTENT });
 
@@ -821,7 +821,7 @@ describe('Auth Routes', () => {
           });
 
           const res = await request(app)
-            .put('/api/auth/posts/201/comments/301')
+            .put('/api/auth/posts/comments/301')
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: 'updated_content' });
 
@@ -1016,9 +1016,7 @@ describe('Auth Routes', () => {
           prismaMock.comment.delete.mockResolvedValue(mockComment);
 
           const res = await request(app)
-            .delete(
-              `/api/auth/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`
-            )
+            .delete(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`);
 
           expect(res.statusCode).toBe(200);
@@ -1044,9 +1042,7 @@ describe('Auth Routes', () => {
           prismaMock.comment.delete.mockResolvedValue(null);
 
           const res = await request(app)
-            .delete(
-              `/api/auth/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`
-            )
+            .delete(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`);
 
           expect(res.statusCode).toBe(404);
@@ -1060,9 +1056,7 @@ describe('Auth Routes', () => {
           );
 
           const res = await request(app)
-            .delete(
-              `/api/auth/posts/${TEST_POST_ID}/comments/${TEST_COMMENT_ID}`
-            )
+            .delete(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`);
 
           expect(res.statusCode).toBe(500);
@@ -1080,7 +1074,7 @@ describe('Auth Routes', () => {
           });
 
           const res = await request(app)
-            .delete('/api/auth/posts/101/comments/301')
+            .delete('/api/auth/posts/comments/301')
             .set('Authorization', `Bearer ${authToken}`);
 
           expect(res.statusCode).toBe(403);

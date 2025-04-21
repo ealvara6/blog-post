@@ -27,16 +27,10 @@ export const getCommentsService = async (
 
 export const getCommentService = async (
   prisma: PrismaClient,
-  postId: number,
   commentId: number
 ): Promise<Comment> => {
   return await prisma.comment.findUnique({
-    where: {
-      AND: [{ postId }, { id: commentId }],
-    },
-    user: {
-      select: { username: true },
-    },
+    where: { id: commentId },
   });
 };
 

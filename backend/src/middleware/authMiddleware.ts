@@ -86,32 +86,29 @@ export const canModifyPost = async (
   }
 };
 
-// export const canModifyComment = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ): Promise<void> => {
-//   try {
-//     const { id, commentId } = req.params;
-//     const userId = req.user?.id;
-//     const prisma = req.prisma;
+export const canModifyComment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { commentId } = req.params;
+    const userId = req.user?.id;
+    const prisma = req.prisma;
 
-//     const comment = await getCommentService(
-//       prisma,
-//       Number(id),
-//       Number(commentId)
-//     );
-//     if (comment.userId !== Number(userId)) {
-//       res.status(403).json({
-//         error: 'Unauthorized: You can only modify your own comment',
-//       });
-//       return;
-//     }
+    const comment = await getCommentService(prisma, Number(commentId));
+    console.log(comment);
+    if (comment.userId !== Number(userId)) {
+      res.status(403).json({
+        error: 'Unauthorized: You can only modify your own comment',
+      });
+      return;
+    }
 
-//     next();
-//   } catch (err) {
-//     handleError(err, res, {
-//       errorMessage: 'An unknown error occured',
-//     });
-//   }
-// };
+    next();
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'An unknown error occured',
+    });
+  }
+};

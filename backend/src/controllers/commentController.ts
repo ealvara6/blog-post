@@ -38,10 +38,9 @@ export const getComment = async (
 ): Promise<void> => {
   try {
     const prisma = req.prisma;
-    const postId = Number(req.params.id);
     const commentId = Number(req.params.commentId);
 
-    const comment = await getCommentService(prisma, postId, commentId);
+    const comment = await getCommentService(prisma, commentId);
 
     if (!comment) {
       res.status(404).json({ error: 'Comment not found' });
