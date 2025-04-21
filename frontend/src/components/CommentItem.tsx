@@ -25,7 +25,6 @@ export const CommentItem = ({
     try {
       setIsLoading(true)
       const deletedComment = await deleteComment(id)
-      console.log(comment)
       setCurrentComments((prev) =>
         prev.filter((comment) => comment.id !== deletedComment.id),
       )

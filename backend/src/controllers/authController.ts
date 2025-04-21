@@ -60,7 +60,6 @@ export const verifyLogin = async (req: Request, res: Response) => {
     const { email, password }: LoginBody = req.body;
 
     const user = await findUserOnEmail(prisma, email);
-    console.log(user);
 
     if (!user) {
       res.status(401).json({ error: 'Email is incorrect' });
@@ -68,7 +67,6 @@ export const verifyLogin = async (req: Request, res: Response) => {
     }
 
     const isMatch = await compare(password, user.password);
-    console.log(isMatch);
 
     if (!isMatch) {
       res.status(401).json({
