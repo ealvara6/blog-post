@@ -4,6 +4,7 @@ import { Button } from './Button'
 import React, { useState } from 'react'
 import { useDeleteComment } from '@/hooks/useDeleteComment'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { UpdateCommentForm } from './UpdateCommentForm'
 
 export const CommentItem = ({
   comment,
@@ -20,6 +21,7 @@ export const CommentItem = ({
   const { authUser } = useAuth()
   const deleteComment = useDeleteComment()
   const [isLoading, setIsLoading] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
 
   const onDelete = async () => {
     try {
@@ -35,24 +37,50 @@ export const CommentItem = ({
     }
   }
 
+  const toggleEdit = async () => {
+    setIsEditing(!isEditing)
+  }
+
+  const AuthButtons = () => {
+    if (comment.userId !== authUser?.id) return ''
+    return (
+      <div className="flex w-fit gap-3 self-end">
+        {!isEditing && (
+          <>
+            <Button onClick={() => toggleEdit()}>Edit</Button>
+            <Button
+              variant="danger"
+              onClick={() => onDelete()}
+              isActive={!isLoading}
+            >
+              {isLoading ? 'Deleting...' : 'Delete'}
+            </Button>
+          </>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col rounded border p-3" key={index}>
       <div className="text-xl font-bold">{comment.user.username}</div>
-      <div>{comment.content}</div>
-      <div className="self-end font-mono font-thin">
-        <span className="font-bold">created at: </span>
-        {date.toLocaleString()}
-      </div>
-      {comment.userId === authUser?.id && (
-        <Button
-          variant="danger"
-          className="w-fit self-end"
-          onClick={() => onDelete()}
-          isActive={!isLoading}
-        >
-          {isLoading ? 'Deleting...' : 'Delete'}
-        </Button>
+      {isEditing ? (
+        <UpdateCommentForm
+          content={comment.content}
+          commentId={id}
+          toggleEdit={toggleEdit}
+          setCurrentComments={setCurrentComments}
+        />
+      ) : (
+        <>
+          <div>{comment.content}</div>
+          <div className="self-end font-mono font-thin">
+            <span className="font-bold">created at: </span>
+            {date.toLocaleString()}
+          </div>
+        </>
       )}
+      <AuthButtons />
     </div>
   )
 }
