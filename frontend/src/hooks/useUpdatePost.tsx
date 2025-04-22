@@ -8,7 +8,7 @@ interface EditPost {
   userId: number | undefined
 }
 
-export const useEditPost = () => {
+export const useUpdatePost = () => {
   return async (data: EditPost) => {
     try {
       const response = await api.put(`auth/posts/${data.id}`, data)

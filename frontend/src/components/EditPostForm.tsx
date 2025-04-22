@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { PostForm } from './PostForm'
-import { useEditPost } from '@/hooks/useUpdatePost'
+import { useUpdatePost } from '@/hooks/useUpdatePost'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import postSchema from '@/validations/postValidations'
@@ -22,7 +22,7 @@ export const EditPostForm = ({
 }) => {
   const navigate = useNavigate()
   const { authUser } = useAuth()
-  const editPost = useEditPost()
+  const editPost = useUpdatePost()
   const [serverError, setServerError] = useState({ msg: '' })
 
   useEffect(() => {
