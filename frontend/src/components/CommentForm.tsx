@@ -5,7 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { commentSchema } from '@/validations/commentValidation'
 import { useCreateComment } from '@/hooks/useCreateComment'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
-import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Comment } from '@/types/posts'
 
 export const CommentForm = ({
@@ -16,7 +15,6 @@ export const CommentForm = ({
   setCurrentComments: React.Dispatch<React.SetStateAction<Comment[]>>
 }) => {
   const [toggleButtons, setToggleButtons] = useState(false)
-  const { authUser } = useAuth()
   const {
     register,
     formState: { isValid, isSubmitting },
@@ -36,8 +34,7 @@ export const CommentForm = ({
 
   const onSubmit = async (data: { content: string }) => {
     try {
-      const userId = authUser?.id
-      const createdComment = await createComment({ ...data, userId, postId })
+      const createdComment = await createComment({ ...data, postId })
       reset()
       setToggleButtons(false)
       setCurrentComments((prev) => [...prev, createdComment])
