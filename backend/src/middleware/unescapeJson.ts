@@ -10,7 +10,7 @@ export const decodeObject = (obj: any): any => {
     return obj.map(decodeObject);
   }
 
-  if (typeof obj === 'object' && obj !== null) {
+  if (typeof obj === 'object' && obj !== null && !(obj instanceof Date)) {
     const decoded: any = {};
 
     for (const key of Object.keys(obj)) {
