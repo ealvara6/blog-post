@@ -95,7 +95,10 @@ export const deletePostService = async (
   prisma: PrismaClient,
   id: number
 ): Promise<Post> => {
+  await prisma.comment.deleteMany({
+    where: { postId: id },
+  });
   return await prisma.post.delete({
-    where: { id: id },
+    where: { id },
   });
 };

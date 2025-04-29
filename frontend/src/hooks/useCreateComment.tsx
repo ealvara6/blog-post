@@ -2,7 +2,11 @@ import api from '@/api/axios'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 export const useCreateComment = () => {
-  return async (data: { content: string; postId: number | undefined }) => {
+  return async (data: {
+    content: string
+    postId: number | undefined
+    userId: number | undefined
+  }) => {
     try {
       const response = await api.post(
         `/auth/posts/${data.postId}/comments`,
