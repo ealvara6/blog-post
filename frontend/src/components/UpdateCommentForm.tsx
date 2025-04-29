@@ -5,7 +5,7 @@ import { commentSchema } from '@/validations/commentValidation'
 import { useUpdateComment } from '@/hooks/useUpdateComment'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Comment } from '@/types/posts'
-import React, { useState } from 'react'
+import React from 'react'
 
 export const UpdateCommentForm = ({
   content,
@@ -22,8 +22,11 @@ export const UpdateCommentForm = ({
     register,
     formState: { isValid, isSubmitting },
     handleSubmit,
-  } = useForm({ resolver: zodResolver(commentSchema) })
-  const [currentContent, setCurrentContent] = useState(content)
+  } = useForm<{ content: string }>({
+    resolver: zodResolver(commentSchema),
+    defaultValues: { content },
+    mode: 'onChange',
+  })
   const updateComment = useUpdateComment()
 
   const onSubmit = async (data: { content: string }) => {
@@ -42,10 +45,6 @@ export const UpdateCommentForm = ({
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentContent(e.target.value)
-  }
-
   return (
     <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
       <input
@@ -53,19 +52,18 @@ export const UpdateCommentForm = ({
         type="text"
         name="content"
         id="content"
-        value={currentContent}
-        onChange={(e) => handleChange(e)}
         className="w-full rounded border p-2"
       />
       <div className="flex w-fit gap-3 self-end">
-        <Button variant="danger" onClick={() => toggleEdit()}>
-          Cancel
-        </Button>
         <Button
           disabled={!isValid || isSubmitting}
           isActive={isValid && !isSubmitting}
+          type="submit"
         >
           Save
+        </Button>
+        <Button variant="danger" type="button" onClick={() => toggleEdit()}>
+          Cancel
         </Button>
       </div>
     </form>
