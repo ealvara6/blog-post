@@ -6,6 +6,7 @@ import { commentSchema } from '@/validations/commentValidation'
 import { useCreateComment } from '@/hooks/useCreateComment'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Comment } from '@/types/posts'
+import { useAuth } from '@/context/AuthProvider/useAuth'
 
 export const CommentForm = ({
   postId,
@@ -14,6 +15,8 @@ export const CommentForm = ({
   postId: number
   setCurrentComments: React.Dispatch<React.SetStateAction<Comment[]>>
 }) => {
+  const { authUser } = useAuth()
+  const userId = authUser?.id
   const [toggleButtons, setToggleButtons] = useState(false)
   const {
     register,
@@ -34,7 +37,7 @@ export const CommentForm = ({
 
   const onSubmit = async (data: { content: string }) => {
     try {
-      const createdComment = await createComment({ ...data, postId })
+      const createdComment = await createComment({ ...data, postId, userId })
       reset()
       setToggleButtons(false)
       setCurrentComments((prev) => [...prev, createdComment])
@@ -59,12 +62,13 @@ export const CommentForm = ({
       />
       {toggleButtons && (
         <div className="flex gap-2 self-end">
-          <Button className="px-3" onClick={() => onCancel()}>
+          <Button className="px-3" type="button" onClick={() => onCancel()}>
             Cancel
           </Button>
           <Button
             disabled={!isValid || isSubmitting}
             isActive={isValid && !isSubmitting}
+            type="submit"
           >
             {isSubmitting ? 'Submiting...' : 'Comment'}
           </Button>
