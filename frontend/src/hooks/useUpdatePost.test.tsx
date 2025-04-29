@@ -6,7 +6,6 @@ import { vi } from 'vitest'
 import { useUpdatePost } from './useUpdatePost'
 
 vi.mock('@/api/axios')
-vi.mock('@/utils/handleErrors')
 
 const mockedAxiosUpdate = api.put as unknown as ReturnType<typeof vi.fn>
 const mockedHandleErrors = parseErrorMessage as unknown as ReturnType<

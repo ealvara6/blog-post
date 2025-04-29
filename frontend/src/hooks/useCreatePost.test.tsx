@@ -6,7 +6,6 @@ import { useCreatePost } from './useCreatePost'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 vi.mock('@/api/axios')
-vi.mock('@/utils/handleErrors')
 
 const mockFormdata = {
   title: 'mock_title',

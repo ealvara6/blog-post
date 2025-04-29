@@ -6,7 +6,6 @@ import { useDeletePost } from './useDeletePost'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 vi.mock('@/api/axios')
-vi.mock('@/utils/handleErrors')
 const MOCK_POST_ID = 1
 
 const mockedAxiosDelete = api.delete as unknown as ReturnType<typeof vi.fn>

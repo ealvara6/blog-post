@@ -1,8 +1,10 @@
-export const mockComment = [
+const date = new Date()
+
+export const mockComments = [
   {
     id: 101,
     content: 'mock_content',
-    createdAt: new Date(),
+    createdAt: date.toString(),
     userId: 1,
     user: {
       id: 1,
@@ -12,20 +14,20 @@ export const mockComment = [
   {
     id: 101,
     content: 'mock_content',
-    createdAt: new Date(),
-    userId: 1,
+    createdAt: date.toString(),
+    userId: 2,
     user: {
-      id: 1,
+      id: 2,
       username: 'mock_username',
     },
   },
   {
     id: 101,
     content: 'mock_content',
-    createdAt: new Date(),
-    userId: 1,
+    createdAt: date.toString(),
+    userId: 3,
     user: {
-      id: 1,
+      id: 3,
       username: 'mock_username',
     },
   },
