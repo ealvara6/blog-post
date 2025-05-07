@@ -26,6 +26,7 @@ jest.mock('@prisma/client', () => {
       update: jest.fn(),
       delete: jest.fn(),
       findUnique: jest.fn(),
+      deleteMany: jest.fn(),
     },
   }));
 

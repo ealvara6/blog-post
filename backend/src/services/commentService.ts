@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client/extension';
 import { Comment } from '@prisma/client';
-import { connect } from 'http2';
 
 interface CommentData {
   content: string;
