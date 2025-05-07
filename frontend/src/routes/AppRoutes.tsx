@@ -6,7 +6,7 @@ import { AuthProvider } from '@/context/AuthProvider/AuthProvider'
 import Login from '@/components/Auth/Login/Login'
 import Signup from '@/components/Auth/Signup/Signup'
 import NotFound from '@/pages/NotFound'
-import Profile from '@/pages/Profile'
+import { Account } from '@/pages/Account'
 import { Posts } from '@/pages/Posts'
 import Post from '@/pages/Post'
 import CreatePost from '@/pages/Createpost'
@@ -22,7 +22,7 @@ const AppRoutes = () => {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/account" element={<Account />} />
               <Route path="/posts" element={<Posts />} />
               <Route path="/posts/:id" element={<Post />} />
               <Route path="/posts/create" element={<CreatePost />} />
