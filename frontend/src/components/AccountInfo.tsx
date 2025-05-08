@@ -1,20 +1,28 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
+import { useState } from 'react'
+import { Modal } from './Modal'
 
 export const AccountInfo = () => {
   const { authUser } = useAuth()
+  const [isOpen, setIsOpen] = useState<'username' | null | string>(null)
 
   const tabInfo = [
-    { label: 'Change Username', subtext: authUser?.username },
-    { label: 'Change Email', subtext: authUser?.email },
-    { label: 'Change Password' },
-    { label: 'Delete Account' },
+    { name: 'username', label: 'Change Username', subtext: authUser?.username },
+    { name: 'email', label: 'Change Email', subtext: authUser?.email },
+    { name: 'password', label: 'Change Password' },
+    { name: 'delete', label: 'Delete Account' },
   ]
+
+  const handleClick = (name: string) => {
+    setIsOpen(name)
+  }
 
   const Tabs = () => {
     const tabs = tabInfo.map((tab) => {
       return (
         <div
           className={`flex min-h-16 w-full cursor-pointer rounded border border-gray-500 p-2 ${tab.label === 'Delete Account' ? 'bg-red-700' : ''}`}
+          onClick={() => handleClick(tab.name)}
         >
           <div className="flex grow flex-col">
             <div className="flex grow items-center font-bold">{tab.label}</div>
@@ -35,6 +43,11 @@ export const AccountInfo = () => {
   return (
     <div className="flex flex-col items-center gap-5">
       <Tabs />
+      {isOpen && (
+        <Modal setIsOpen={setIsOpen}>
+          {tabInfo.find((tab) => tab.name === isOpen)?.label}
+        </Modal>
+      )}
     </div>
   )
 }
