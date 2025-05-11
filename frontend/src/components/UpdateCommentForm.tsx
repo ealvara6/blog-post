@@ -6,6 +6,7 @@ import { useUpdateComment } from '@/hooks/useUpdateComment'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Comment } from '@/types/posts'
 import React from 'react'
+import { Input } from './Input'
 
 export const UpdateCommentForm = ({
   content,
@@ -46,14 +47,8 @@ export const UpdateCommentForm = ({
   }
 
   return (
-    <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-      <input
-        {...register('content')}
-        type="text"
-        name="content"
-        id="content"
-        className="w-full rounded border p-2"
-      />
+    <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+      <Input {...register('content')} />
       <div className="flex w-fit gap-3 self-end">
         <Button
           disabled={!isValid || isSubmitting}
