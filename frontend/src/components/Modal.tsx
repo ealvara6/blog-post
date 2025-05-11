@@ -38,12 +38,6 @@ export const Modal = ({
         className="dark:bg-background-dark bg-background-light flex w-full max-w-md flex-col rounded p-6 shadow-lg"
         ref={modalRef}
       >
-        <button
-          className="cursor-pointer self-end"
-          onClick={() => setIsOpen(null)}
-        >
-          X
-        </button>
         {children}
       </div>
     </div>

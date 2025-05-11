@@ -23,3 +23,11 @@ export const signupSchema = z
     message: 'Passwords do not match',
     path: ['confirmPassword'],
   })
+
+export const usernameSchema = z.object({
+  username: z
+    .string()
+    .trim()
+    .min(1, 'Username is required')
+    .min(4, 'Username must be at least 4 characters long'),
+})

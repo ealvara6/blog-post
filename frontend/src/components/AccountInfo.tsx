@@ -1,13 +1,19 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { useState } from 'react'
 import { Modal } from './Modal'
+import { UserNameModal } from './Account/Modals/UsernameModal'
 
 export const AccountInfo = () => {
   const { authUser } = useAuth()
   const [isOpen, setIsOpen] = useState<'username' | null | string>(null)
 
   const tabInfo = [
-    { name: 'username', label: 'Change Username', subtext: authUser?.username },
+    {
+      name: 'username',
+      label: 'Change Username',
+      subtext: authUser?.username,
+      component: <UserNameModal setIsOpen={setIsOpen} />,
+    },
     { name: 'email', label: 'Change Email', subtext: authUser?.email },
     { name: 'password', label: 'Change Password' },
     { name: 'delete', label: 'Delete Account' },
@@ -45,7 +51,7 @@ export const AccountInfo = () => {
       <Tabs />
       {isOpen && (
         <Modal setIsOpen={setIsOpen}>
-          {tabInfo.find((tab) => tab.name === isOpen)?.label}
+          {tabInfo.find((tab) => tab.name === isOpen)?.component}
         </Modal>
       )}
     </div>
