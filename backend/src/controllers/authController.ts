@@ -75,7 +75,12 @@ export const verifyLogin = async (req: Request, res: Response) => {
       return;
     }
 
-    const payload = { id: user.id, email: user.email, username: user.username };
+    const payload = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      password: user.password,
+    };
     const token = sign(payload, process.env.JWT_SECRET || 'jwt_secret', {
       expiresIn: '1h',
     });
