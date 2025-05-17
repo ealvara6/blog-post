@@ -2,17 +2,12 @@ import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { useUpdateUser } from '@/hooks/useUpdateUser'
-import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { handleUserUpdate } from '@/utils/handleUserUpdate'
 import { usernameSchema } from '@/validations/authValidations'
 import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
 import { useForm } from 'react-hook-form'
 
-export const UserNameModal = ({
-  setIsOpen,
-}: {
-  setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
-}) => {
+export const UserNameModal = () => {
   const { authUser, setAuthUser } = useAuth()
   const {
     register,
@@ -22,21 +17,9 @@ export const UserNameModal = ({
   const updateUser = useUpdateUser()
 
   const onSubmit = async (data: { username: string }) => {
-    try {
-      if (!authUser) return
-      await updateUser(authUser?.id, {
-        ...data,
-        email: authUser.email,
-        password: authUser.password,
-      })
-      const updatedUser = { ...authUser, username: data.username }
-      localStorage.setItem('user', JSON.stringify(updatedUser))
-      setAuthUser(updatedUser)
-
-      setIsOpen(null)
-    } catch (err) {
-      parseErrorMessage(err)
-    }
+    if (!authUser?.id) return
+    const updatedUser = { ...authUser, ...data }
+    handleUserUpdate(updatedUser, setAuthUser, updateUser)
   }
 
   return (
@@ -47,7 +30,7 @@ export const UserNameModal = ({
         <div className="text-red-500">{errors['username']?.message}</div>
       )}
       <div className="flex gap-3 self-end">
-        <Button size="sm" type="button" onClick={() => setIsOpen(null)}>
+        <Button size="sm" type="button">
           Cancel
         </Button>
         <Button
