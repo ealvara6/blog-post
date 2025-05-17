@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FormErrors } from '@/types/errors'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { signupSchema } from '@/validations/authValidations'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 type FormData = z.infer<typeof signupSchema>
 type FieldName = keyof FormData
@@ -32,19 +32,15 @@ const Signup = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormData>({ resolver: zodResolver(signupSchema) })
 
-  const [serverErrors, setServerErrors] = useState<FormErrors[]>([])
+  const [serverError, setServerError] = useState('')
   const navigate = useNavigate()
 
   const onSubmit = async (data: FormData) => {
     try {
       await signup(data)
       navigate('/')
-    } catch (err: unknown) {
-      if (Array.isArray(err)) {
-        setServerErrors(err as FormErrors[])
-      } else {
-        setServerErrors([{ msg: 'An unexpected error occurred' }])
-      }
+    } catch (err) {
+      setServerError(parseErrorMessage(err))
     }
   }
   return (
@@ -70,6 +66,7 @@ const Signup = () => {
           </div>
         )
       })}
+      {serverError && <div className="text-red-500">{serverError}</div>}
       <button
         type="submit"
         className={`mt-2 rounded p-1 text-lg font-semibold ${isSubmitting ? 'bg-gray-600' : 'bg-primary-dark'}`}
@@ -77,13 +74,6 @@ const Signup = () => {
       >
         {isSubmitting ? 'Signing up...' : 'Sign up'}
       </button>
-      {serverErrors.length !== 0 && (
-        <div className="text-red-500">
-          {serverErrors.map((error, key) => (
-            <div key={key}>{error.msg}</div>
-          ))}
-        </div>
-      )}
     </form>
   )
 }

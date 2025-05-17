@@ -1,6 +1,5 @@
 import api from '@/api/axios'
 import { SignUpInterface } from '@/components/Auth/Signup/Signup'
-import { AxiosError } from 'axios'
 import { jwtDecode } from 'jwt-decode'
 import { useState, useCallback, useEffect } from 'react'
 import { User, AuthContext } from './AuthContext'
@@ -60,9 +59,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       })
       await login(email, password)
     } catch (err) {
-      const error = err as AxiosError<{ errors: string }>
-      const message =
-        error.response?.data.errors || error.message || 'Signup failed'
+      const message = parseErrorMessage(err)
       throw message
     }
   }
