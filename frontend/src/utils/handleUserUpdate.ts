@@ -9,7 +9,6 @@ export const handleUserUpdate = async (
   updateUser: (id: number | undefined, data: EditUser) => Promise<User>,
 ) => {
   try {
-    console.log(updatedUser)
     if (!updatedUser) return
 
     await updateUser(updatedUser.id, updatedUser)

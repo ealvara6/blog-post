@@ -12,7 +12,7 @@ export const Input = forwardRef<
       ref={ref}
       {...props}
       className={clsx(
-        'rounded border p-2',
+        'dark:text-text-light rounded border p-2 dark:bg-gray-300',
         className,
         props.disabled ? 'bg-gray-600' : '',
       )}

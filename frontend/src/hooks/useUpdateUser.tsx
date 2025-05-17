@@ -1,10 +1,10 @@
 import api from '@/api/axios'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
-interface EditUser {
-  username: string | undefined
-  email: string | undefined
-  password: string | undefined
+export interface EditUser {
+  username: string
+  email: string
+  password: string
 }
 
 export const useUpdateUser = () => {
