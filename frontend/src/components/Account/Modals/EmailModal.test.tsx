@@ -1,0 +1,38 @@
+import { customRender } from '@/utils/test-utils'
+import userEvent from '@testing-library/user-event'
+import { EmailModal } from './EmailModal'
+import { screen, waitFor } from '@testing-library/react'
+
+describe('change email modal', () => {
+  let cancelButton: HTMLButtonElement
+  let saveButton: HTMLButtonElement
+  let userInput: HTMLInputElement
+  let user: ReturnType<typeof userEvent.setup>
+
+  beforeEach(() => {
+    customRender(<EmailModal />)
+    cancelButton = screen.getByText(/cancel/i)
+    saveButton = screen.getByText(/save/i)
+    userInput = screen.getByRole('textbox')
+    user = userEvent.setup()
+  })
+
+  it('renders the email change modal', () => {
+    expect(screen.getByText(/new email/i)).toBeInTheDocument()
+    expect(cancelButton).toBeInTheDocument()
+    expect(saveButton).toBeInTheDocument()
+  })
+
+  it('disables save button when no input is given', () => {
+    expect(userInput).toHaveValue('')
+    expect(saveButton).toBeDisabled()
+  })
+
+  it('enables save button when input is given', async () => {
+    await user.type(userInput, 'mockemail@gmail.com')
+
+    await waitFor(() => {
+      expect(saveButton).not.toBeDisabled()
+    })
+  })
+})
