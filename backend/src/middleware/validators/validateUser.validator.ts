@@ -2,6 +2,7 @@ import { body, ValidationChain } from 'express-validator';
 
 const validateUsername = () => {
   return body('username')
+    .optional()
     .trim()
     .notEmpty()
     .withMessage('username is required')
@@ -11,6 +12,7 @@ const validateUsername = () => {
 
 const validateEmail = () => {
   return body('email')
+    .optional()
     .trim()
     .isEmail()
     .withMessage('Invalid email address')
@@ -19,6 +21,7 @@ const validateEmail = () => {
 
 const validatePassword = () => {
   return body('password')
+    .optional()
     .isLength({ min: 7 })
     .withMessage('password must be at least 7 characters long');
 };

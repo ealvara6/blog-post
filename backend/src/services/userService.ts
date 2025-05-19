@@ -75,3 +75,21 @@ export const findUserOnEmail = async (
     },
   });
 };
+
+export const findUserOnUsername = async (
+  prisma: PrismaClient,
+  username: string
+): Promise<User> => {
+  return await prisma.user.findUnique({
+    where: { username },
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      blogAuthor: true,
+      password: true,
+      posts: true,
+      comments: true,
+    },
+  });
+};

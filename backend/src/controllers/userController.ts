@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
 import {
   findUser,
+  findUserOnEmail,
+  findUserOnUsername,
   getUsersService,
   updateUserService,
 } from '../services/userService';
 import { handleError } from '../utils/errorhandler';
+import hashPassword from '../utils/hashPassword';
 
 export const getAuthUser = async (
   req: Request,
@@ -83,6 +86,34 @@ export const updateUser = async (
     const prisma = req.prisma;
     const id = Number(req.params.id);
     const updateData = req.body;
+
+    if (!req.user) {
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
+    }
+
+    if (req.body.email) {
+      if (await findUserOnEmail(prisma, req.body.email)) {
+        res.status(409).json({
+          error: 'Email is already associated with an existing account',
+        });
+        return;
+      }
+    }
+
+    if (req.body.username) {
+      if ((await findUserOnUsername(prisma, req.body.username)) !== null) {
+        res.status(409).json({
+          error: 'Username is already associated with an existing account',
+        });
+        return;
+      }
+    }
+
+    if (req.body.password) {
+      req.body.password = await hashPassword(req.body.password);
+    }
+
     const user = await findUser(prisma, id);
 
     if (!user) {
