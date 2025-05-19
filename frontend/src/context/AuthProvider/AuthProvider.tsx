@@ -40,7 +40,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       )
       setAuthUser(response.data.payload)
     } catch (err) {
-      parseErrorMessage(err)
+      const message = parseErrorMessage(err)
+      throw message
     }
   }, [])
 
