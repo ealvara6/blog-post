@@ -2,21 +2,39 @@ import { useAuth } from '@/context/AuthProvider/useAuth'
 import { useState } from 'react'
 import { Modal } from './Modal'
 import { UserNameModal } from './Account/Modals/UsernameModal'
+import { EmailModal } from './Account/Modals/EmailModal'
+import { PasswordModal } from './Account/Modals/PasswordModal'
+import { DeleteAccountModal } from './Account/Modals/DeleteAccountModal'
 
 export const AccountInfo = () => {
   const { authUser } = useAuth()
-  const [isOpen, setIsOpen] = useState<'username' | null | string>(null)
+  const [isOpen, setIsOpen] = useState<'username' | 'email' | null | string>(
+    null,
+  )
 
   const tabInfo = [
     {
       name: 'username',
       label: 'Change Username',
       subtext: authUser?.username,
-      component: <UserNameModal setIsOpen={setIsOpen} />,
+      component: <UserNameModal />,
     },
-    { name: 'email', label: 'Change Email', subtext: authUser?.email },
-    { name: 'password', label: 'Change Password' },
-    { name: 'delete', label: 'Delete Account' },
+    {
+      name: 'email',
+      label: 'Change Email',
+      subtext: authUser?.email,
+      component: <EmailModal />,
+    },
+    {
+      name: 'password',
+      label: 'Change Password',
+      component: <PasswordModal />,
+    },
+    {
+      name: 'delete',
+      label: 'Delete Account',
+      component: <DeleteAccountModal />,
+    },
   ]
 
   const handleClick = (name: string) => {
