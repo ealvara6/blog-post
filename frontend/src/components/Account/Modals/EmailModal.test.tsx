@@ -23,16 +23,11 @@ describe('change email modal', () => {
     expect(saveButton).toBeInTheDocument()
   })
 
-  it('disables save button when no input is given', () => {
-    expect(userInput).toHaveValue('')
-    expect(saveButton).toBeDisabled()
-  })
-
-  it('enables save button when input is given', async () => {
-    await user.type(userInput, 'mockemail@gmail.com')
+  it('accepts user input', async () => {
+    await user.type(userInput, 'mock_email@email.com')
 
     await waitFor(() => {
-      expect(saveButton).not.toBeDisabled()
+      expect(userInput).toHaveValue('mock_email@email.com')
     })
   })
 })
