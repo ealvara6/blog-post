@@ -5,6 +5,7 @@ import { useUpdateUser } from '@/hooks/useUpdateUser'
 import { handleUserUpdate } from '@/utils/handleUserUpdate'
 import { emailSchema } from '@/validations/authValidations'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const EmailModal = () => {
@@ -12,14 +13,19 @@ export const EmailModal = () => {
   const updateUser = useUpdateUser()
   const {
     register,
-    formState: { isValid, isSubmitting, errors },
+    formState: { isSubmitting, errors },
     handleSubmit,
   } = useForm({ resolver: zodResolver(emailSchema) })
+  const [serverError, setServerError] = useState('')
 
-  const onSubmit = async (data: { email: string }) => {
+  const onSubmit = async (updateData: { email: string }) => {
     if (!authUser?.id) return
-    const updatedUser = { ...authUser, ...data }
-    handleUserUpdate(updatedUser, setAuthUser, updateUser)
+    handleUserUpdate(
+      { ...updateData, id: authUser.id },
+      setAuthUser,
+      updateUser,
+      setServerError,
+    )
   }
 
   return (
@@ -31,13 +37,10 @@ export const EmailModal = () => {
           <div className="text-red-500">{errors['email']?.message}</div>
         )}
       </div>
+      {serverError && <div className="text-red-500">{serverError}</div>}
       <div className="flex justify-end gap-3">
         <Button type="button">Cancel</Button>
-        <Button
-          type="submit"
-          disabled={!isValid || isSubmitting}
-          isActive={isValid && !isSubmitting}
-        >
+        <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Saving...' : 'Save'}
         </Button>
       </div>
