@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { PrismaClient } from '@prisma/client/extension';
 
 interface CheckUserDTO {
@@ -91,5 +91,19 @@ export const findUserOnUsername = async (
       posts: true,
       comments: true,
     },
+  });
+};
+
+export const deleteUserService = async (prisma: PrismaClient, id: number) => {
+  await prisma.comment.deleteMany({
+    where: { userId: id },
+  });
+
+  await prisma.post.deleteMany({
+    where: { userId: id },
+  });
+
+  return await prisma.user.delete({
+    where: { id },
   });
 };

@@ -5,6 +5,7 @@ import {
   findUserOnUsername,
   getUsersService,
   updateUserService,
+  deleteUserService,
 } from '../services/userService';
 import { handleError } from '../utils/errorhandler';
 import hashPassword from '../utils/hashPassword';
@@ -152,9 +153,7 @@ export const deleteUser = async (
       return;
     }
 
-    const deletedUser = await prisma.user.delete({
-      where: { id },
-    });
+    const deletedUser = await deleteUserService(prisma, id);
 
     res.status(200).json({ message: 'User successfully deleted', deletedUser });
   } catch (err) {
