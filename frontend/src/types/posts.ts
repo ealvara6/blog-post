@@ -15,6 +15,7 @@ export interface Comment {
   createdAt: string
   userId: number
   user: User
+  postId?: number
 }
 
 export interface User {
