@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { PrismaClient } from '@prisma/client/extension';
 import {
   deleteUser,
+  getUserComments,
   getUserPosts,
   updateUser,
 } from '../../controllers/userController';
@@ -20,6 +21,7 @@ export const authUserRoutes = (prisma: PrismaClient) => {
     .delete(validateUserDeletion, deleteUser);
 
   router.get('/:id/posts', validateId, getUserPosts);
+  router.get('/:id/comments', validateId, getUserComments);
 
   return router;
 };

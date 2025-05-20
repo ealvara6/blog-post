@@ -7,6 +7,7 @@ import {
   updateUserService,
   deleteUserService,
   getUserPostsService,
+  getUserCommentsService,
 } from '../services/userService';
 import { handleError } from '../utils/errorhandler';
 import hashPassword from '../utils/hashPassword';
@@ -177,13 +178,31 @@ export const getUserPosts = async (
     const prisma = req.prisma;
     const id = Number(req.params.id);
     let posts = await getUserPostsService(prisma, id);
-    console.log(posts);
 
     res.status(200).json({ data: posts });
     return;
   } catch (err) {
     handleError(err, res, {
       errorMessage: 'failed to get user posts',
+    });
+  }
+};
+
+export const getUserComments = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+    const id = Number(req.params.id);
+    let comments = await getUserCommentsService(prisma, id);
+    console.log(comments);
+
+    res.status(200).json({ data: comments });
+    return;
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to get user comments',
     });
   }
 };

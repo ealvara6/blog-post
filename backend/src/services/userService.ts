@@ -124,3 +124,23 @@ export const getUserPostsService = async (prisma: PrismaClient, id: number) => {
     },
   });
 };
+
+export const getUserCommentsService = async (
+  prisma: PrismaClient,
+  id: number
+) => {
+  return await prisma.comment.findMany({
+    where: { userId: id },
+    select: {
+      id: true,
+      createdAt: true,
+      content: true,
+      postId: true,
+      user: {
+        select: {
+          username: true,
+        },
+      },
+    },
+  });
+};
