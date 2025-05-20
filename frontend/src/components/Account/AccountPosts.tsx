@@ -29,12 +29,11 @@ export const AccountPosts = () => {
   }, [authUser, getUserPosts])
 
   const fetchPosts = () => {
-    console.log(posts)
     if (posts === undefined || Object.keys(posts).length === 0)
       return <div>No posts found</div>
 
-    const postItems = posts.map((post) => {
-      return <PostCard post={post} />
+    const postItems = posts.map((post, index) => {
+      return <PostCard post={post} key={index} />
     })
 
     return <div>{postItems}</div>

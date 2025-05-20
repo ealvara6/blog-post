@@ -42,11 +42,12 @@ export const AccountInfo = () => {
   }
 
   const Tabs = () => {
-    const tabs = tabInfo.map((tab) => {
+    const tabs = tabInfo.map((tab, index) => {
       return (
         <div
           className={`flex min-h-16 w-full cursor-pointer rounded border border-gray-500 p-2 ${tab.label === 'Delete Account' ? 'bg-red-700' : ''}`}
           onClick={() => handleClick(tab.name)}
+          key={index}
         >
           <div className="flex grow flex-col">
             <div className="flex grow items-center font-bold">{tab.label}</div>

@@ -43,12 +43,14 @@ export const PostItem = ({
     return currentcomments.map((comment, index) => {
       const date = new Date(comment.createdAt)
       return (
-        <CommentItem
-          comment={comment}
-          index={index}
-          date={date}
-          setCurrentComments={setCurrentComments}
-        />
+        <div key={index}>
+          <CommentItem
+            comment={comment}
+            index={index}
+            date={date}
+            setCurrentComments={setCurrentComments}
+          />
+        </div>
       )
     })
   }
