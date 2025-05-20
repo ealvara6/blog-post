@@ -23,17 +23,17 @@ export const AccountInfo = () => {
       name: 'email',
       label: 'Change Email',
       subtext: authUser?.email,
-      component: <EmailModal />,
+      component: <EmailModal setIsOpen={setIsOpen} />,
     },
     {
       name: 'password',
       label: 'Change Password',
-      component: <PasswordModal />,
+      component: <PasswordModal setIsOpen={setIsOpen} />,
     },
     {
       name: 'delete',
       label: 'Delete Account',
-      component: <DeleteAccountModal />,
+      component: <DeleteAccountModal setIsOpen={setIsOpen} />,
     },
   ]
 

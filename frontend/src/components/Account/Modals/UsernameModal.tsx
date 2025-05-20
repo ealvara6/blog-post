@@ -5,10 +5,14 @@ import { useUpdateUser } from '@/hooks/useUpdateUser'
 import { handleUserUpdate } from '@/utils/handleUserUpdate'
 import { usernameSchema } from '@/validations/authValidations'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-export const UserNameModal = () => {
+export const UserNameModal = ({
+  setIsOpen,
+}: {
+  setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
+}) => {
   const { authUser, setAuthUser } = useAuth()
   const {
     register,
@@ -37,7 +41,7 @@ export const UserNameModal = () => {
       )}
       {serverError && <div className="text-red-500">{serverError}</div>}
       <div className="flex gap-3 self-end">
-        <Button size="sm" type="button">
+        <Button size="sm" type="button" onClick={() => setIsOpen(null)}>
           Cancel
         </Button>
         <Button type="submit" disabled={isSubmitting} size="sm">

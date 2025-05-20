@@ -5,10 +5,14 @@ import { useUpdateUser } from '@/hooks/useUpdateUser'
 import { handleUserUpdate } from '@/utils/handleUserUpdate'
 import { passwordSchema } from '@/validations/authValidations'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-export const PasswordModal = () => {
+export const PasswordModal = ({
+  setIsOpen,
+}: {
+  setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
+}) => {
   const { authUser, setAuthUser } = useAuth()
   const updateUser = useUpdateUser()
   const {
@@ -62,7 +66,9 @@ export const PasswordModal = () => {
       </div>
       {serverError && <div>{serverError}</div>}
       <div className="flex justify-end gap-3">
-        <Button type="button">Cancel</Button>
+        <Button type="button" onClick={() => setIsOpen(null)}>
+          Cancel
+        </Button>
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Saving....' : 'Save'}
         </Button>

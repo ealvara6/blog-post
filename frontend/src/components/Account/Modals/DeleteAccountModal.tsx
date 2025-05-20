@@ -2,9 +2,13 @@ import { Button } from '@/components/Button'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { useDeleteUser } from '@/hooks/useDeleteUser'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
-export const DeleteAccountModal = () => {
+export const DeleteAccountModal = ({
+  setIsOpen,
+}: {
+  setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
+}) => {
   const { authUser, logout } = useAuth()
   const deleteUser = useDeleteUser()
   const [serverError, setServerError] = useState('')
@@ -29,7 +33,7 @@ export const DeleteAccountModal = () => {
         <div className="text-center text-red-500">{serverError}</div>
       )}
       <div className="flex justify-end gap-4">
-        <Button>Cancel</Button>
+        <Button onClick={() => setIsOpen(null)}>Cancel</Button>
         <Button variant="danger" onClick={onDelete}>
           Delete
         </Button>
