@@ -6,6 +6,7 @@ import {
   getUsersService,
   updateUserService,
   deleteUserService,
+  getUserPostsService,
 } from '../services/userService';
 import { handleError } from '../utils/errorhandler';
 import hashPassword from '../utils/hashPassword';
@@ -165,5 +166,24 @@ export const deleteUser = async (
       return;
     }
     res.status(500).json({ error: 'an unknown error occured' });
+  }
+};
+
+export const getUserPosts = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+    const id = Number(req.params.id);
+    let posts = await getUserPostsService(prisma, id);
+    console.log(posts);
+
+    res.status(200).json({ data: posts });
+    return;
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'failed to get user posts',
+    });
   }
 };
