@@ -17,7 +17,7 @@ export const UpdateCommentForm = ({
   content: string
   commentId: number
   toggleEdit: () => void
-  setCurrentComments: React.Dispatch<React.SetStateAction<Comment[]>>
+  setCurrentComments?: React.Dispatch<React.SetStateAction<Comment[]>>
 }) => {
   const {
     register,
@@ -33,6 +33,7 @@ export const UpdateCommentForm = ({
   const onSubmit = async (data: { content: string }) => {
     try {
       const updatedComment = await updateComment({ ...data, commentId })
+      if (!setCurrentComments) return
 
       setCurrentComments((prev) =>
         prev.map((comment) =>

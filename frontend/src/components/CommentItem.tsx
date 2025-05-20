@@ -15,7 +15,7 @@ export const CommentItem = ({
   comment: Comment
   index: number
   date: Date
-  setCurrentComments: React.Dispatch<React.SetStateAction<Comment[]>>
+  setCurrentComments?: React.Dispatch<React.SetStateAction<Comment[]>>
 }) => {
   const { id } = comment
   const { authUser } = useAuth()
@@ -27,6 +27,7 @@ export const CommentItem = ({
     try {
       setIsLoading(true)
       const deletedComment = await deleteComment(id)
+      if (!setCurrentComments) return
       setCurrentComments((prev) =>
         prev.filter((comment) => comment.id !== deletedComment.id),
       )
