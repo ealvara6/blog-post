@@ -39,11 +39,12 @@ export const Account = () => {
   const Tabs = () => {
     return (
       <>
-        <div className="flex min-w-3xl cursor-pointer justify-around border-b p-2">
-          {tabs.map((tab) => (
+        <div className="flex min-w-3xl justify-around border-b p-2">
+          {tabs.map((tab, index) => (
             <div
-              className={`${isActive === tab.value ? 'font-bold' : ''}`}
+              className={`${isActive === tab.value ? 'font-bold' : ''} cursor-pointer`}
               onClick={() => setIsActive(tab.value)}
+              key={index}
             >
               {tab.label}
             </div>
