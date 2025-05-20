@@ -1,10 +1,10 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { useState } from 'react'
-import { Modal } from './Modal'
-import { UserNameModal } from './Account/Modals/UsernameModal'
-import { EmailModal } from './Account/Modals/EmailModal'
-import { PasswordModal } from './Account/Modals/PasswordModal'
-import { DeleteAccountModal } from './Account/Modals/DeleteAccountModal'
+import { Modal } from '../Modal'
+import { UserNameModal } from './Modals/UsernameModal'
+import { EmailModal } from './Modals/EmailModal'
+import { PasswordModal } from './Modals/PasswordModal'
+import { DeleteAccountModal } from './Modals/DeleteAccountModal'
 
 export const AccountInfo = () => {
   const { authUser } = useAuth()
@@ -17,7 +17,7 @@ export const AccountInfo = () => {
       name: 'username',
       label: 'Change Username',
       subtext: authUser?.username,
-      component: <UserNameModal />,
+      component: <UserNameModal setIsOpen={setIsOpen} />,
     },
     {
       name: 'email',
