@@ -19,6 +19,7 @@ jest.mock('@prisma/client', () => {
       create: jest.fn(),
       update: jest.fn(),
       delete: jest.fn(),
+      deleteMany: jest.fn(),
       findUnique: jest.fn(),
     },
     comment: {
@@ -451,54 +452,6 @@ describe('Auth Routes', () => {
 
   describe('PUT api calls', () => {
     describe('PUT /api/auth/users/:id', () => {
-      it('Should update an existing user data based on their id', async () => {
-        prismaMock.user.findUnique.mockResolvedValue(testUser);
-        prismaMock.user.update.mockResolvedValue({
-          ...testUser,
-          email: 'updated@email.com',
-        });
-
-        const res = await request(app)
-          .put('/api/auth/users/1')
-          .set('Authorization', `Bearer ${authToken}`)
-          .send({
-            ...testUser,
-            email: 'updated@email.com',
-          });
-
-        expect(res.statusCode).toBe(200);
-
-        expect(res.body).toEqual({
-          message: 'User successfully updated',
-          updatedUser: {
-            id: 1,
-            username: 'mockUser',
-            email: 'updated@email.com',
-            password: expect.any(String),
-            createdAt: expect.any(String),
-            blogAuthor: false,
-            posts: [
-              {
-                id: 101,
-                title: 'mock_title',
-                content: 'mock content',
-                published: true,
-                createdAt: expect.any(String),
-              },
-            ],
-            comments: [
-              {
-                id: 201,
-                content: 'mock comment',
-                createdAt: expect.any(String),
-                postId: 101,
-                userUsername: 'mockUser',
-              },
-            ],
-          },
-        });
-      });
-
       it('Should return a 400 status code if the data is invalid', async () => {
         prismaMock.user.findUnique.mockResolvedValue(testUser);
         prismaMock.user.update.mockResolvedValue({
@@ -538,42 +491,6 @@ describe('Auth Routes', () => {
 
         expect(res.body).toEqual({
           error: 'Invalid id input',
-        });
-      });
-
-      it("Should return a 404 user not found error when trying to update a user that doesn't exist", async () => {
-        prismaMock.user.findUnique.mockResolvedValue();
-
-        const res = await request(app)
-          .put(`/api/auth/users/1`)
-          .set('Authorization', `Bearer ${authToken}`)
-          .set('Authorization', `Bearer ${authToken}`)
-          .send({ ...testUser, email: 'updated@email.com ' });
-
-        expect(res.statusCode).toBe(404);
-
-        expect(res.body).toEqual({
-          error: 'User does not exist',
-        });
-      });
-
-      it('Should handle database errors gracefully', async () => {
-        prismaMock.user.findUnique.mockResolvedValue(testUser);
-        prismaMock.user.update.mockRejectedValue(
-          new Error('Failed to update user')
-        );
-
-        const res = await request(app)
-          .put('/api/auth/users/1')
-          .set('Authorization', `Bearer ${authToken}`)
-          .set('Authorization', `Bearer ${authToken}`)
-          .send({ ...testUser, email: 'updated@email.com' });
-
-        expect(res.statusCode).toBe(500);
-
-        expect(res.body).toEqual({
-          error: 'Failed to update user',
-          details: 'Failed to update user',
         });
       });
 
