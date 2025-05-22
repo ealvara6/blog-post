@@ -10,6 +10,7 @@ import {
 import { getComment, getComments } from '../controllers/commentController';
 import { getUser, getUsers } from '../controllers/userController';
 import { createUser } from '../controllers/authController';
+import { getCategories } from '../controllers/categoryController';
 
 export const publicRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
@@ -26,6 +27,8 @@ export const publicRoutes = (prisma: PrismaClient): Router => {
 
   router.get('/users', getUsers);
   router.get('/users/:id', validateId, getUser);
+
+  router.get('/categories', getCategories);
 
   return router;
 };
