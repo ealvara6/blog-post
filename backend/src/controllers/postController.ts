@@ -6,6 +6,14 @@ import {
   deletePostService,
   updatePostService,
 } from '../services/postService';
+import { Category } from '@prisma/client';
+
+type CreatePostProps = {
+  title: string;
+  content: string;
+  userId: number;
+  categories: Category[];
+};
 
 export const createPost = async (
   req: Request,
@@ -13,8 +21,15 @@ export const createPost = async (
 ): Promise<void> => {
   try {
     const prisma = req.prisma;
+    const { title, content, categories, userId }: CreatePostProps = req.body;
+    const data = {
+      title,
+      content,
+      userId,
+      categories: categories.map(({ id }) => ({ id })),
+    };
 
-    const newPost = await createPostService(prisma, req.body);
+    const newPost = await createPostService(prisma, data);
 
     res
       .status(201)
@@ -85,11 +100,9 @@ export const updatePost = async (
     const data = {
       title,
       content,
-      categories,
-    };
-
-    data.categories = {
-      set: categories,
+      categories: {
+        set: categories,
+      },
     };
 
     const post = await updatePostService(prisma, id, data);

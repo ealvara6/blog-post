@@ -5,17 +5,22 @@ interface CreatePostDTO {
   title: string;
   content?: string;
   userId: number;
+  categories: { id: number }[];
 }
 
 export const createPostService = async (
   prisma: PrismaClient,
-  { title, content, userId }: CreatePostDTO
+  { title, content, userId, categories }: CreatePostDTO
 ): Promise<Post> => {
+  console.log(categories);
   return await prisma.post.create({
     data: {
       title,
       content,
       userId,
+      categories: {
+        connect: categories.map(({ id }) => ({ id })),
+      },
     },
   });
 };

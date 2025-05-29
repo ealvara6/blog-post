@@ -6,6 +6,8 @@ import { useAuth } from '@/context/AuthProvider/useAuth'
 import { useCreatePost } from '@/hooks/useCreatePost'
 import { PostForm } from './PostForm'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { useGetCategories } from '@/hooks/useGetCategories'
+import { Category } from '@/types/posts'
 
 type FormData = z.infer<typeof postSchema>
 
@@ -13,6 +15,7 @@ export const CreatePostForm = () => {
   const navigate = useNavigate()
   const { authUser } = useAuth()
   const createPost = useCreatePost()
+  const getCategories = useGetCategories()
   const [serverError, setServerError] = useState({ msg: '' })
 
   useEffect(() => {
@@ -22,7 +25,18 @@ export const CreatePostForm = () => {
   const onSubmit = async (data: FormData) => {
     try {
       if (!authUser) return navigate('/login')
-      const post = await createPost({ ...data, userId: authUser.id })
+
+      const allCategories: Category[] = await getCategories()
+      const categories = allCategories.filter((category) =>
+        data.categoryIds.includes(category.id),
+      )
+
+      const post = await createPost({
+        title: data.title,
+        content: data.content,
+        categories: categories,
+        userId: authUser.id,
+      })
       navigate(`/posts/${post.id}`)
     } catch (err) {
       setServerError({ msg: parseErrorMessage(err) })

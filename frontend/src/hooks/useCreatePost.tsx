@@ -1,10 +1,12 @@
 import api from '@/api/axios'
+import { Category } from '@/types/posts'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 interface CreatePost {
   title: string
   content: string
   userId: number
+  categories: Category[]
 }
 
 export const useCreatePost = () => {
