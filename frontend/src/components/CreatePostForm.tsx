@@ -35,6 +35,7 @@ export const CreatePostForm = () => {
         onSubmit={onSubmit}
         submitLabel="Create Post"
         submittingLabel="Creating..."
+        defaultValues={{ title: '', content: '', categoryIds: [] }}
       />
       {serverError && (
         <div className="text-center text-red-500">{serverError.msg}</div>

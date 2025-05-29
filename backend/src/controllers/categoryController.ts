@@ -7,7 +7,6 @@ export const getCategories = async (req: Request, res: Response) => {
     const prisma = req.prisma;
 
     let categories = await getCategoriesService(prisma);
-    console.log(categories);
     res.status(200).json({ categories });
     return;
   } catch (err) {

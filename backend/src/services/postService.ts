@@ -60,6 +60,7 @@ export const getPostService = async (
       content: true,
       published: true,
       userId: true,
+      categories: true,
       user: {
         select: {
           id: true,

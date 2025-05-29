@@ -196,7 +196,6 @@ export const getUserComments = async (
     const prisma = req.prisma;
     const id = Number(req.params.id);
     let comments = await getUserCommentsService(prisma, id);
-    console.log(comments);
 
     res.status(200).json({ data: comments });
     return;
