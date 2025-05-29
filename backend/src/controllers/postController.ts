@@ -79,10 +79,21 @@ export const updatePost = async (
   res: Response
 ): Promise<void> => {
   try {
+    const { title, content, categories } = req.body;
     const prisma = req.prisma;
     const id = Number(req.params.id);
-    const data: Object = req.body;
+    const data = {
+      title,
+      content,
+      categories,
+    };
+
+    data.categories = {
+      set: categories,
+    };
+
     const post = await updatePostService(prisma, id, data);
+    console.log(post);
 
     if (!post) {
       res.status(404).json({ error: 'Post not found' });

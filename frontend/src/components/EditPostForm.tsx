@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import postSchema from '@/validations/postValidations'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { useGetCategories } from '@/hooks/useGetCategories'
+import { Category } from '@/types/posts'
 
 type FormData = z.infer<typeof postSchema>
 
@@ -14,15 +16,19 @@ export const EditPostForm = ({
   content,
   id,
   userId,
+  categoryIds,
 }: {
   title: string
   content: string
   id: number
   userId: number
+  categoryIds: number[]
 }) => {
+  if (!categoryIds) categoryIds = []
   const navigate = useNavigate()
   const { authUser } = useAuth()
   const editPost = useUpdatePost()
+  const getCategories = useGetCategories()
   const [serverError, setServerError] = useState({ msg: '' })
 
   useEffect(() => {
@@ -31,7 +37,17 @@ export const EditPostForm = ({
 
   const onSubmit = async (data: FormData) => {
     try {
-      await editPost({ ...data, userId: authUser?.id, id })
+      const allCategories: Category[] = await getCategories()
+      const categories = allCategories.filter((category) =>
+        data.categoryIds.includes(category.id),
+      )
+      await editPost({
+        title: data.title,
+        content: data.content,
+        categories: categories,
+        userId: authUser?.id,
+        id,
+      })
       navigate(`/posts/${id}`)
     } catch (err) {
       setServerError({ msg: parseErrorMessage(err) })
@@ -40,7 +56,10 @@ export const EditPostForm = ({
 
   return (
     <div>
-      <PostForm onSubmit={onSubmit} defaultValues={{ title, content }} />
+      <PostForm
+        onSubmit={onSubmit}
+        defaultValues={{ title, content, categoryIds }}
+      />
       {serverError && <div className="text-red-500">{serverError.msg}</div>}
     </div>
   )

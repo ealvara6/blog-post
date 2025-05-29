@@ -1,10 +1,12 @@
 import api from '@/api/axios'
+import { Category } from '@/types/posts'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 interface EditPost {
   id: number
   title: string
   content: string
+  categories: Category[]
   userId: number | undefined
 }
 

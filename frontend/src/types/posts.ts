@@ -4,6 +4,7 @@ export interface Post {
   content: string
   createdAt: string
   published: boolean
+  categories?: Category[]
   comments?: Comment[]
   user: User
   userId: number
@@ -21,4 +22,9 @@ export interface Comment {
 export interface User {
   id: number
   username: string
+}
+
+export interface Category {
+  id: number
+  name: string
 }

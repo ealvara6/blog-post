@@ -1,18 +1,29 @@
 import postSchema from '@/validations/postValidations'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from './Button'
+import { useEffect, useState } from 'react'
+import { Category } from '@/types/posts'
+import { useGetCategories } from '@/hooks/useGetCategories'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { Options } from './Options'
 
 interface PostFormProps {
   defaultValues?: {
     title: string
     content: string
+    categoryIds: number[]
   }
   submittingLabel?: string
   submitLabel?: string
-  onSubmit: (data: { title: string; content: string }) => Promise<void>
+  onSubmit: (data: {
+    title: string
+    content: string
+    categoryIds: number[]
+  }) => Promise<void>
 }
+
 type FormData = z.infer<typeof postSchema>
 
 export const PostForm = ({
@@ -24,8 +35,28 @@ export const PostForm = ({
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({ resolver: zodResolver(postSchema), defaultValues })
+  const getCategories = useGetCategories()
+
+  const [categories, setCategories] = useState<Category[]>()
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const fetchedCategories: Category[] = await getCategories()
+        setCategories(fetchedCategories)
+      } catch (err) {
+        parseErrorMessage(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCategories()
+  }, [getCategories])
 
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
@@ -56,6 +87,30 @@ export const PostForm = ({
           placeholder="Content"
         />
       </div>
+      {loading ? (
+        'Loading Categories...'
+      ) : (
+        <div className="flex flex-col gap-2.5">
+          <div className="text-lg font-bold">Category</div>
+          <div className="flex justify-around">
+            <Controller
+              name="categoryIds"
+              control={control}
+              defaultValue={undefined}
+              render={({ field }) => (
+                <Options
+                  options={categories}
+                  selected={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          </div>
+          {errors['categoryIds'] && (
+            <p className="text-red-500">{errors['categoryIds'].message}</p>
+          )}
+        </div>
+      )}
       <Button disabled={isSubmitting} isActive={!isSubmitting}>
         {isSubmitting
           ? (submittingLabel ?? 'Submitting...')

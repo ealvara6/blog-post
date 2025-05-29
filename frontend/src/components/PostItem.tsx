@@ -14,6 +14,7 @@ export const PostItem = ({
   comments,
   id,
   userId,
+  categories,
   user,
 }: Post) => {
   if (!comments) comments = []
@@ -56,7 +57,10 @@ export const PostItem = ({
   }
 
   const handleEdit = () => {
-    navigate(`/posts/${id}/edit`, { state: { title, content, userId, id } })
+    const categoryIds = categories?.map((category) => category.id)
+    navigate(`/posts/${id}/edit`, {
+      state: { title, content, userId, id, categoryIds },
+    })
   }
 
   const AuthButtons = () => {
