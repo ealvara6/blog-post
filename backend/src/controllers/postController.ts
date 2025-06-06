@@ -47,11 +47,20 @@ export const createPost = async (
 
 export const getPosts = async (req: Request, res: Response): Promise<void> => {
   try {
+    const page = Number(req.query.page ?? 1);
+    const limit = Number(req.query.limit ?? 10);
+    const skip = (page - 1) * limit;
     const prisma = req.prisma;
-    let posts = await getPostsService(prisma);
+
+    let [posts, total] = await getPostsService(prisma, limit, skip);
 
     res.status(200).json({
       posts,
+      pageInfo: {
+        currentPage: page,
+        total,
+        totalPage: Math.ceil(total / limit),
+      },
     });
   } catch (err) {
     if (err instanceof Error) {
@@ -106,7 +115,6 @@ export const updatePost = async (
     };
 
     const post = await updatePostService(prisma, id, data);
-    console.log(post);
 
     if (!post) {
       res.status(404).json({ error: 'Post not found' });

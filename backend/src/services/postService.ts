@@ -12,7 +12,6 @@ export const createPostService = async (
   prisma: PrismaClient,
   { title, content, userId, categories }: CreatePostDTO
 ): Promise<Post> => {
-  console.log(categories);
   return await prisma.post.create({
     data: {
       title,
@@ -26,31 +25,40 @@ export const createPostService = async (
 };
 
 export const getPostsService = async (
-  prisma: PrismaClient
-): Promise<Post[]> => {
-  return await prisma.post.findMany({
-    select: {
-      id: true,
-      title: true,
-      content: true,
-      published: true,
-      userId: true,
-      user: {
-        select: {
-          id: true,
-          username: true,
+  prisma: PrismaClient,
+  limit: number,
+  skip: number
+) => {
+  const [posts, total] = await Promise.all([
+    prisma.post.findMany({
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        published: true,
+        userId: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+          },
+        },
+        createdAt: true,
+        comments: {
+          select: {
+            content: true,
+            id: true,
+            userId: true,
+          },
         },
       },
-      createdAt: true,
-      comments: {
-        select: {
-          content: true,
-          id: true,
-          userId: true,
-        },
-      },
-    },
-  });
+      skip,
+      take: Number(limit),
+    }),
+    prisma.post.count(),
+  ]);
+
+  return [posts, total];
 };
 
 export const getPostService = async (
