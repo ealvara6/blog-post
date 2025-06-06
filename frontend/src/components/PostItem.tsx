@@ -76,6 +76,20 @@ export const PostItem = ({
     )
   }
 
+  const Categories = () => {
+    const categoryItems = categories?.map((category, index) => {
+      return (
+        <div
+          className={`font-thin dark:text-gray-300 ${index !== categories.length - 1 && 'border-r px-2'}`}
+        >
+          {category.name}
+        </div>
+      )
+    })
+
+    return categoryItems
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col">
@@ -86,9 +100,14 @@ export const PostItem = ({
         <div className="border-b-border-dark border border-t-transparent p-3">
           {content}
         </div>
-        <div className="border border-t-transparent p-3 text-end font-mono font-thin">
-          <span className="font-semibold">Posted At:</span>{' '}
-          {date.toLocaleString()}
+        <div className="flex justify-between border border-t-transparent p-3 font-mono font-thin">
+          <div className="flex gap-2">
+            <Categories />
+          </div>
+          <div>
+            <span className="font-semibold">Posted At:</span>{' '}
+            {date.toLocaleString()}
+          </div>
         </div>
         <AuthButtons />
       </div>
