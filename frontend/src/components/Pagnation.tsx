@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from './Button'
+import { useNavigate } from 'react-router-dom'
 
 interface PagnationProps {
   currentPage: string
@@ -10,14 +11,16 @@ interface PagnationProps {
         totalPage: string
       }
     | undefined
-  setPage: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const Pagnation = ({
-  currentPage,
-  pageInfo,
-  setPage,
-}: PagnationProps) => {
+export const Pagnation = ({ currentPage, pageInfo }: PagnationProps) => {
+  const navigate = useNavigate()
+
+  const handlePageClick = (page: number) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    navigate(`/posts?page=${page.toString()}`)
+  }
+
   const PageNumbers = () => {
     const pages = []
     const limit = 10
@@ -41,7 +44,7 @@ export const Pagnation = ({
           return (
             <div
               className={`w-14 cursor-pointer rounded border p-2 text-center select-none ${page === Number(currentPage) ? 'dark:bg-primary-dark' : ''}`}
-              onClick={() => setPage(page.toString())}
+              onClick={() => handlePageClick(page)}
             >
               {page}
             </div>
@@ -50,10 +53,20 @@ export const Pagnation = ({
       </div>
     )
   }
+
+  const handleNavigationButton = (direction: string) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
+    if (direction === 'backward')
+      navigate(`/posts?page=${Number(currentPage) - 1}`)
+    if (direction === 'forward')
+      navigate(`/posts?page=${Number(currentPage) + 1}`)
+  }
+
   const BackButton = () => {
     return (
       <Button
-        onClick={() => setPage((Number(currentPage) - 1).toString())}
+        onClick={() => handleNavigationButton('backward')}
         variant="transparent"
         className="p-2 select-none"
       >
@@ -65,7 +78,7 @@ export const Pagnation = ({
   const ForwardButton = () => {
     return (
       <Button
-        onClick={() => setPage((Number(currentPage) + 1).toString())}
+        onClick={() => handleNavigationButton('forward')}
         variant="transparent"
         className="p-2 select-none"
       >

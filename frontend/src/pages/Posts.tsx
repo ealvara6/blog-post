@@ -4,10 +4,15 @@ import { useGetPosts } from '@/hooks/useGetPosts'
 import { Post } from '@/types/posts'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 export const Posts = () => {
+  const location = useLocation()
+  const query = new URLSearchParams(location.search)
+  const page = query.get('page') || '1'
+
   const [posts, setPosts] = useState<Post[]>()
-  const [page, setPage] = useState('1')
+  // const [page, setPage] = useState('1')
   const [pageInfo, setPageInfo] = useState()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -37,7 +42,7 @@ export const Posts = () => {
       {posts ? (
         <div className="w-full">
           <GetPosts posts={posts} pageInfo={pageInfo} />
-          <Pagnation currentPage={page} setPage={setPage} pageInfo={pageInfo} />
+          <Pagnation currentPage={page} pageInfo={pageInfo} />
         </div>
       ) : (
         <div>No posts found</div>
