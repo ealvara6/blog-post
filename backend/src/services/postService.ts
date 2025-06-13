@@ -27,10 +27,17 @@ export const createPostService = async (
 export const getPostsService = async (
   prisma: PrismaClient,
   limit: number,
-  skip: number
+  skip: number,
+  searchTerm: string
 ) => {
   const [posts, total] = await Promise.all([
     prisma.post.findMany({
+      where: {
+        OR: [
+          { title: { contains: searchTerm, mode: 'insensitive' } },
+          { content: { contains: searchTerm, mode: 'insensitive' } },
+        ],
+      },
       select: {
         id: true,
         title: true,
@@ -55,7 +62,14 @@ export const getPostsService = async (
       skip,
       take: Number(limit),
     }),
-    prisma.post.count(),
+    prisma.post.count({
+      where: {
+        OR: [
+          { title: { contains: searchTerm, mode: 'insensitive' } },
+          { content: { contains: searchTerm, mode: 'insensitive' } },
+        ],
+      },
+    }),
   ]);
 
   return [posts, total];

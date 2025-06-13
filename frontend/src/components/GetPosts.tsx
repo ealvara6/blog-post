@@ -1,5 +1,6 @@
 import PostCard from './PostCard'
 import { Post } from '@/types/posts'
+import { SearchBar } from './SearchBar'
 
 interface PageInfoProps {
   currentPage: string

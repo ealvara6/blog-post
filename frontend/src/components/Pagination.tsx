@@ -1,8 +1,7 @@
-import React from 'react'
 import { Button } from './Button'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-interface PagnationProps {
+interface PaginationProps {
   currentPage: string
   pageInfo:
     | {
@@ -13,12 +12,15 @@ interface PagnationProps {
     | undefined
 }
 
-export const Pagnation = ({ currentPage, pageInfo }: PagnationProps) => {
+export const Pagination = ({ currentPage, pageInfo }: PaginationProps) => {
+  const location = useLocation()
+  const query = new URLSearchParams(location.search)
   const navigate = useNavigate()
 
   const handlePageClick = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    navigate(`/posts?page=${page.toString()}`)
+    query.set('page', page.toString())
+    navigate(`/posts?${query.toString()}`)
   }
 
   const PageNumbers = () => {
@@ -58,9 +60,11 @@ export const Pagnation = ({ currentPage, pageInfo }: PagnationProps) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
     if (direction === 'backward')
-      navigate(`/posts?page=${Number(currentPage) - 1}`)
+      query.set('page', (Number(currentPage) - 1).toString())
+    navigate(`/posts?${query}`)
     if (direction === 'forward')
-      navigate(`/posts?page=${Number(currentPage) + 1}`)
+      query.set('page', (Number(currentPage) + 1).toString())
+    navigate(`/posts?${query}`)
   }
 
   const BackButton = () => {
