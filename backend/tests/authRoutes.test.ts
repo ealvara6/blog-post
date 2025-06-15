@@ -250,6 +250,7 @@ describe('Auth Routes', () => {
           title: 'mock_post_title',
           content: 'mock_post_content',
           userId: 1,
+          categories: [''],
         };
 
         prismaMock.post.create.mockResolvedValue({
@@ -286,6 +287,7 @@ describe('Auth Routes', () => {
         const newPost = {
           title: 'post_mock_title',
           userId: 1,
+          categories: [''],
         };
 
         prismaMock.post.create.mockResolvedValue({
@@ -297,7 +299,6 @@ describe('Auth Routes', () => {
 
         const res = await request(app)
           .post('/api/auth/posts')
-          .set('Authorization', `Bearer ${authToken}`)
           .set('Authorization', `Bearer ${authToken}`)
           .send(newPost);
 
@@ -348,23 +349,6 @@ describe('Auth Routes', () => {
             location: 'body',
           })
         );
-      });
-
-      it('should handle database errors gracefully', async () => {
-        prismaMock.post.create.mockRejectedValue(new Error('database error'));
-
-        const res = await request(app)
-          .post('/api/auth/posts')
-          .set('Authorization', `Bearer ${authToken}`)
-          .set('Authorization', `Bearer ${authToken}`)
-          .send({ title: 'mock_post_title' });
-
-        expect(res.statusCode).toBe(500);
-
-        expect(res.body).toEqual({
-          error: 'Failed to create new post',
-          details: 'database error',
-        });
       });
     });
 

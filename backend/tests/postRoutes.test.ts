@@ -8,6 +8,7 @@ jest.mock('@prisma/client', () => {
     post: {
       findMany: jest.fn(),
       findUnique: jest.fn(),
+      count: jest.fn(),
     },
   }));
 
