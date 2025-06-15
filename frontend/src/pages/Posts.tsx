@@ -1,3 +1,4 @@
+import { Filter } from '@/components/Filter'
 import { GetPosts } from '@/components/GetPosts'
 import { Pagination } from '@/components/Pagination'
 import { SearchBar } from '@/components/SearchBar'
@@ -14,6 +15,7 @@ export const Posts = () => {
     return {
       page: query.get('page') || '1',
       search: query.get('search') || '',
+      categoryId: query.get('categoryId') || '',
     }
   }, [location.search])
 
@@ -41,18 +43,29 @@ export const Posts = () => {
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>{error}</p>
+  if (!posts) return
+
+  const PageSection = () => {
+    return (
+      <>
+        <GetPosts posts={posts} pageInfo={pageInfo} />
+        <Pagination
+          className="col-span-full"
+          currentPage={queryData.page}
+          pageInfo={pageInfo}
+        />
+      </>
+    )
+  }
 
   return (
     <>
       {posts ? (
         <div className="flex w-full flex-col gap-5">
-          <SearchBar />
+          <SearchBar className="col-span-full" />
+          <Filter />
           {posts.length !== 0 ? (
-            <>
-              {' '}
-              <GetPosts posts={posts} pageInfo={pageInfo} />
-              <Pagination currentPage={queryData.page} pageInfo={pageInfo} />
-            </>
+            <PageSection />
           ) : (
             <p className="self-center text-2xl font-bold">No posts found</p>
           )}

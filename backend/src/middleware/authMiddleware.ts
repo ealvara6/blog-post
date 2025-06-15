@@ -98,7 +98,6 @@ export const canModifyComment = async (
     const prisma = req.prisma;
 
     const comment = await getCommentService(prisma, Number(commentId));
-    console.log(comment);
     if (comment.userId !== Number(userId)) {
       res.status(403).json({
         error: 'Unauthorized: You can only modify your own comment',

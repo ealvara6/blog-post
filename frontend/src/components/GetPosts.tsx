@@ -1,6 +1,5 @@
 import PostCard from './PostCard'
 import { Post } from '@/types/posts'
-import { SearchBar } from './SearchBar'
 
 interface PageInfoProps {
   currentPage: string
@@ -10,7 +9,6 @@ interface PageInfoProps {
 
 export const GetPosts = ({
   posts,
-  pageInfo,
 }: {
   posts: Post[]
   pageInfo: PageInfoProps | undefined
@@ -20,9 +18,6 @@ export const GetPosts = ({
       {posts.map((post) => {
         return <PostCard key={post.id} post={post} />
       })}
-      <div className="self-center">
-        showing page {pageInfo?.currentPage} out of {pageInfo?.totalPage}{' '}
-      </div>
     </div>
   )
 }
