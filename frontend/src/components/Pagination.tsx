@@ -1,7 +1,9 @@
+import React from 'react'
 import { Button } from './Button'
-import { useLocation, useNavigate } from 'react-router-dom'
+import clsx from 'clsx'
+import { useUpdateQueryParams } from '@/hooks/useUpdateQueryParams'
 
-interface PaginationProps {
+type PaginationProps = React.HTMLAttributes<HTMLDivElement> & {
   currentPage: string
   pageInfo:
     | {
@@ -12,15 +14,16 @@ interface PaginationProps {
     | undefined
 }
 
-export const Pagination = ({ currentPage, pageInfo }: PaginationProps) => {
-  const location = useLocation()
-  const query = new URLSearchParams(location.search)
-  const navigate = useNavigate()
+export const Pagination = ({
+  currentPage,
+  pageInfo,
+  className,
+}: PaginationProps) => {
+  const updateQuery = useUpdateQueryParams()
 
   const handlePageClick = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    query.set('page', page.toString())
-    navigate(`/posts?${query.toString()}`)
+    updateQuery({ page })
   }
 
   const PageNumbers = () => {
@@ -58,13 +61,13 @@ export const Pagination = ({ currentPage, pageInfo }: PaginationProps) => {
 
   const handleNavigationButton = (direction: string) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
+    const newPage =
+      direction === 'forward'
+        ? Number(currentPage) + 1
+        : Number(currentPage) - 1
+    window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    if (direction === 'backward')
-      query.set('page', (Number(currentPage) - 1).toString())
-    navigate(`/posts?${query}`)
-    if (direction === 'forward')
-      query.set('page', (Number(currentPage) + 1).toString())
-    navigate(`/posts?${query}`)
+    updateQuery({ page: newPage })
   }
 
   const BackButton = () => {
@@ -92,10 +95,22 @@ export const Pagination = ({ currentPage, pageInfo }: PaginationProps) => {
   }
 
   return (
-    <div className="flex items-center justify-center gap-3">
-      {currentPage !== '1' && <BackButton />}
-      <PageNumbers />
-      {Number(currentPage) !== Number(pageInfo?.totalPage) && <ForwardButton />}
+    <div
+      className={clsx(
+        'flex flex-col items-center justify-center gap-3',
+        className,
+      )}
+    >
+      <div className="self-center">
+        showing page {pageInfo?.currentPage} out of {pageInfo?.totalPage}
+      </div>
+      <div className="flex gap-3">
+        {currentPage !== '1' && <BackButton />}
+        <PageNumbers />
+        {Number(currentPage) !== Number(pageInfo?.totalPage) && (
+          <ForwardButton />
+        )}
+      </div>
     </div>
   )
 }

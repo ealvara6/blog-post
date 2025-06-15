@@ -49,11 +49,19 @@ export const getPosts = async (req: Request, res: Response): Promise<void> => {
   try {
     const page = Number(req.query.page ?? 1);
     const searchTerm = (req.query.search ?? '').toString();
+    const categoryId = (req.query.categoryId ?? '').toString();
     const limit = Number(req.query.limit ?? 5);
     const skip = (page - 1) * limit;
     const prisma = req.prisma;
+    console.log(req.query);
 
-    let [posts, total] = await getPostsService(prisma, limit, skip, searchTerm);
+    let [posts, total] = await getPostsService(
+      prisma,
+      limit,
+      skip,
+      searchTerm,
+      categoryId
+    );
 
     res.status(200).json({
       posts,

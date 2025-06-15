@@ -28,22 +28,40 @@ export const getPostsService = async (
   prisma: PrismaClient,
   limit: number,
   skip: number,
-  searchTerm: string
+  searchTerm: string,
+  categoryId: string
 ) => {
-  const [posts, total] = await Promise.all([
-    prisma.post.findMany({
-      where: {
+  const categoryFilter = categoryId
+    ? { categories: { some: { id: Number(categoryId) } } }
+    : {};
+  const searchFilter = searchTerm
+    ? {
         OR: [
           { title: { contains: searchTerm, mode: 'insensitive' } },
           { content: { contains: searchTerm, mode: 'insensitive' } },
         ],
-      },
+      }
+    : {};
+
+  const whereClause = {
+    AND: [categoryFilter, searchFilter],
+  };
+
+  const [posts, total] = await Promise.all([
+    prisma.post.findMany({
+      where: whereClause,
       select: {
         id: true,
         title: true,
         content: true,
         published: true,
         userId: true,
+        categories: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         user: {
           select: {
             id: true,
@@ -63,12 +81,7 @@ export const getPostsService = async (
       take: Number(limit),
     }),
     prisma.post.count({
-      where: {
-        OR: [
-          { title: { contains: searchTerm, mode: 'insensitive' } },
-          { content: { contains: searchTerm, mode: 'insensitive' } },
-        ],
-      },
+      where: whereClause,
     }),
   ]);
 
