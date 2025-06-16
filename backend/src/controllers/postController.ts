@@ -53,7 +53,6 @@ export const getPosts = async (req: Request, res: Response): Promise<void> => {
     const limit = Number(req.query.limit ?? 5);
     const skip = (page - 1) * limit;
     const prisma = req.prisma;
-    console.log(req.query);
 
     let [posts, total] = await getPostsService(
       prisma,
