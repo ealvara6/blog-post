@@ -1,9 +1,10 @@
 import { Post } from '@/types/posts'
 import { useNavigate } from 'react-router-dom'
+import { CategoriesList } from './CategoriesList'
 
 export const PostCard = ({ post }: { post: Post }) => {
   const Navigate = useNavigate()
-  const { title, content, createdAt, id, user } = post
+  const { title, content, createdAt, id, user, categories } = post
   const date = new Date(createdAt)
   return (
     <div
@@ -17,9 +18,12 @@ export const PostCard = ({ post }: { post: Post }) => {
       <div className="border-b-border-dark border border-t-transparent p-3">
         {content}
       </div>
-      <div className="border border-t-transparent p-3 text-end font-mono font-thin">
-        <span className="font-semibold">Posted At: </span>
-        {date.toLocaleString()}
+      <div className="flex justify-between border border-t-transparent p-3 text-end font-mono font-thin">
+        {categories && <CategoriesList categories={categories} />}
+        <div>
+          <span className="font-semibold">Posted At: </span>
+          {date.toLocaleString()}
+        </div>
       </div>
     </div>
   )

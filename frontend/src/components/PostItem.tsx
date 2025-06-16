@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { CommentForm } from './CommentForm'
 import { useEffect, useState } from 'react'
 import { CommentItem } from './CommentItem'
+import { CategoriesList } from './CategoriesList'
 
 export const PostItem = ({
   title,
@@ -22,9 +23,9 @@ export const PostItem = ({
   const deletePost = useDeletePost()
   const navigate = useNavigate()
   const date = new Date(createdAt)
-  const [currentcomments, setCurrentComments] = useState<Comment[]>(comments)
+  const [currentComments, setCurrentComments] = useState<Comment[]>(comments)
 
-  useEffect(() => {}, [currentcomments])
+  useEffect(() => {}, [currentComments])
 
   const handleDelete = async () => {
     try {
@@ -38,10 +39,10 @@ export const PostItem = ({
   }
 
   const GetComments = () => {
-    if (!currentcomments) return ''
-    if (currentcomments.length === 0)
+    if (!currentComments) return ''
+    if (currentComments.length === 0)
       return <div className="text-center">No comments found</div>
-    return currentcomments.map((comment, index) => {
+    return currentComments.map((comment, index) => {
       const date = new Date(comment.createdAt)
       return (
         <div key={index}>
@@ -76,20 +77,6 @@ export const PostItem = ({
     )
   }
 
-  const Categories = () => {
-    const categoryItems = categories?.map((category, index) => {
-      return (
-        <div
-          className={`font-thin dark:text-gray-300 ${index !== categories.length - 1 && 'border-r px-2'}`}
-        >
-          {category.name}
-        </div>
-      )
-    })
-
-    return categoryItems
-  }
-
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col">
@@ -102,7 +89,7 @@ export const PostItem = ({
         </div>
         <div className="flex justify-between border border-t-transparent p-3 font-mono font-thin">
           <div className="flex gap-2">
-            <Categories />
+            {categories && <CategoriesList categories={categories} />}
           </div>
           <div>
             <span className="font-semibold">Posted At:</span>{' '}
