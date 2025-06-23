@@ -1,4 +1,5 @@
 import { useTheme } from '@/context/ThemeProvider/useTheme'
+import { MoonIcon, SunIcon } from '@heroicons/react/24/outline'
 
 const ThemeButton = () => {
   const { theme, dispatch } = useTheme()
@@ -8,12 +9,13 @@ const ThemeButton = () => {
   }
 
   return (
-    <button
-      onClick={() => onClick()}
-      className="bg-primary-light text-text-dark dark:bg-primary-dark p1 cursor-pointer rounded-md p-2"
-    >
-      {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-    </button>
+    <>
+      {theme === 'dark' ? (
+        <SunIcon onClick={() => onClick()} className="w-8 cursor-pointer" />
+      ) : (
+        <MoonIcon onClick={() => onClick()} className="w-8 cursor-pointer" />
+      )}
+    </>
   )
 }
 
