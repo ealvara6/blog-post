@@ -6,10 +6,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { loginSchema } from '@/validations/authValidations'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { Error } from '@/components/Errors'
+import { Button } from '@/components/Button'
+import clsx from 'clsx'
 
 type FormData = z.infer<typeof loginSchema>
 
-const Login = () => {
+const Login = ({ className }: { className?: string }) => {
   const [serverError, setServerError] = useState({ msg: '' })
 
   const {
@@ -33,45 +36,50 @@ const Login = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="border-border-light bg-background-dark text-text-dark flex size-fit w-full flex-col gap-2 border p-4 sm:w-lg"
+      className={clsx(
+        'dark:border-border-darkTheme dark:bg-background-darkTheme border-border bg-background flex size-fit w-full flex-col gap-4 rounded border p-4',
+        className,
+      )}
     >
       <div className="flex flex-col gap-1">
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="email" className="font-semibold">
+          Email:
+        </label>
         <input
           {...register('email')}
           type="text"
-          className={`bg-background-light text-text-light rounded border-2 p-1 ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+          className={`dark:border-border-darkTheme border-border rounded border-2 p-1 ${errors.email ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border'}`}
           name="email"
           id="email"
           placeholder="Email"
         />
-        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+        {errors.email && <Error>{errors.email.message}</Error>}
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password" className="font-semibold">
+          Password:
+        </label>
         <input
           {...register('password')}
           type="password"
-          className={`bg-background-light text-text-light rounded border-2 p-1 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+          className={`dark:border-border-darkTheme border-border- rounded border-2 p-1 ${errors.password ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border'}`}
           name="password"
           id="password"
           placeholder="Password"
         />
-        {errors.password && (
-          <p className="text-red-500">{errors.password.message}</p>
-        )}
+        {errors.password && <Error>{errors.password.message}</Error>}
       </div>
-      <button
-        className={`cursor-pointer rounded p-1 text-lg font-semibold ${isSubmitting ? 'bg-gray-600' : 'bg-primary-dark'}`}
-        type="submit"
-        disabled={isSubmitting}
-      >
+      <Button variant="primary" type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'Logging in...' : 'Login'}
-      </button>
-      {serverError && <div className="text-red-500">{serverError.msg}</div>}
-      <div className="self-center">
-        Don't have an account?{' '}
-        <a className="text-accent" href="/signup">
+      </Button>
+      {serverError && <Error>{serverError.msg}</Error>}
+      <div className="dark:text-text-muted-darkTheme text-text-muted self-center text-center">
+        Don't have an account?
+        <br />
+        <a
+          className="dark:text-accent-darkTheme dark:hover:text-accent-hover-darkTheme text-accent hover:text-accent-hover"
+          href="/signup"
+        >
           Sign Up
         </a>
       </div>
