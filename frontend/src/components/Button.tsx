@@ -10,7 +10,8 @@ type ButtonProps = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const baseStyles = {
-  primary: 'bg-primary-light dark:bg-primary-dark text-white',
+  primary:
+    'bg-accent dark:bg-accent-darkTheme dark:hover:bg-accent-hover-darkTheme hover:bg-accent-hover dark:text-text',
   transparent: 'bg-transparent text-white border',
   danger: 'bg-red-600 text-white',
 }

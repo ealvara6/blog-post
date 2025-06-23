@@ -44,7 +44,7 @@ export const MenuMobile = ({
   return (
     <div
       ref={menuRef}
-      className={`dark:bg-card-darkTheme bg-card-lightTheme fixed top-0 left-0 z-40 flex h-full w-48 transform flex-col gap-3 p-2 text-center shadow-lg transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      className={`dark:bg-card-darkTheme bg-card fixed top-0 left-0 z-40 flex h-full w-48 transform flex-col gap-3 p-2 text-center shadow-lg transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
     >
       <div className="flex justify-between">
         <XCircleIcon
