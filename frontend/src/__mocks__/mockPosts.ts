@@ -22,6 +22,12 @@ export const mockPosts = [
       id: 1,
       username: 'mock_username',
     },
+    categories: [
+      {
+        name: 'mock_name',
+        id: 2,
+      },
+    ],
   },
   {
     id: 2,
@@ -46,6 +52,12 @@ export const mockPosts = [
       id: 1,
       username: 'mock_username',
     },
+    categories: [
+      {
+        name: 'mock_name',
+        id: 2,
+      },
+    ],
   },
 ]
 
@@ -61,4 +73,10 @@ export const postNoComments = {
     id: 1,
     username: 'mock_username',
   },
+  categories: [
+    {
+      name: 'mock_name',
+      id: 2,
+    },
+  ],
 }

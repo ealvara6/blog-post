@@ -2,6 +2,7 @@ import { customRender } from '@/utils/test-utils'
 import userEvent from '@testing-library/user-event'
 import { EmailModal } from './EmailModal'
 import { screen, waitFor } from '@testing-library/react'
+import { vi } from 'vitest'
 
 describe('change email modal', () => {
   let cancelButton: HTMLButtonElement
@@ -10,7 +11,7 @@ describe('change email modal', () => {
   let user: ReturnType<typeof userEvent.setup>
 
   beforeEach(() => {
-    customRender(<EmailModal />)
+    customRender(<EmailModal setIsOpen={vi.fn()} />)
     cancelButton = screen.getByText(/cancel/i)
     saveButton = screen.getByText(/save/i)
     userInput = screen.getByRole('textbox')

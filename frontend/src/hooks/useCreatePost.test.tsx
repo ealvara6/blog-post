@@ -11,6 +11,7 @@ const mockFormdata = {
   title: 'mock_title',
   content: 'mock_content',
   userId: 1,
+  categories: [{ name: 'mock_name', id: 1 }],
 }
 
 const mockedAxiosCreate = api.post as unknown as ReturnType<typeof vi.fn>

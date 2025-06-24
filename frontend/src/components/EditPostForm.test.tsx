@@ -19,6 +19,7 @@ describe('edit post', () => {
         content={mockPost.content}
         id={mockPost.id}
         userId={mockPost.userId}
+        categoryIds={[2, 3]}
       />,
     )
     titleInput = screen.getByLabelText(/title:/i)

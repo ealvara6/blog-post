@@ -14,6 +14,7 @@ export const customRender = (ui: React.ReactElement, options = {}) => {
             username: 'mock_username',
             email: 'mock@gmail.com',
           },
+          setAuthUser: vi.fn(),
           login: vi.fn(),
           logout: vi.fn(),
           signup: vi.fn(),

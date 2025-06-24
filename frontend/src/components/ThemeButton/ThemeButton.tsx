@@ -11,9 +11,17 @@ const ThemeButton = () => {
   return (
     <>
       {theme === 'dark' ? (
-        <SunIcon onClick={() => onClick()} className="w-8 cursor-pointer" />
+        <SunIcon
+          title="toggle theme"
+          onClick={() => onClick()}
+          className="w-8 cursor-pointer"
+        />
       ) : (
-        <MoonIcon onClick={() => onClick()} className="w-8 cursor-pointer" />
+        <MoonIcon
+          title="toggle theme"
+          onClick={() => onClick()}
+          className="w-8 cursor-pointer"
+        />
       )}
     </>
   )

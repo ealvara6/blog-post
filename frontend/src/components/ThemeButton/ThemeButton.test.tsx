@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import ThemeButton from './ThemeButton'
 import * as useThemeModule from '@/context/ThemeProvider/useTheme'
-import { vi, it, expect, describe, MockedFunction } from 'vitest'
+import { vi, MockedFunction } from 'vitest'
 
 vi.mock('../../context/ThemeProvider/useTheme.ts', () => ({
   useTheme: vi.fn(() => ({
@@ -33,9 +33,8 @@ describe('ThemeButton', () => {
 
     render(<ThemeButton />)
 
-    const button = await screen.findByRole('button')
+    const button = await screen.findByTitle('toggle theme')
     expect(button).toBeInTheDocument()
-    expect(button).toHaveTextContent('Dark Mode')
   })
 
   it('calls dispatch with toggle action when clicked', () => {
@@ -51,7 +50,7 @@ describe('ThemeButton', () => {
 
     render(<ThemeButton />)
 
-    const button = screen.getByRole('button')
+    const button = screen.getByTitle('toggle theme')
     fireEvent.click(button)
 
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'toggle' })

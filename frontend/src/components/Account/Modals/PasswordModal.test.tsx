@@ -2,6 +2,7 @@ import { customRender } from '@/utils/test-utils'
 import userEvent from '@testing-library/user-event'
 import { PasswordModal } from './PasswordModal'
 import { screen, waitFor } from '@testing-library/react'
+import { vi } from 'vitest'
 
 describe('Change password modal', () => {
   let cancelButton: HTMLButtonElement
@@ -11,7 +12,7 @@ describe('Change password modal', () => {
   let user: ReturnType<typeof userEvent.setup>
 
   beforeEach(() => {
-    customRender(<PasswordModal />)
+    customRender(<PasswordModal setIsOpen={vi.fn()} />)
     cancelButton = screen.getByText(/cancel/i)
     saveButton = screen.getByText(/save/i)
     passwordInput = screen.getByLabelText(/new password/i)
