@@ -5,10 +5,14 @@ import { MenuMobile } from './MenuMobile'
 import { Menu } from './Menu'
 import { UserCircleIcon } from '@heroicons/react/24/outline'
 import { Modal } from '../Modal'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/context/AuthProvider/useAuth'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenModal, setIsOpenModal] = useState<string | null>(null)
+  const navigate = useNavigate()
+  const { authUser } = useAuth()
 
   const menuToggle = () => {
     setIsOpen((prev) => !prev)
@@ -24,9 +28,27 @@ const Navbar = () => {
             onClick={() => setIsOpenModal(null)}
           />
         </div>
-        <Login className="border-none" />
+        <Login className="border-none" setIsOpenModal={setIsOpenModal} />
       </Modal>
     )
+  }
+
+  const NavigateUserIcon = () => {
+    if (!authUser) {
+      return (
+        <UserCircleIcon
+          className="w-8"
+          onClick={() => setIsOpenModal('open')}
+        />
+      )
+    } else {
+      return (
+        <UserCircleIcon
+          className="w-8"
+          onClick={() => navigate({ pathname: '/account' }, { replace: true })}
+        />
+      )
+    }
   }
 
   return (
@@ -38,21 +60,25 @@ const Navbar = () => {
         <div className="hidden sm:block">
           <Menu />
         </div>
-        <div className="absolute left-1/2 -translate-x-1/2 self-center text-2xl font-bold">
+        <div
+          className="absolute left-1/2 -translate-x-1/2 cursor-pointer self-center text-2xl font-bold"
+          onClick={() => navigate({ pathname: '/' }, { replace: true })}
+        >
           LOGO
         </div>
         <div className="block sm:hidden">
-          <UserCircleIcon
-            className="w-8"
-            onClick={() => setIsOpenModal('open')}
-          />
+          <NavigateUserIcon />
         </div>
         <div
           className="hidden cursor-pointer gap-1 text-center text-lg font-bold select-none sm:flex"
-          onClick={() => setIsOpenModal('open')}
+          onClick={() =>
+            !authUser
+              ? setIsOpenModal('open')
+              : navigate({ pathname: '/account' }, { replace: true })
+          }
         >
           <UserCircleIcon className="w-8" />
-          Sign In
+          {!authUser ? <div>Sign In</div> : <div>Account</div>}
         </div>
       </div>
       <div className="block sm:hidden">
