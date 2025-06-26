@@ -1,5 +1,5 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -12,7 +12,13 @@ import clsx from 'clsx'
 
 type FormData = z.infer<typeof loginSchema>
 
-const Login = ({ className }: { className?: string }) => {
+const Login = ({
+  className,
+  setIsOpenModal,
+}: {
+  className?: string
+  setIsOpenModal?: React.Dispatch<React.SetStateAction<string | null>>
+}) => {
   const [serverError, setServerError] = useState({ msg: '' })
 
   const {
@@ -27,7 +33,8 @@ const Login = ({ className }: { className?: string }) => {
   const onSubmit = async (data: FormData) => {
     try {
       await login(data.email, data.password)
-      navigate('/')
+      if (setIsOpenModal) setIsOpenModal(null)
+      navigate({ pathname: '/' }, { replace: true })
     } catch (err) {
       setServerError({ msg: parseErrorMessage(err) })
     }

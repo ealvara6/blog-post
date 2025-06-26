@@ -3,6 +3,7 @@ import React, { useRef, useEffect, SetStateAction } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MenuItems } from './MenuItems'
 import ThemeButton from '../ThemeButton/ThemeButton'
+import { useAuth } from '@/context/AuthProvider/useAuth'
 
 type MenuMobileProps = {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>
@@ -17,6 +18,7 @@ export const MenuMobile = ({
 }: MenuMobileProps) => {
   const menuRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
+  const { logout, authUser } = useAuth()
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -41,6 +43,39 @@ export const MenuMobile = ({
     navigate({ pathname: link })
   }
 
+  const handleLogout = () => {
+    logout()
+    setIsOpen(false)
+    navigate({ pathname: '/' }, { replace: true })
+  }
+
+  const handleLogin = () => {
+    setIsOpen(false)
+    navigate({ pathname: '/login' }, { replace: true })
+  }
+
+  const Auth = () => {
+    if (!authUser) {
+      return (
+        <div
+          className="dark:text-accent-darkTheme text-accent dark:hover:text-accent-hover-darkTheme hover:text-accent-hover font-thin underline"
+          onClick={() => handleLogin()}
+        >
+          Sign In
+        </div>
+      )
+    } else {
+      return (
+        <div
+          className="dark:text-accent-darkTheme text-accent dark:hover:text-accent-hover-darkTheme hover:text-accent-hover font-thin underline"
+          onClick={() => handleLogout()}
+        >
+          Sign Out
+        </div>
+      )
+    }
+  }
+
   return (
     <div
       ref={menuRef}
@@ -57,6 +92,7 @@ export const MenuMobile = ({
         className="font-semi-bold text-xl"
         handleNavigate={handleNavigate}
       />
+      <Auth />
     </div>
   )
 }
