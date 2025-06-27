@@ -39,7 +39,7 @@ export const Account = () => {
   const Tabs = () => {
     return (
       <>
-        <div className="flex min-w-3xl justify-around border-b p-2">
+        <div className="flex justify-between border-b p-2 text-center">
           {tabs.map((tab, index) => (
             <div
               className={`${isActive === tab.value ? 'font-bold' : ''} cursor-pointer`}
@@ -56,7 +56,7 @@ export const Account = () => {
   }
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex w-full max-w-4xl flex-col gap-5">
       <Tabs />
     </div>
   )
