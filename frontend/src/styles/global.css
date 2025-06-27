@@ -25,3 +25,7 @@
   --color-error: #dc2626;
   --color-error-darkTheme: #f87171;
 }
+
+html {
+  @apply bg-background dark:bg-background-darkTheme;
+}
