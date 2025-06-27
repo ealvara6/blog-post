@@ -1,20 +1,6 @@
 import React from 'react'
 import { Link } from '../Link'
-
-const menuItems = [
-  {
-    name: 'Home',
-    link: '/',
-  },
-  {
-    name: 'Posts',
-    link: '/posts',
-  },
-  {
-    name: 'About',
-    link: '/about',
-  },
-]
+import { menuItems } from './menuItems'
 
 type MenuItemsProps = {
   handleNavigate: (link: string) => void

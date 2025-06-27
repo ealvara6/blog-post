@@ -7,6 +7,7 @@ import { UserCircleIcon } from '@heroicons/react/24/outline'
 import { Modal } from '../Modal'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthProvider/useAuth'
+import { Account } from './Account'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -66,19 +67,8 @@ const Navbar = () => {
         >
           LOGO
         </div>
-        <div className="block sm:hidden">
-          <NavigateUserIcon />
-        </div>
-        <div
-          className="hidden cursor-pointer gap-1 text-center text-lg font-bold select-none sm:flex"
-          onClick={() =>
-            !authUser
-              ? setIsOpenModal('open')
-              : navigate({ pathname: '/account' }, { replace: true })
-          }
-        >
-          <UserCircleIcon className="w-8" />
-          {!authUser ? <div>Sign In</div> : <div>Account</div>}
+        <div className="flex text-lg font-bold">
+          <Account setIsOpenModal={setIsOpenModal} />
         </div>
       </div>
       <div className="block sm:hidden">
