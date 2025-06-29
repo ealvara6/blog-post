@@ -15,6 +15,10 @@ import { getCategories } from '../controllers/categoryController';
 export const publicRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
 
+  router.get('/test-secret', (req, res) => {
+    res.send(`JWT_SECRET is: ${process.env.JWT_SECRET}` || 'not set');
+  });
+
   router.route('/posts').get(getPosts);
   router.get('/posts/:id', validateId, getPost);
   router.get('/posts/:id/comments', validateId, getComments);
