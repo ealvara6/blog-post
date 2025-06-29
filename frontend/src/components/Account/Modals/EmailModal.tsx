@@ -33,20 +33,33 @@ export const EmailModal = ({
   }
 
   return (
-    <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="email">New Email:</label>
+    <form className="flex flex-col gap-4 p-2" onSubmit={handleSubmit(onSubmit)}>
+      <label htmlFor="email" className="text-xl font-semibold">
+        New Email:
+      </label>
+      <div className="flex flex-col gap-2">
         <Input {...register('email')} />
         {errors['email'] && (
-          <div className="text-red-500">{errors['email']?.message}</div>
+          <div className="dark:text-error-darkTheme text-error">
+            {errors['email']?.message}
+          </div>
         )}
       </div>
-      {serverError && <div className="text-red-500">{serverError}</div>}
+      {serverError && (
+        <div className="dark:text-error-darkTheme text-error">
+          {serverError}
+        </div>
+      )}
       <div className="flex justify-end gap-3">
-        <Button type="button" onClick={() => setIsOpen(null)}>
+        <Button
+          type="button"
+          size="md"
+          className="dark:bg-text-muted-darkTheme bg-text-muted"
+          onClick={() => setIsOpen(null)}
+        >
           Cancel
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" size="md" disabled={isSubmitting}>
           {isSubmitting ? 'Saving...' : 'Save'}
         </Button>
       </div>

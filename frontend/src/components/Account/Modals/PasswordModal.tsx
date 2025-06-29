@@ -37,9 +37,11 @@ export const PasswordModal = ({
   }
 
   return (
-    <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="password">New Password: </label>
+    <form className="flex flex-col gap-4 p-2" onSubmit={handleSubmit(onSubmit)}>
+      <label htmlFor="password" className="text-xl font-semibold">
+        New Password:{' '}
+      </label>
+      <div className="flex flex-col gap-2">
         <Input
           {...register('password')}
           type="password"
@@ -50,8 +52,10 @@ export const PasswordModal = ({
           <div className="text-red-500">{errors['password']?.message}</div>
         )}
       </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="confirmPassword">Confirm Password: </label>
+      <label htmlFor="confirmPassword" className="text-xl font-semibold">
+        Confirm Password:{' '}
+      </label>
+      <div className="flex flex-col gap-2">
         <Input
           {...register('confirmPassword')}
           type="password"
@@ -66,10 +70,15 @@ export const PasswordModal = ({
       </div>
       {serverError && <div>{serverError}</div>}
       <div className="flex justify-end gap-3">
-        <Button type="button" onClick={() => setIsOpen(null)}>
+        <Button
+          type="button"
+          size="md"
+          className="dark:bg-text-muted-darkTheme bg-text-muted"
+          onClick={() => setIsOpen(null)}
+        >
           Cancel
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" size="md" disabled={isSubmitting}>
           {isSubmitting ? 'Saving....' : 'Save'}
         </Button>
       </div>

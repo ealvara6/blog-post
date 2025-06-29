@@ -44,7 +44,7 @@ const Login = ({
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={clsx(
-        'dark:border-border-darkTheme dark:bg-background-darkTheme border-border bg-background flex size-fit w-full flex-col gap-4 rounded border p-4',
+        'dark:border-border-darkTheme dark:bg-background-darkTheme border-border bg-background flex size-fit w-full max-w-xl flex-col gap-4 rounded border p-4',
         className,
       )}
     >

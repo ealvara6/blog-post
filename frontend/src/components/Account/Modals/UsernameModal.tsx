@@ -33,18 +33,33 @@ export const UserNameModal = ({
   }
 
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="username">New Username: </label>
-      <Input {...register('username')} />
-      {errors['username'] && (
-        <div className="text-red-500">{errors['username']?.message}</div>
+    <form className="flex flex-col gap-4 p-2" onSubmit={handleSubmit(onSubmit)}>
+      <label htmlFor="username" className="text-xl font-semibold">
+        New Username:{' '}
+      </label>
+      <div className="flex flex-col gap-2">
+        <Input {...register('username')} />
+        {errors['username'] && (
+          <div className="dark:text-error-darkTheme text-error">
+            {errors['username']?.message}
+          </div>
+        )}
+      </div>
+      {serverError && (
+        <div className="dark:text-error-darkTheme text-error">
+          {serverError}
+        </div>
       )}
-      {serverError && <div className="text-red-500">{serverError}</div>}
       <div className="flex gap-3 self-end">
-        <Button size="sm" type="button" onClick={() => setIsOpen(null)}>
+        <Button
+          size="md"
+          type="button"
+          className="dark:bg-text-muted-darkTheme bg-text-muted"
+          onClick={() => setIsOpen(null)}
+        >
           Cancel
         </Button>
-        <Button type="submit" disabled={isSubmitting} size="sm">
+        <Button type="submit" disabled={isSubmitting} size="md">
           {isSubmitting ? 'Saving...' : 'Save'}
         </Button>
       </div>
