@@ -30,7 +30,9 @@ export const DeleteAccountModal = ({
         Are you sure you want to delete your account?
       </div>
       {serverError && (
-        <div className="text-center text-red-500">{serverError}</div>
+        <div className="dark:bg-error-darkTheme bg-error-darkTheme text-center">
+          {serverError}
+        </div>
       )}
       <div className="flex justify-end gap-4">
         <Button onClick={() => setIsOpen(null)}>Cancel</Button>

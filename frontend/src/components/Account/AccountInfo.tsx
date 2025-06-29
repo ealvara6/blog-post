@@ -45,7 +45,7 @@ export const AccountInfo = () => {
     const tabs = tabInfo.map((tab, index) => {
       return (
         <div
-          className={`flex min-h-16 w-full cursor-pointer rounded border border-gray-500 p-2 ${tab.label === 'Delete Account' ? 'bg-red-700' : ''}`}
+          className={`flex min-h-16 w-full cursor-pointer rounded border border-gray-500 p-2 ${tab.label === 'Delete Account' ? 'dark:bg-error-darkTheme bg-error text-text-primary-darkTheme' : ''}`}
           onClick={() => handleClick(tab.name)}
           key={index}
         >

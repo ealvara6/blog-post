@@ -49,7 +49,9 @@ export const PasswordModal = ({
           id="password"
         />
         {errors['password'] && (
-          <div className="text-red-500">{errors['password']?.message}</div>
+          <div className="dark:text-error-darkTheme text-error">
+            {errors['password']?.message}
+          </div>
         )}
       </div>
       <label htmlFor="confirmPassword" className="text-xl font-semibold">
@@ -63,7 +65,7 @@ export const PasswordModal = ({
           id="confirmPassword"
         />
         {errors['confirmPassword'] && (
-          <div className="text-red-500">
+          <div className="dark:text-error-darkTheme text-error">
             {errors['confirmPassword']?.message}
           </div>
         )}
