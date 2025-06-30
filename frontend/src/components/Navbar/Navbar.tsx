@@ -3,17 +3,14 @@ import { Bars3Icon, XCircleIcon } from '@heroicons/react/16/solid'
 import { useState } from 'react'
 import { MenuMobile } from './MenuMobile'
 import { Menu } from './Menu'
-import { UserCircleIcon } from '@heroicons/react/24/outline'
 import { Modal } from '../Modal'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Account } from './Account'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenModal, setIsOpenModal] = useState<string | null>(null)
   const navigate = useNavigate()
-  const { authUser } = useAuth()
 
   const menuToggle = () => {
     setIsOpen((prev) => !prev)
@@ -31,24 +28,6 @@ const Navbar = () => {
         <Login className="border-none" setIsOpenModal={setIsOpenModal} />
       </Modal>
     )
-  }
-
-  const NavigateUserIcon = () => {
-    if (!authUser) {
-      return (
-        <UserCircleIcon
-          className="w-8"
-          onClick={() => setIsOpenModal('open')}
-        />
-      )
-    } else {
-      return (
-        <UserCircleIcon
-          className="w-8"
-          onClick={() => navigate({ pathname: '/account' }, { replace: true })}
-        />
-      )
-    }
   }
 
   return (

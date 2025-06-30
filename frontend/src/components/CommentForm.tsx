@@ -70,7 +70,7 @@ export const CommentForm = ({
             isActive={isValid && !isSubmitting}
             type="submit"
           >
-            {isSubmitting ? 'Submiting...' : 'Comment'}
+            {isSubmitting ? 'Submitting...' : 'Comment'}
           </Button>
         </div>
       )}
