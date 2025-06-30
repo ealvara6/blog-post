@@ -49,11 +49,22 @@ export const Posts = () => {
     return (
       <>
         <GetPosts posts={posts} pageInfo={pageInfo} />
-        <Pagination
-          className="col-span-full"
-          currentPage={queryData.page}
-          pageInfo={pageInfo}
-        />
+        <div className="block sm:hidden">
+          <Pagination
+            className="col-span-full"
+            currentPage={queryData.page}
+            pageInfo={pageInfo}
+            limit={3}
+          />
+        </div>
+        <div className="hidden sm:block">
+          <Pagination
+            className="col-span-full"
+            currentPage={queryData.page}
+            pageInfo={pageInfo}
+            limit={10}
+          />
+        </div>
       </>
     )
   }
@@ -62,7 +73,7 @@ export const Posts = () => {
     <>
       {posts ? (
         <div className="flex w-full flex-col gap-5">
-          <SearchBar className="col-span-full" />
+          <SearchBar className="dark:border-border-darkTheme border-border dark:bg-card-darkTheme bg-card col-span-full border focus:outline" />
           <Filter />
           {posts.length !== 0 ? (
             <PageSection />

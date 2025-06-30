@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Button } from './Button'
 import { Input } from './Input'
 import { useLocation } from 'react-router-dom'
 import clsx from 'clsx'
 import { useUpdateQueryParams } from '@/hooks/useUpdateQueryParams'
+import { MagnifyingGlassCircleIcon } from '@heroicons/react/24/outline'
 
 type SearchBarProps = React.HTMLAttributes<HTMLFormElement>
 
@@ -19,23 +19,17 @@ export const SearchBar = ({ className }: SearchBarProps) => {
   }
 
   return (
-    <form
-      className={clsx('flex rounded border p-2', className)}
-      onSubmit={handleSubmit}
-    >
+    <form className={clsx('flex p-2', className)} onSubmit={handleSubmit}>
       <Input
-        className="dark:bg-background-dark grow border-none text-xl focus:border-none focus:outline-none dark:text-white"
+        className="dark:bg-card-darkTheme bg-card grow border-none text-xl focus:outline-none dark:text-white"
         placeholder="Search..."
         value={searchTerm}
         name="search"
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <Button
-        className="hover:bg-primary-dark w-fit transition"
-        variant="transparent"
-      >
-        Search
-      </Button>
+      <button type="submit">
+        <MagnifyingGlassCircleIcon className="w-12 cursor-pointer" />
+      </button>
     </form>
   )
 }

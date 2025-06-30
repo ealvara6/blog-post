@@ -14,7 +14,7 @@ export const Input = forwardRef<
       {...props}
       className={twMerge(
         clsx(
-          'text-text-primary border-border rounded border bg-gray-200 p-2',
+          'text-text-primary',
           className,
           props.disabled ? 'bg-gray-600' : '',
         ),

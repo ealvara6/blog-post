@@ -41,7 +41,7 @@ export const Filter = () => {
           />
           <label
             htmlFor={id}
-            className="cursor-pointer rounded border border-gray-500 p-1 text-center transition select-none peer-checked:bg-blue-600 peer-checked:font-semibold peer-checked:text-white"
+            className="peer-checked:dark:bg-accent-darkTheme peer-checked:bg-accent cursor-pointer rounded border border-gray-500 p-1 text-center transition select-none peer-checked:font-semibold peer-checked:text-white"
           >
             {category.name}
           </label>
@@ -49,7 +49,7 @@ export const Filter = () => {
       )
     })
     buttonComponents?.push(
-      <div className="flex items-center gap-2" key="clear">
+      <div className="flex items-center" key="clear">
         <input
           type="radio"
           name="category"
@@ -64,7 +64,11 @@ export const Filter = () => {
       </div>,
     )
 
-    return <div className="flex justify-around">{buttonComponents}</div>
+    return (
+      <div className="flex flex-wrap justify-around gap-2">
+        {buttonComponents}
+      </div>
+    )
   }
 
   if (!categories) return <p>Loading...</p>
