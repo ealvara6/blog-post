@@ -6,7 +6,7 @@ const MainLayout = () => {
   return (
     <div className="dark:bg-background-darkTheme dark:text-text-primary-darkTheme flex min-h-screen flex-col">
       <Navbar />
-      <main className="container mx-auto flex flex-1 justify-center px-4 py-8">
+      <main className="container mx-auto flex flex-1 justify-center px-1 py-2 sm:px-4 sm:py-8">
         <Outlet />
       </main>
       <Footer />

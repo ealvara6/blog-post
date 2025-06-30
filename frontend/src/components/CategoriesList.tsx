@@ -4,7 +4,7 @@ export const CategoriesList = ({ categories }: { categories: Category[] }) => {
   const categoryItems = categories.map((category, index) => {
     return (
       <div
-        className={`px-2 font-thin dark:text-gray-300 ${index !== categories.length - 1 && 'border-r'}`}
+        className={`dark:text-text-muted-darkTheme text-text-muted dark:border-border-darkTheme rounded-xl border px-2 font-thin ${index !== categories.length - 1 && 'border-r'}`}
       >
         {category.name}
       </div>

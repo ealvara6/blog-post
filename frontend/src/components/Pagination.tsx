@@ -12,12 +12,14 @@ type PaginationProps = React.HTMLAttributes<HTMLDivElement> & {
         totalPage: string
       }
     | undefined
+  limit: number
 }
 
 export const Pagination = ({
   currentPage,
   pageInfo,
   className,
+  limit,
 }: PaginationProps) => {
   const updateQuery = useUpdateQueryParams()
 
@@ -28,27 +30,34 @@ export const Pagination = ({
 
   const PageNumbers = () => {
     const pages = []
-    const limit = 10
+    const totalPages = Number(pageInfo?.totalPage)
+    const current = Number(currentPage)
+    const half = Math.floor(limit / 2)
 
-    for (let i = 0; i < limit; i++) {
-      if (Number(currentPage) - i > 0) {
-        pages.push(Number(currentPage) - i)
-      }
+    let start = current - half
+    let end = current + half
+
+    if (start < 1) {
+      end += 1 - start
+      start = 1
+    }
+    if (end > totalPages) {
+      start -= end - totalPages
+      end = totalPages
     }
 
-    for (let i = 1; i < limit; i++) {
-      if (Number(currentPage) + i <= Number(pageInfo?.totalPage)) {
-        pages.push(Number(currentPage) + i)
-      }
+    start = Math.max(start, 1)
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i)
     }
-    pages.sort((a, b) => a - b)
 
     return (
       <div className="flex justify-center gap-4">
         {pages.map((page) => {
           return (
             <div
-              className={`w-14 cursor-pointer rounded border p-2 text-center select-none ${page === Number(currentPage) ? 'dark:bg-primary-dark' : ''}`}
+              className={`w-14 cursor-pointer rounded border p-2 text-center select-none ${page === Number(currentPage) ? 'dark:bg-accent-darkTheme bg-accent' : ''}`}
               onClick={() => handlePageClick(page)}
             >
               {page}
