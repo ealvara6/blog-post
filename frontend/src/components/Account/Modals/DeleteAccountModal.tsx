@@ -1,4 +1,5 @@
 import { Button } from '@/components/Button'
+import { Error } from '@/components/Error'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { useDeleteUser } from '@/hooks/useDeleteUser'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
@@ -29,11 +30,7 @@ export const DeleteAccountModal = ({
       <div className="text-center text-xl font-bold">
         Are you sure you want to delete your account?
       </div>
-      {serverError && (
-        <div className="dark:bg-error-darkTheme bg-error-darkTheme text-center">
-          {serverError}
-        </div>
-      )}
+      {serverError && <Error>{serverError}</Error>}
       <div className="flex justify-end gap-4">
         <Button onClick={() => setIsOpen(null)}>Cancel</Button>
         <Button variant="danger" onClick={onDelete}>

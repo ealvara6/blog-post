@@ -7,6 +7,7 @@ import { emailSchema } from '@/validations/authValidations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Error } from '@/components/Error'
 
 export const EmailModal = ({
   setIsOpen,
@@ -39,17 +40,9 @@ export const EmailModal = ({
       </label>
       <div className="flex flex-col gap-2">
         <Input {...register('email')} />
-        {errors['email'] && (
-          <div className="dark:text-error-darkTheme text-error">
-            {errors['email']?.message}
-          </div>
-        )}
+        {errors['email'] && <Error>{errors['email']?.message}</Error>}
       </div>
-      {serverError && (
-        <div className="dark:text-error-darkTheme text-error">
-          {serverError}
-        </div>
-      )}
+      {serverError && <Error>{serverError}</Error>}
       <div className="flex justify-end gap-3">
         <Button
           type="button"

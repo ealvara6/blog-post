@@ -8,6 +8,7 @@ import postSchema from '@/validations/postValidations'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { useGetCategories } from '@/hooks/useGetCategories'
 import { Category } from '@/types/posts'
+import { Error } from './Error'
 
 type FormData = z.infer<typeof postSchema>
 
@@ -60,7 +61,7 @@ export const EditPostForm = ({
         onSubmit={onSubmit}
         defaultValues={{ title, content, categoryIds }}
       />
-      {serverError && <div className="text-red-500">{serverError.msg}</div>}
+      {<Error>{serverError.msg}</Error>}
     </div>
   )
 }

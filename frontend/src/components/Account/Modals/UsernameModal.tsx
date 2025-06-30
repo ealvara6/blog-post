@@ -1,4 +1,5 @@
 import { Button } from '@/components/Button'
+import { Error } from '@/components/Error'
 import { Input } from '@/components/Input'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { useUpdateUser } from '@/hooks/useUpdateUser'
@@ -39,17 +40,9 @@ export const UserNameModal = ({
       </label>
       <div className="flex flex-col gap-2">
         <Input {...register('username')} />
-        {errors['username'] && (
-          <div className="dark:text-error-darkTheme text-error">
-            {errors['username']?.message}
-          </div>
-        )}
+        {errors['username'] && <Error>{errors['username']?.message}</Error>}
       </div>
-      {serverError && (
-        <div className="dark:text-error-darkTheme text-error">
-          {serverError}
-        </div>
-      )}
+      {serverError && <Error>{serverError}</Error>}
       <div className="flex gap-3 self-end">
         <Button
           size="md"

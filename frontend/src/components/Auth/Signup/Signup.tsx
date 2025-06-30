@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { signupSchema } from '@/validations/authValidations'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { Error } from '@/components/Error'
 
 type FormData = z.infer<typeof signupSchema>
 type FieldName = keyof FormData
@@ -45,7 +46,7 @@ const Signup = () => {
   }
   return (
     <form
-      className="dark:border-border-darkTheme dark:bg-card-darkTheme flex size-fit w-lg flex-col gap-2 rounded border-2 p-4"
+      className="dark:border-border-darkTheme dark:bg-card-darkTheme border-border bg-card flex size-fit w-lg flex-col gap-2 rounded border-2 p-4"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="self-center text-2xl font-bold">Sign Up</div>
@@ -63,22 +64,14 @@ const Signup = () => {
               id={name}
               placeholder={name}
             />
-            {errors[name] && (
-              <p className="dark:text-error-darkTheme text-error">
-                {errors[name]?.message}
-              </p>
-            )}
+            {errors[name] && <Error>{errors[name].message}</Error>}
           </div>
         )
       })}
-      {serverError && (
-        <div className="dark:text-error-darkTheme text-error">
-          {serverError}
-        </div>
-      )}
+      {serverError && <Error>{serverError}</Error>}
       <button
         type="submit"
-        className={`mt-2 rounded p-2 text-xl font-bold ${isSubmitting ? 'bg-gray-600' : 'dark:bg-accent-darkTheme bg-accent'}`}
+        className={`text-text-primary-darkTheme mt-2 rounded p-2 text-xl font-bold ${isSubmitting ? 'bg-gray-600' : 'dark:bg-accent-darkTheme bg-accent'}`}
         disabled={isSubmitting}
       >
         {isSubmitting ? 'Signing up...' : 'Sign up'}

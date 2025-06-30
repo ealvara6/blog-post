@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { CommentItem } from '../CommentItem'
 import { Comment } from '@/types/posts'
 import { useNavigate } from 'react-router-dom'
+import { Error } from '../Error'
 
 export const AccountComments = () => {
   const { authUser } = useAuth()
@@ -47,7 +48,7 @@ export const AccountComments = () => {
   }
 
   if (loading) return <div>Loading...</div>
-  if (serverError) return <div>{serverError}</div>
+  if (serverError) return <Error>{serverError}</Error>
   if (!comments || comments.length === 0) return <div>No Comments found</div>
 
   return <div>{fetchComments()}</div>

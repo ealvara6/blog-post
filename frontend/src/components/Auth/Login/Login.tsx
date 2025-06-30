@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { loginSchema } from '@/validations/authValidations'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
-import { Error } from '@/components/Errors'
+import { Error } from '@/components/Error'
 import { Button } from '@/components/Button'
 import clsx from 'clsx'
 

@@ -8,6 +8,7 @@ import { PostForm } from './PostForm'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { useGetCategories } from '@/hooks/useGetCategories'
 import { Category } from '@/types/posts'
+import { Error } from './Error'
 
 type FormData = z.infer<typeof postSchema>
 
@@ -51,9 +52,7 @@ export const CreatePostForm = () => {
         submittingLabel="Creating..."
         defaultValues={{ title: '', content: '', categoryIds: [] }}
       />
-      {serverError && (
-        <div className="text-center text-red-500">{serverError.msg}</div>
-      )}
+      {serverError && <Error>{serverError.msg}</Error>}
     </div>
   )
 }

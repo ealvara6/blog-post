@@ -8,6 +8,7 @@ import { Category } from '@/types/posts'
 import { useGetCategories } from '@/hooks/useGetCategories'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Options } from './Options'
+import { Error } from './Error'
 
 interface PostFormProps {
   defaultValues?: {
@@ -62,9 +63,7 @@ export const PostForm = ({
     <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col">
         <label htmlFor="title">Title: </label>
-        {errors['title'] && (
-          <p className="text-red-500">{errors['title']?.message}</p>
-        )}
+        {errors['title'] && <Error>{errors['title']?.message}</Error>}
         <input
           {...register('title')}
           className="rounded border"
@@ -74,9 +73,7 @@ export const PostForm = ({
         />
       </div>
       <div>
-        {errors['content'] && (
-          <p className="text-red-500">{errors['content']?.message}</p>
-        )}
+        {errors['content'] && <Error>{errors['content']?.message}</Error>}
         <textarea
           {...register('content')}
           className="rounded border"
@@ -107,7 +104,7 @@ export const PostForm = ({
             />
           </div>
           {errors['categoryIds'] && (
-            <p className="text-red-500">{errors['categoryIds'].message}</p>
+            <Error>{errors['categoryIds'].message}</Error>
           )}
         </div>
       )}

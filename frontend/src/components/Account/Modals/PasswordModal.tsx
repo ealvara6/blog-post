@@ -1,4 +1,5 @@
 import { Button } from '@/components/Button'
+import { Error } from '@/components/Error'
 import { Input } from '@/components/Input'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { useUpdateUser } from '@/hooks/useUpdateUser'
@@ -48,11 +49,7 @@ export const PasswordModal = ({
           name="password"
           id="password"
         />
-        {errors['password'] && (
-          <div className="dark:text-error-darkTheme text-error">
-            {errors['password']?.message}
-          </div>
-        )}
+        {errors['password'] && <Error>{errors['password']?.message}</Error>}
       </div>
       <label htmlFor="confirmPassword" className="text-xl font-semibold">
         Confirm Password:{' '}
@@ -65,9 +62,7 @@ export const PasswordModal = ({
           id="confirmPassword"
         />
         {errors['confirmPassword'] && (
-          <div className="dark:text-error-darkTheme text-error">
-            {errors['confirmPassword']?.message}
-          </div>
+          <Error>{errors['confirmPassword']?.message}</Error>
         )}
       </div>
       {serverError && <div>{serverError}</div>}
