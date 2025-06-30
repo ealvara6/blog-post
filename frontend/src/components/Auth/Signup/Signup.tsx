@@ -45,31 +45,40 @@ const Signup = () => {
   }
   return (
     <form
-      className="border-border-light bg-background-dark text-text-dark flex size-fit w-md flex-col gap-2 border p-4"
+      className="dark:border-border-darkTheme dark:bg-card-darkTheme flex size-fit w-lg flex-col gap-2 rounded border-2 p-4"
       onSubmit={handleSubmit(onSubmit)}
     >
+      <div className="self-center text-2xl font-bold">Sign Up</div>
       {fields.map(({ name, label, type }) => {
         return (
           <div className="flex flex-col gap-1">
-            <label htmlFor={label}>{label}: </label>
+            <label htmlFor={label} className="text-xl font-semibold">
+              {label}:{' '}
+            </label>
             <input
               {...register(name)}
-              className={`bg-background-light text-text-light rounded border-2 p-1 ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
+              className={`dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border-darkTheme rounded border-2 p-1 ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
               type={type}
               name={name}
               id={name}
               placeholder={name}
             />
             {errors[name] && (
-              <p className="text-red-500">{errors[name]?.message}</p>
+              <p className="dark:text-error-darkTheme text-error">
+                {errors[name]?.message}
+              </p>
             )}
           </div>
         )
       })}
-      {serverError && <div className="text-red-500">{serverError}</div>}
+      {serverError && (
+        <div className="dark:text-error-darkTheme text-error">
+          {serverError}
+        </div>
+      )}
       <button
         type="submit"
-        className={`mt-2 rounded p-1 text-lg font-semibold ${isSubmitting ? 'bg-gray-600' : 'bg-primary-dark'}`}
+        className={`mt-2 rounded p-2 text-xl font-bold ${isSubmitting ? 'bg-gray-600' : 'dark:bg-accent-darkTheme bg-accent'}`}
         disabled={isSubmitting}
       >
         {isSubmitting ? 'Signing up...' : 'Sign up'}

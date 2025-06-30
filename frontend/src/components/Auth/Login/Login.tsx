@@ -44,12 +44,13 @@ const Login = ({
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={clsx(
-        'dark:border-border-darkTheme dark:bg-background-darkTheme border-border bg-background flex size-fit w-full max-w-xl flex-col gap-4 rounded border p-4',
+        'dark:border-border-darkTheme dark:bg-card-darkTheme border-border bg-card flex size-fit w-full max-w-xl flex-col gap-4 rounded border p-4',
         className,
       )}
     >
+      <div className="self-center text-2xl font-bold">Sign In</div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="email" className="font-semibold">
+        <label htmlFor="email" className="text-xl font-semibold">
           Email:
         </label>
         <input
@@ -63,7 +64,7 @@ const Login = ({
         {errors.email && <Error>{errors.email.message}</Error>}
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="password" className="font-semibold">
+        <label htmlFor="password" className="text-xl font-semibold">
           Password:
         </label>
         <input
