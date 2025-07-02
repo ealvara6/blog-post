@@ -29,7 +29,7 @@ export const Filter = () => {
     const buttonComponents = categories?.map((category) => {
       const id = category.id.toString()
       return (
-        <div className="flex items-center gap-2" key={id}>
+        <div key={id}>
           <input
             type="radio"
             name="category"
@@ -41,7 +41,7 @@ export const Filter = () => {
           />
           <label
             htmlFor={id}
-            className="peer-checked:dark:bg-accent-darkTheme peer-checked:bg-accent cursor-pointer rounded border border-gray-500 p-1 text-center transition select-none peer-checked:font-semibold peer-checked:text-white"
+            className="peer-checked:dark:bg-accent-darkTheme peer-checked:bg-accent flex w-full cursor-pointer items-center justify-center rounded border border-gray-500 p-1 text-center transition select-none peer-checked:font-semibold peer-checked:text-white md:h-12 lg:w-36"
           >
             {category.name}
           </label>
@@ -49,7 +49,7 @@ export const Filter = () => {
       )
     })
     buttonComponents?.push(
-      <div className="flex items-center" key="clear">
+      <div className="flex items-center justify-center" key="clear">
         <input
           type="radio"
           name="category"
@@ -65,7 +65,7 @@ export const Filter = () => {
     )
 
     return (
-      <div className="flex flex-wrap justify-around gap-2">
+      <div className="grid grid-cols-2 grid-rows-2 gap-2 lg:flex lg:justify-around">
         {buttonComponents}
       </div>
     )
@@ -73,9 +73,5 @@ export const Filter = () => {
 
   if (!categories) return <p>Loading...</p>
 
-  return (
-    <form className="gap-3">
-      <CategoryButtons />
-    </form>
-  )
+  return <CategoryButtons />
 }
