@@ -54,11 +54,12 @@ export const Pagination = ({
 
     return (
       <div className="flex justify-center gap-4">
-        {pages.map((page) => {
+        {pages.map((page, index) => {
           return (
             <div
               className={`w-14 cursor-pointer rounded border p-2 text-center select-none ${page === Number(currentPage) ? 'dark:bg-accent-darkTheme bg-accent' : ''}`}
               onClick={() => handlePageClick(page)}
+              key={index}
             >
               {page}
             </div>
