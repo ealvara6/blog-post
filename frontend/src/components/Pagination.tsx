@@ -1,7 +1,10 @@
 import React from 'react'
-import { Button } from './Button'
 import clsx from 'clsx'
 import { useUpdateQueryParams } from '@/hooks/useUpdateQueryParams'
+import {
+  ArrowLeftCircleIcon,
+  ArrowRightCircleIcon,
+} from '@heroicons/react/24/outline'
 
 type PaginationProps = React.HTMLAttributes<HTMLDivElement> & {
   currentPage: string
@@ -54,11 +57,12 @@ export const Pagination = ({
 
     return (
       <div className="flex justify-center gap-4">
-        {pages.map((page) => {
+        {pages.map((page, index) => {
           return (
             <div
-              className={`w-14 cursor-pointer rounded border p-2 text-center select-none ${page === Number(currentPage) ? 'dark:bg-accent-darkTheme bg-accent' : ''}`}
+              className={`flex h-10 w-10 cursor-pointer items-center justify-center self-center rounded border select-none ${page === Number(currentPage) ? 'dark:bg-accent-darkTheme bg-accent' : ''}`}
               onClick={() => handlePageClick(page)}
+              key={index}
             >
               {page}
             </div>
@@ -81,25 +85,23 @@ export const Pagination = ({
 
   const BackButton = () => {
     return (
-      <Button
+      <button
         onClick={() => handleNavigationButton('backward')}
-        variant="transparent"
         className="p-2 select-none"
       >
-        {'<'}
-      </Button>
+        <ArrowLeftCircleIcon className="w-10" />
+      </button>
     )
   }
 
   const ForwardButton = () => {
     return (
-      <Button
+      <button
         onClick={() => handleNavigationButton('forward')}
-        variant="transparent"
         className="p-2 select-none"
       >
-        {'>'}
-      </Button>
+        <ArrowRightCircleIcon className="w-10" />
+      </button>
     )
   }
 
