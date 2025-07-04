@@ -60,36 +60,34 @@ export const PostForm = ({
   }, [getCategories])
 
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col">
-        <label htmlFor="title">Title: </label>
+    <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+      <div className="text-2xl font-bold">New Post</div>
+      <div className="flex flex-col gap-2">
         {errors['title'] && <Error>{errors['title']?.message}</Error>}
         <input
           {...register('title')}
-          className="rounded border"
+          className="rounded border p-2 text-lg"
           type="text"
           id="title"
           placeholder="Title"
         />
       </div>
-      <div>
+      <div className="flex flex-col gap-2">
         {errors['content'] && <Error>{errors['content']?.message}</Error>}
         <textarea
           {...register('content')}
-          className="rounded border"
+          className="h-[400px] w-full rounded border p-2 text-lg sm:h-[500px]"
           id="content"
           spellCheck={true}
-          rows={10}
-          cols={60}
           placeholder="Content"
         />
       </div>
       {loading ? (
         'Loading Categories...'
       ) : (
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col items-center gap-2.5">
           <div className="text-lg font-bold">Category</div>
-          <div className="flex justify-around">
+          <div className="grid w-full grid-cols-2 justify-items-center gap-5 sm:flex sm:justify-around">
             <Controller
               name="categoryIds"
               control={control}

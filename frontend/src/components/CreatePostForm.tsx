@@ -45,7 +45,7 @@ export const CreatePostForm = () => {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-full max-w-3xl flex-col gap-2">
       <PostForm
         onSubmit={onSubmit}
         submitLabel="Create Post"

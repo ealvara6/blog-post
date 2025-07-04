@@ -12,5 +12,5 @@ export const CategoriesList = ({ categories }: { categories: Category[] }) => {
     )
   })
 
-  return <div className="flex">{categoryItems}</div>
+  return <>{categoryItems}</>
 }
