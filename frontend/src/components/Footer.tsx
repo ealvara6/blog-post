@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
+import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
 const Footer = () => {
   const Header = ({ children }: { children: React.ReactNode }) => {
@@ -100,103 +100,6 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-
-    // <footer className="border-t border-gray-200 bg-gray-100 text-gray-700 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300">
-    //   <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 py-10 sm:grid-cols-2 lg:grid-cols-4">
-    //     {/* Logo & Description */}
-    //     <div>
-    //       <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-    //         Draftory
-    //       </h2>
-    //       <p className="mt-2 text-sm">
-    //         Sharing insights, code, and stories for developers and creators.
-    //       </p>
-    //     </div>
-
-    //     {/* Navigation */}
-    //     <div>
-    //       <h3 className="text-sm font-semibold tracking-wider uppercase">
-    //         Navigation
-    //       </h3>
-    //       <ul className="mt-4 space-y-2 text-sm">
-    //         <li>
-    //           <a href="/" className="hover:underline">
-    //             Home
-    //           </a>
-    //         </li>
-    //         <li>
-    //           <a href="/blog" className="hover:underline">
-    //             Blog
-    //           </a>
-    //         </li>
-    //         <li>
-    //           <a href="/about" className="hover:underline">
-    //             About
-    //           </a>
-    //         </li>
-    //         <li>
-    //           <a href="/contact" className="hover:underline">
-    //             Contact
-    //           </a>
-    //         </li>
-    //       </ul>
-    //     </div>
-
-    //     {/* Social */}
-    //     <div>
-    //       <h3 className="text-sm font-semibold tracking-wider uppercase">
-    //         Connect
-    //       </h3>
-    //       <div className="mt-4 flex space-x-4 text-xl">
-    //         <a
-    //           href="https://github.com"
-    //           aria-label="GitHub"
-    //           className="hover:text-accent"
-    //         >
-    //           <FaGithub />
-    //         </a>
-    //         <a
-    //           href="https://twitter.com"
-    //           aria-label="Twitter"
-    //           className="hover:text-accent"
-    //         >
-    //           <FaTwitter />
-    //         </a>
-    //         <a
-    //           href="https://linkedin.com"
-    //           aria-label="LinkedIn"
-    //           className="hover:text-accent"
-    //         >
-    //           <FaLinkedin />
-    //         </a>
-    //       </div>
-    //     </div>
-
-    //     {/* Legal */}
-    //     <div>
-    //       <h3 className="text-sm font-semibold tracking-wider uppercase">
-    //         Legal
-    //       </h3>
-    //       <ul className="mt-4 space-y-2 text-sm">
-    //         <li>
-    //           <a href="/privacy" className="hover:underline">
-    //             Privacy Policy
-    //           </a>
-    //         </li>
-    //         <li>
-    //           <a href="/terms" className="hover:underline">
-    //             Terms of Service
-    //           </a>
-    //         </li>
-    //       </ul>
-    //     </div>
-    //   </div>
-
-    //   {/* Bottom Bar */}
-    //   <div className="mt-10 border-t border-gray-200 py-4 text-center text-xs text-gray-500 dark:border-gray-700">
-    //     © {new Date().getFullYear()} Draftory. All rights reserved.
-    //   </div>
-    // </footer>
   )
 }
 

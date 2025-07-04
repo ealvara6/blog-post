@@ -6,11 +6,15 @@ import { Menu } from './Menu'
 import { Modal } from '../Modal'
 import { useNavigate } from 'react-router-dom'
 import { Account } from './Account'
+import { PlusIcon } from '@heroicons/react/24/outline'
+import { useAuth } from '@/context/AuthProvider/useAuth'
+import { Link } from '../Link'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenModal, setIsOpenModal] = useState<string | null>(null)
   const navigate = useNavigate()
+  const { authUser } = useAuth()
 
   const menuToggle = () => {
     setIsOpen((prev) => !prev)
@@ -45,7 +49,19 @@ const Navbar = () => {
         >
           LOGO
         </div>
-        <div className="flex text-lg font-bold">
+        <div className="flex gap-3 text-lg font-bold">
+          <div
+            className={`self-center rounded-md border ${authUser ? 'block' : 'hidden'} sm:hidden`}
+            onClick={() => navigate({ pathname: '/posts/create' })}
+          >
+            <PlusIcon className="w-8 p-0.5" />
+          </div>
+          <Link
+            className="hidden self-center sm:block"
+            onClick={() => navigate({ pathname: '/posts/create' })}
+          >
+            Create Post
+          </Link>
           <Account setIsOpenModal={setIsOpenModal} />
         </div>
       </div>

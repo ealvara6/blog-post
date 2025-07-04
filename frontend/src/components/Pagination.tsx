@@ -60,7 +60,7 @@ export const Pagination = ({
         {pages.map((page, index) => {
           return (
             <div
-              className={`flex h-10 w-10 cursor-pointer items-center justify-center self-center rounded border select-none md:h-16 md:w-20 ${page === Number(currentPage) ? 'dark:bg-accent-darkTheme bg-accent' : ''}`}
+              className={`flex h-12 w-14 cursor-pointer items-center justify-center self-center rounded border select-none sm:h-16 sm:w-20 ${page === Number(currentPage) ? 'dark:bg-accent-darkTheme bg-accent' : ''}`}
               onClick={() => handlePageClick(page)}
               key={index}
             >
@@ -89,7 +89,7 @@ export const Pagination = ({
         onClick={() => handleNavigationButton('backward')}
         className="cursor-pointer select-none"
       >
-        <ArrowLeftCircleIcon className="w-10" />
+        <ArrowLeftCircleIcon className="dark:hover:text-accent-darkTheme hover:text-accent w-10 sm:w-14" />
       </button>
     )
   }
@@ -100,7 +100,7 @@ export const Pagination = ({
         onClick={() => handleNavigationButton('forward')}
         className="cursor-pointer select-none"
       >
-        <ArrowRightCircleIcon className="w-10" />
+        <ArrowRightCircleIcon className="dark:hover:text-accent-darkTheme hover:text-accent w-10 sm:w-14" />
       </button>
     )
   }

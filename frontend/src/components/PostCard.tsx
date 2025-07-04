@@ -13,10 +13,12 @@ export const PostCard = ({ post }: { post: Post }) => {
         className="dark:border-border-darkTheme flex cursor-pointer flex-col border-2"
         onClick={() => navigate(`/posts/${id}`)}
       >
-        <div className="dark:border-border-darkTheme flex flex-col gap-2 border-b p-3">
+        <div className="dark:border-border-darkTheme flex flex-col gap-2 border-b px-2 pt-2 pb-6 sm:px-3 sm:pt-3">
           <div className="grow text-lg font-bold md:text-2xl">{title}</div>
           <div className="flex justify-between">
-            {categories && <CategoriesList categories={categories} />}
+            <div className="flex flex-wrap gap-2">
+              {categories && <CategoriesList categories={categories} />}
+            </div>
             <div className="text-md hidden font-semibold sm:block md:text-lg">
               Posted by: <span className="font-thin">{user.username}</span>
             </div>
