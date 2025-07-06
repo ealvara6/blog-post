@@ -38,7 +38,7 @@ export const CreatePostForm = () => {
         categories: categories,
         userId: authUser.id,
       })
-      navigate(`/posts/${post.id}`)
+      navigate({ pathname: `/posts/${post.id}` }, { replace: true })
     } catch (err) {
       setServerError({ msg: parseErrorMessage(err) })
     }

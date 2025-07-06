@@ -49,7 +49,7 @@ export const EditPostForm = ({
         userId: authUser?.id,
         id,
       })
-      navigate(`/posts/${id}`)
+      navigate({ pathname: `/posts/${id}` }, { replace: true })
     } catch (err) {
       setServerError({ msg: parseErrorMessage(err) })
     }
