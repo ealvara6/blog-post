@@ -3,18 +3,25 @@ import { useNavigate } from 'react-router-dom'
 import { CategoriesList } from './CategoriesList'
 import { format } from 'date-fns'
 
-export const PostCard = ({ post }: { post: Post }) => {
+export const PostCard = ({
+  post,
+  handleNavigate,
+}: {
+  post: Post
+  handleNavigate?: boolean
+}) => {
   const navigate = useNavigate()
-  const { title, content, createdAt, id, user, categories } = post
+  const { title, content, createdAt, id, user, categories, userId } = post
   const date = format(new Date(createdAt), 'MMM dd, yyy  • h:mm a')
+
   return (
-    <>
+    <div className="flex flex-col gap-5">
       <div
         className="dark:border-border-darkTheme flex cursor-pointer flex-col border-2"
-        onClick={() => navigate(`/posts/${id}`)}
+        onClick={() => handleNavigate && navigate(`/posts/${id}`)}
       >
-        <div className="dark:border-border-darkTheme flex flex-col gap-2 border-b px-2 pt-2 pb-6 sm:px-3 sm:pt-3">
-          <div className="grow text-lg font-bold md:text-2xl">{title}</div>
+        <div className="dark:border-border-darkTheme flex flex-col gap-2 border-b px-2 pt-2 pb-4 sm:px-3 sm:pt-3">
+          <div className="grow text-2xl font-bold md:text-2xl">{title}</div>
           <div className="flex justify-between">
             <div className="flex flex-wrap gap-2">
               {categories && <CategoriesList categories={categories} />}
@@ -34,7 +41,7 @@ export const PostCard = ({ post }: { post: Post }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
