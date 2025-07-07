@@ -4,8 +4,8 @@ export const menuItems = [
     link: '/',
   },
   {
-    name: 'Posts',
-    link: '/posts',
+    name: 'Browse',
+    link: '/browse',
   },
   {
     name: 'About',
