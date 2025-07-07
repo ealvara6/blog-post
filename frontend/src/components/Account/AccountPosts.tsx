@@ -36,7 +36,7 @@ export const AccountPosts = () => {
       return <PostCard post={post} key={index} />
     })
 
-    return <div>{postItems}</div>
+    return <div className="flex flex-col gap-8">{postItems}</div>
   }
 
   if (loading) return <div>Loading...</div>

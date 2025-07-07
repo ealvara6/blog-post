@@ -7,14 +7,18 @@ import { useCreateComment } from '@/hooks/useCreateComment'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Comment } from '@/types/posts'
 import { useAuth } from '@/context/AuthProvider/useAuth'
+import clsx from 'clsx'
+
+type CommentFormProps = {
+  postId: number
+  setCurrentComments: React.Dispatch<React.SetStateAction<Comment[]>>
+} & React.FormHTMLAttributes<HTMLFormElement>
 
 export const CommentForm = ({
   postId,
   setCurrentComments,
-}: {
-  postId: number
-  setCurrentComments: React.Dispatch<React.SetStateAction<Comment[]>>
-}) => {
+  className,
+}: CommentFormProps) => {
   const { authUser } = useAuth()
   const userId = authUser?.id
   const [toggleButtons, setToggleButtons] = useState(false)
@@ -48,12 +52,12 @@ export const CommentForm = ({
 
   return (
     <form
-      className="flex w-full flex-col self-center"
+      className={clsx('flex w-full flex-col gap-4 self-center', className)}
       onSubmit={handleSubmit(onSubmit)}
     >
       <input
         {...register('content')}
-        className="w-full border-b"
+        className="border-border-darkTheme focus:border-border w-full rounded border p-2"
         type="text"
         name="content"
         id="content"
@@ -62,13 +66,19 @@ export const CommentForm = ({
       />
       {toggleButtons && (
         <div className="flex gap-2 self-end">
-          <Button className="px-3" type="button" onClick={() => onCancel()}>
+          <Button
+            variant="transparent"
+            className="border-border-darkTheme"
+            type="button"
+            onClick={() => onCancel()}
+          >
             Cancel
           </Button>
           <Button
             disabled={!isValid || isSubmitting}
             isActive={isValid && !isSubmitting}
             type="submit"
+            className="font-bold"
           >
             {isSubmitting ? 'Submitting...' : 'Comment'}
           </Button>

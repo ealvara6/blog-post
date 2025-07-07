@@ -48,7 +48,9 @@ export const CommentItem = ({
       <div className="flex w-fit gap-3 self-end">
         {!isEditing && (
           <>
-            <Button onClick={() => toggleEdit()}>Edit</Button>
+            <Button variant="transparent" onClick={() => toggleEdit()}>
+              Edit
+            </Button>
             <Button
               variant="danger"
               onClick={() => onDelete()}
@@ -63,8 +65,13 @@ export const CommentItem = ({
   }
 
   return (
-    <div className="flex flex-col rounded border p-3" key={index}>
-      <div className="text-xl font-bold">{comment.user.username}</div>
+    <div
+      className="border-border-darkTheme flex flex-col gap-4 rounded border p-3"
+      key={index}
+    >
+      <div className="text-lg font-semibold tracking-wider">
+        {comment.user.username}
+      </div>
       {isEditing ? (
         <UpdateCommentForm
           content={comment.content}
@@ -75,13 +82,17 @@ export const CommentItem = ({
       ) : (
         <>
           <div>{comment.content}</div>
-          <div className="self-end font-mono font-thin">
-            <span className="font-bold">created at: </span>
-            {date.toLocaleString()}
+          <div className="flex flex-col gap-2 font-mono font-thin">
+            <div>
+              <span className="font-bold">created: </span>
+              <span className="dark:text-text-muted-darkTheme">
+                {date.toLocaleString()}
+              </span>
+            </div>
+            <AuthButtons />
           </div>
         </>
       )}
-      <AuthButtons />
     </div>
   )
 }

@@ -39,15 +39,18 @@ export const UserNameModal = ({
         New Username:{' '}
       </label>
       <div className="flex flex-col gap-2">
-        <Input {...register('username')} />
+        <Input
+          className="border-border-darkTheme rounded border p-2 text-white"
+          value={authUser?.username}
+          {...register('username')}
+        />
         {errors['username'] && <Error>{errors['username']?.message}</Error>}
       </div>
       {serverError && <Error>{serverError}</Error>}
       <div className="flex gap-3 self-end">
         <Button
-          size="md"
           type="button"
-          className="dark:bg-text-muted-darkTheme bg-text-muted"
+          variant="transparent"
           onClick={() => setIsOpen(null)}
         >
           Cancel

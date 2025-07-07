@@ -51,5 +51,5 @@ export const AccountComments = () => {
   if (serverError) return <Error>{serverError}</Error>
   if (!comments || comments.length === 0) return <div>No Comments found</div>
 
-  return <div>{fetchComments()}</div>
+  return <div className="flex flex-col gap-8">{fetchComments()}</div>
 }

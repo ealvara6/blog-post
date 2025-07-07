@@ -26,14 +26,20 @@ export const DeleteAccountModal = ({
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-10 p-4">
       <div className="text-center text-xl font-bold">
         Are you sure you want to delete your account?
       </div>
       {serverError && <Error>{serverError}</Error>}
       <div className="flex justify-end gap-4">
-        <Button onClick={() => setIsOpen(null)}>Cancel</Button>
-        <Button variant="danger" onClick={onDelete}>
+        <Button variant="transparent" onClick={() => setIsOpen(null)}>
+          Cancel
+        </Button>
+        <Button
+          variant="danger"
+          className="dark:bg-error-darkTheme bg-error"
+          onClick={onDelete}
+        >
           Delete
         </Button>
       </div>

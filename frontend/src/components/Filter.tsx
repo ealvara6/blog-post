@@ -41,7 +41,7 @@ export const Filter = () => {
           />
           <label
             htmlFor={id}
-            className="peer-checked:dark:bg-accent-darkTheme peer-checked:bg-accent flex w-full cursor-pointer items-center justify-center rounded border border-gray-500 p-1 text-center transition select-none peer-checked:font-semibold peer-checked:text-white md:h-12 lg:w-36"
+            className="peer-checked:dark:bg-accent-darkTheme peer-checked:bg-accent flex h-12 w-full cursor-pointer items-center justify-center rounded border border-gray-500 p-1 text-center transition select-none peer-checked:font-semibold peer-checked:text-white lg:w-36"
           >
             {category.name}
           </label>

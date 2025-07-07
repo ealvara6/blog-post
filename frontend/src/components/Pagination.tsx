@@ -60,7 +60,7 @@ export const Pagination = ({
         {pages.map((page, index) => {
           return (
             <div
-              className={`flex h-12 w-14 cursor-pointer items-center justify-center self-center rounded border select-none sm:h-16 sm:w-20 ${page === Number(currentPage) ? 'dark:bg-accent-darkTheme bg-accent' : ''}`}
+              className={`border-border-darkTheme flex h-12 w-14 cursor-pointer items-center justify-center self-center rounded border select-none sm:h-16 sm:w-20 ${page === Number(currentPage) ? 'dark:bg-accent-darkTheme bg-accent text-text-primary-darkTheme' : ''}`}
               onClick={() => handlePageClick(page)}
               key={index}
             >

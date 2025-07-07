@@ -39,15 +39,18 @@ export const EmailModal = ({
         New Email:
       </label>
       <div className="flex flex-col gap-2">
-        <Input {...register('email')} />
+        <Input
+          className="border-border-darkTheme text-text-primary-darkTheme rounded border p-2"
+          value={authUser?.email}
+          {...register('email')}
+        />
         {errors['email'] && <Error>{errors['email']?.message}</Error>}
       </div>
       {serverError && <Error>{serverError}</Error>}
       <div className="flex justify-end gap-3">
         <Button
           type="button"
-          size="md"
-          className="dark:bg-text-muted-darkTheme bg-text-muted"
+          variant="transparent"
           onClick={() => setIsOpen(null)}
         >
           Cancel

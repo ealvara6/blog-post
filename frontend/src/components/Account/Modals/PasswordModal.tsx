@@ -45,6 +45,7 @@ export const PasswordModal = ({
       <div className="flex flex-col gap-2">
         <Input
           {...register('password')}
+          className="border-border-darkTheme rounded border p-2"
           type="password"
           name="password"
           id="password"
@@ -57,6 +58,7 @@ export const PasswordModal = ({
       <div className="flex flex-col gap-2">
         <Input
           {...register('confirmPassword')}
+          className="border-border-darkTheme rounded border p-2"
           type="password"
           name="confirmPassword"
           id="confirmPassword"
@@ -67,12 +69,7 @@ export const PasswordModal = ({
       </div>
       {serverError && <div>{serverError}</div>}
       <div className="flex justify-end gap-3">
-        <Button
-          type="button"
-          size="md"
-          className="dark:bg-text-muted-darkTheme bg-text-muted"
-          onClick={() => setIsOpen(null)}
-        >
+        <Button variant="transparent" onClick={() => setIsOpen(null)}>
           Cancel
         </Button>
         <Button type="submit" size="md" disabled={isSubmitting}>

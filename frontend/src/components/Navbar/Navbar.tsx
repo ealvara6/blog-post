@@ -56,12 +56,15 @@ const Navbar = () => {
           >
             <PlusIcon className="w-8 p-0.5" />
           </div>
-          <Link
-            className="hidden self-center sm:block"
-            onClick={() => navigate({ pathname: '/posts/create' })}
-          >
-            Create Post
-          </Link>
+          {authUser && (
+            <Link
+              className="hidden self-center sm:block"
+              onClick={() => navigate({ pathname: '/posts/create' })}
+            >
+              Create Post
+            </Link>
+          )}
+
           <Account setIsOpenModal={setIsOpenModal} />
         </div>
       </div>

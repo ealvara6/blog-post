@@ -48,18 +48,21 @@ export const UpdateCommentForm = ({
   }
 
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-      <Input {...register('content')} />
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <Input
+        className="dark:border-border-darkTheme border p-2 text-white"
+        {...register('content')}
+      />
       <div className="flex w-fit gap-3 self-end">
+        <Button variant="danger" type="button" onClick={() => toggleEdit()}>
+          Cancel
+        </Button>
         <Button
           disabled={!isValid || isSubmitting}
           isActive={isValid && !isSubmitting}
           type="submit"
         >
           Save
-        </Button>
-        <Button variant="danger" type="button" onClick={() => toggleEdit()}>
-          Cancel
         </Button>
       </div>
     </form>

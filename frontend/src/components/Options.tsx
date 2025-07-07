@@ -41,7 +41,7 @@ export const Options = ({
           <label
             htmlFor={id}
             className={clsx(
-              'dark:border-border-darkTheme border-border peer-checked:dark:bg-accent-darkTheme peer-checked:bg-accent w-full cursor-pointer rounded border p-1 transition select-none peer-checked:font-semibold peer-checked:text-white',
+              'dark:border-border-darkTheme border-border peer-checked:dark:bg-accent-darkTheme peer-checked:bg-accent w-36 cursor-pointer rounded border p-1 transition select-none peer-checked:font-semibold peer-checked:text-white',
               className,
             )}
           >
