@@ -50,7 +50,7 @@ export const Browse = () => {
     )
 
     return (
-      <div className="grid grid-cols-1 justify-items-center gap-x-3 gap-y-12 md:grid-cols-2">
+      <div className="grid grid-cols-1 justify-items-center gap-x-3 gap-y-7 md:grid-cols-2">
         {categoryItems}
       </div>
     )
@@ -63,6 +63,7 @@ export const Browse = () => {
       <div className="text-center text-3xl font-semibold tracking-wide">
         Browse
       </div>
+
       <CategoryItems />
     </div>
   )

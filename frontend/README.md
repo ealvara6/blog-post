@@ -52,3 +52,6 @@ export default tseslint.config({
   },
 })
 ```
+
+Photo by Lisa from Pexels: https://www.pexels.com/photo/photo-of-people-sitting-beside-glass-wall-1833320/
+Photo by fauxels: https://www.pexels.com/photo/colleagues-shaking-each-other-s-hands-3184291/

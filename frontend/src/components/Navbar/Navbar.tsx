@@ -35,8 +35,8 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="dark:border-border-darkTheme dark:text-text-primary-darkTheme border-border text-text-primary h-16 border-b border-solid p-2 text-lg">
-      <div className="flex h-full items-center justify-between">
+    <nav className="dark:border-border-darkTheme dark:text-text-primary-darkTheme border-border text-text-primary border-b border-solid p-2 text-lg">
+      <div className="flex min-h-full items-center justify-between">
         <div className="block sm:hidden">
           <Bars3Icon className="w-10" onClick={() => menuToggle()} />
         </div>
@@ -44,7 +44,7 @@ const Navbar = () => {
           <Menu />
         </div>
         <div
-          className="absolute left-1/2 -translate-x-1/2 cursor-pointer self-center text-2xl font-bold"
+          className={`font-bol absolute left-1/2 -translate-x-1/2 cursor-pointer self-center text-2xl`}
           onClick={() => navigate({ pathname: '/' }, { replace: true })}
         >
           LOGO
