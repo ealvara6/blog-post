@@ -1,8 +1,10 @@
-import { Button } from './Button'
+import { useNavigate } from 'react-router-dom'
+import { Button } from '@/components/Button'
 
 export const Hero = () => {
+  const navigate = useNavigate()
   return (
-    <div className="text-text-primary-darkTheme relative -mx-4 -my-8 sm:-my-20">
+    <div className="text-text-primary-darkTheme relative">
       <img
         src="/hero-1920.jpg"
         alt="Hero"
@@ -21,10 +23,18 @@ export const Hero = () => {
             Ask questions, explore topics, and grow with the community.
           </p>
           <div className="flex gap-10">
-            <Button variant="transparent" className="sm:w-36">
+            <Button
+              variant="transparent"
+              className="text-text-primary-darkTheme border-accent sm:w-36"
+              onClick={() => navigate('/browse')}
+            >
               Browse
             </Button>
-            <Button variant="transparent" className="sm:w-36">
+            <Button
+              variant="transparent"
+              className="text-text-primary-darkTheme border-accent sm:w-36"
+              onClick={() => navigate('/signup')}
+            >
               Sign Up
             </Button>
           </div>

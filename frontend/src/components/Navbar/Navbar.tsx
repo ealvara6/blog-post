@@ -35,7 +35,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="dark:border-border-darkTheme dark:text-text-primary-darkTheme border-border text-text-primary border-b border-solid p-2 text-lg">
+    <nav className="dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border/5 border-b p-2 text-lg">
       <div className="flex min-h-full items-center justify-between">
         <div className="block sm:hidden">
           <Bars3Icon className="w-10" onClick={() => menuToggle()} />

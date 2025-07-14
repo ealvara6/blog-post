@@ -60,7 +60,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="dark:border-border-darkTheme min-h-24 border-t py-5">
+    <footer className="border-border dark:border-border/5 min-h-24 border-t py-5">
       <div className="flex flex-col justify-center">
         <div className="grid grid-cols-2 grid-rows-2 justify-items-center gap-10 sm:flex sm:flex-row sm:justify-center sm:gap-28">
           <HeaderGroup>
