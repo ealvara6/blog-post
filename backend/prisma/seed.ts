@@ -1,341 +1,68 @@
 import { PrismaClient } from '@prisma/client';
+import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create Users
-  const users = await Promise.all([
-    prisma.user.create({
-      data: {
-        username: 'joshuaelliott',
-        email: 'lacosta@gmail.com',
-        password: 'Di^7ZHjnm&',
-        blogAuthor: true,
-        createdAt: new Date('2025-03-10T13:50:19.599069'),
-      },
-    }),
-    prisma.user.create({
-      data: {
-        username: 'dawn18',
-        email: 'mariavalencia@taylor-lee.com',
-        password: 'Wb93EoUq(Q',
-        blogAuthor: true,
-        createdAt: new Date('2025-03-10T13:50:19.599084'),
-      },
-    }),
-  ]);
+  const NUM_USERS = 10;
+  const NUM_POSTS_PER_USER = 5;
+  const NUM_COMMENTS = 50;
 
-  // Create Categories
-  const categories = await Promise.all([
-    prisma.category.create({
-      data: { name: 'Technology' },
-    }),
-    prisma.category.create({
-      data: { name: 'Science' },
-    }),
-    prisma.category.create({
-      data: { name: 'World News' },
-    }),
-    prisma.category.create({
-      data: { name: 'Health' },
-    }),
-    prisma.category.create({
-      data: { name: 'Entertainment' },
-    }),
-  ]);
+  const categories = await prisma.category.createMany({
+    data: [
+      { name: 'Technology' },
+      { name: 'Lifestyle' },
+      { name: 'Education' },
+      { name: 'Gaming' },
+    ],
+    skipDuplicates: true,
+  });
 
-  // Create Posts
-  const posts = await Promise.all([
-    prisma.post.create({
-      data: {
-        title: 'The Future of Artificial Intelligence',
-        content: 'Artificial intelligence is evolving rapidly...',
-        published: true,
-        userId: users[0].id, // Linking to first user
-        categories: { connect: [{ id: categories[0].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-    prisma.post.create({
-      data: {
-        title: 'Breakthrough in Quantum Computing',
-        content: 'Scientists have made a major breakthrough...',
-        published: true,
-        userId: users[1].id, // Linking to second user
-        categories: { connect: [{ id: categories[1].id }] },
-      },
-    }),
-  ]);
+  const categoryList = await prisma.category.findMany();
 
-  // Create Comments
-  const comments = await Promise.all([
-    prisma.comment.create({
+  for (let i = 0; i < NUM_USERS; i++) {
+    const user = await prisma.user.create({
       data: {
-        content: 'Fascinating research. Looking forward to more breakthroughs.',
-        postId: posts[0].id,
-        userId: users[1].id,
+        username: faker.internet.userName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        blogAuthor: faker.datatype.boolean(),
       },
-    }),
-    prisma.comment.create({
-      data: {
-        content:
-          "I have some concerns about the long-term effects, but it's promising.",
-        postId: posts[1].id,
-        userId: users[0].id,
-      },
-    }),
-  ]);
+    });
 
-  console.log('Database seeded successfully!');
+    for (let j = 0; j < NUM_POSTS_PER_USER; j++) {
+      const post = await prisma.post.create({
+        data: {
+          title: faker.lorem.sentence(),
+          content: faker.lorem.paragraphs(2),
+          published: faker.datatype.boolean(),
+          userId: user.id,
+          categories: {
+            connect: [
+              categoryList[Math.floor(Math.random() * categoryList.length)],
+            ],
+          },
+        },
+      });
+
+      // Add random comments
+      for (let k = 0; k < 3; k++) {
+        await prisma.comment.create({
+          data: {
+            content: faker.lorem.sentences(2),
+            postId: post.id,
+            userId: user.id,
+          },
+        });
+      }
+    }
+  }
 }
 
 main()
+  .then(() => prisma.$disconnect())
   .catch((e) => {
     console.error(e);
+    prisma.$disconnect();
     process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
   });
