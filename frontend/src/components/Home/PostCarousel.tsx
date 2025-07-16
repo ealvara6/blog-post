@@ -36,7 +36,7 @@ export const PostCarousel = ({ category }: { category: Category }) => {
         <ChevronLeftIcon className="w-10" />
       </button>
       <button
-        className={`swiper-button-next-${category.id} dark:hover:text-accent-darkTheme hover:text-accent absolute top-1/2 -right-14 z-10 -translate-y-1/2`}
+        className={`hidden sm:block swiper-button-next-${category.id} dark:hover:text-accent-darkTheme hover:text-accent absolute top-1/2 -right-14 z-10 -translate-y-1/2`}
       >
         <ChevronRightIcon className="w-10" />
       </button>

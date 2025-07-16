@@ -27,7 +27,7 @@ export const Account = ({
     <>
       {!authUser ? (
         <UserCircleIcon
-          className="w-10"
+          className="w-12"
           onClick={() => setIsOpenModal('open')}
         />
       ) : (

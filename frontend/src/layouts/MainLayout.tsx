@@ -6,8 +6,10 @@ const MainLayout = () => {
   return (
     <div className="dark:bg-background-darkTheme dark:text-text-primary-darkTheme flex min-h-screen flex-col">
       <Navbar />
-      <main className="mx-4 flex grow justify-center py-8 sm:mx-12 sm:py-20 md:px-20">
-        <Outlet />
+      <main className="flex grow justify-center py-8 sm:py-20">
+        <div className="flex w-full justify-center">
+          <Outlet />
+        </div>
       </main>
       <Footer />
     </div>

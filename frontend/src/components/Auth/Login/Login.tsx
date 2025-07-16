@@ -48,40 +48,47 @@ const Login = ({
         className,
       )}
     >
-      <div className="self-center text-2xl font-bold">Sign In</div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="email" className="text-xl font-semibold">
+      <div className="self-center text-3xl font-bold tracking-wide lg:text-5xl">
+        Sign In
+      </div>
+      <div className="flex flex-col gap-3">
+        <label htmlFor="email" className="text-xl font-semibold lg:text-2xl">
           Email:
         </label>
         <input
           {...register('email')}
           type="text"
-          className={`dark:border-border-darkTheme border-border rounded border-2 p-1 ${errors.email ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border'}`}
+          className={`dark:border-border-darkTheme border-border rounded border-2 p-1 lg:text-xl ${errors.email ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border text-lg'}`}
           name="email"
           id="email"
           placeholder="Email"
         />
         {errors.email && <Error>{errors.email.message}</Error>}
       </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="password" className="text-xl font-semibold">
+      <div className="flex flex-col gap-3">
+        <label htmlFor="password" className="text-xl font-semibold lg:text-2xl">
           Password:
         </label>
         <input
           {...register('password')}
           type="password"
-          className={`dark:border-border-darkTheme border-border- rounded border-2 p-1 ${errors.password ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border'}`}
+          className={`dark:border-border-darkTheme border-border- rounded border-2 p-1 lg:text-xl ${errors.password ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border text-lg'}`}
           name="password"
           id="password"
           placeholder="Password"
         />
         {errors.password && <Error>{errors.password.message}</Error>}
       </div>
-      <Button variant="primary" type="submit" disabled={isSubmitting}>
+      <Button
+        variant="primary"
+        type="submit"
+        disabled={isSubmitting}
+        className="text-xl tracking-wider"
+      >
         {isSubmitting ? 'Logging in...' : 'Login'}
       </Button>
       {serverError && <Error>{serverError.msg}</Error>}
-      <div className="dark:text-text-muted-darkTheme text-text-muted self-center text-center">
+      <div className="dark:text-text-muted-darkTheme text-text-muted self-center text-center text-lg lg:text-xl">
         Don't have an account?
         <br />
         <a

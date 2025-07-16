@@ -14,13 +14,13 @@ const ThemeButton = () => {
         <SunIcon
           title="toggle theme"
           onClick={() => onClick()}
-          className="w-8 cursor-pointer"
+          className="w-10 cursor-pointer"
         />
       ) : (
         <MoonIcon
           title="toggle theme"
           onClick={() => onClick()}
-          className="w-8 cursor-pointer"
+          className="w-10 cursor-pointer"
         />
       )}
     </>

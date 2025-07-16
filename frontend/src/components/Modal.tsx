@@ -35,7 +35,7 @@ export const Modal = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 shadow-lg">
       <div
-        className="dark:bg-card-darkTheme bg-card dark:border-border-darkTheme border-border flex w-full max-w-lg flex-col rounded border p-1"
+        className="dark:bg-card-darkTheme bg-card dark:border-border-darkTheme border-border flex w-full max-w-xl flex-col items-center rounded border p-1 lg:max-w-3xl"
         ref={modalRef}
       >
         {children}

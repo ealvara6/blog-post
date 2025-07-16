@@ -23,7 +23,7 @@ const Navbar = () => {
   const LoginModal = () => {
     return (
       <Modal setIsOpen={setIsOpenModal}>
-        <div className="flex justify-end">
+        <div className="self-end p-4">
           <XCircleIcon
             className="w-8 cursor-pointer"
             onClick={() => setIsOpenModal(null)}
@@ -35,8 +35,8 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border/5 border-b p-2 text-lg">
-      <div className="flex min-h-full items-center justify-between">
+    <nav className="dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border/5 flex min-h-18 border-b p-2 text-2xl">
+      <div className="flex min-h-full grow items-center justify-between">
         <div className="block sm:hidden">
           <Bars3Icon className="w-10" onClick={() => menuToggle()} />
         </div>
