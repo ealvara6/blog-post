@@ -15,7 +15,7 @@ const baseStyles = {
   transparent:
     'dark:border-accent-darkTheme border-accent border text-text-primary dark:text-text-primary-darkTheme hover:text-text-primary-darkTheme border-border-darkTheme hover:bg-accent dark:hover:bg-accent-darkTheme h-13 min-w-26 transition',
   danger:
-    'dark:border-error-darkTheme border-error dark:text-text-primary-darkTheme text-text-primary hover:text-text-primary-darkTheme dark:hover:bg-error-darkTheme hover:bg-error dark:focus:bg-error-darkTheme h-13 min-w-26 border transition border',
+    'dark:border-error-darkTheme border-error dark:text-text-primary-darkTheme  hover:text-text-primary-darkTheme dark:hover:bg-error-darkTheme hover:bg-error dark:focus:bg-error-darkTheme h-13 min-w-26 border transition border',
 }
 
 const sizeStyles = {

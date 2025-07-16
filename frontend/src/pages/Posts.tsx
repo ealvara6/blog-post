@@ -57,12 +57,12 @@ export const Posts = () => {
             limit={3}
           />
         </div>
-        <div className="hidden sm:block">
+        <div className="hidden w-full sm:block">
           <Pagination
             className="col-span-full"
             currentPage={queryData.page}
             pageInfo={pageInfo}
-            limit={10}
+            limit={5}
           />
         </div>
       </>
@@ -72,7 +72,7 @@ export const Posts = () => {
   return (
     <>
       {posts ? (
-        <div className="flex w-full flex-col gap-5">
+        <div className="mx-3 flex w-full flex-col gap-15">
           <SearchBar className="dark:border-border-darkTheme border-border dark:bg-card-darkTheme bg-card col-span-full border focus:outline" />
           <Filter />
           {posts.length !== 0 ? (

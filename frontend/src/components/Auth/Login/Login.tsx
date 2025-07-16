@@ -44,7 +44,7 @@ const Login = ({
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={clsx(
-        'dark:border-border-darkTheme dark:bg-card-darkTheme border-border bg-card flex size-fit w-full max-w-xl flex-col gap-4 rounded border p-4',
+        'dark:border-border-darkTheme dark:bg-card-darkTheme border-border bg-card mx-3 flex size-fit w-full max-w-4xl flex-col gap-3 rounded border p-4 py-8',
         className,
       )}
     >
@@ -58,7 +58,7 @@ const Login = ({
         <input
           {...register('email')}
           type="text"
-          className={`dark:border-border-darkTheme border-border rounded border-2 p-1 lg:text-xl ${errors.email ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border text-lg'}`}
+          className={`dark:border-border-darkTheme border-border rounded border-2 p-2 lg:text-xl ${errors.email ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border text-lg'}`}
           name="email"
           id="email"
           placeholder="Email"
@@ -72,7 +72,7 @@ const Login = ({
         <input
           {...register('password')}
           type="password"
-          className={`dark:border-border-darkTheme border-border- rounded border-2 p-1 lg:text-xl ${errors.password ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border text-lg'}`}
+          className={`dark:border-border-darkTheme border-border- rounded border-2 p-2 lg:text-xl ${errors.password ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border text-lg'}`}
           name="password"
           id="password"
           placeholder="Password"
@@ -83,7 +83,7 @@ const Login = ({
         variant="primary"
         type="submit"
         disabled={isSubmitting}
-        className="text-xl tracking-wider"
+        className={`h-12 text-xl tracking-wider md:h-14`}
       >
         {isSubmitting ? 'Logging in...' : 'Login'}
       </Button>

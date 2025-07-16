@@ -45,9 +45,10 @@ export const CreatePostForm = () => {
   }
 
   return (
-    <div className="flex w-full max-w-3xl flex-col gap-2">
+    <div className="mx-3 flex w-full max-w-4xl flex-col gap-2 rounded px-2 sm:px-6">
       <PostForm
         onSubmit={onSubmit}
+        header="New Post"
         submitLabel="Create Post"
         submittingLabel="Creating..."
         defaultValues={{ title: '', content: '', categoryIds: [] }}

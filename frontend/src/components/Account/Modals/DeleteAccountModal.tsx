@@ -26,7 +26,7 @@ export const DeleteAccountModal = ({
   }
 
   return (
-    <div className="flex flex-col gap-10 p-4">
+    <div className="flex w-full flex-col gap-10 p-4">
       <div className="text-center text-xl font-bold">
         Are you sure you want to delete your account?
       </div>

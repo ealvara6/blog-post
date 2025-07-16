@@ -5,6 +5,7 @@ import { UserNameModal } from './Modals/UsernameModal'
 import { EmailModal } from './Modals/EmailModal'
 import { PasswordModal } from './Modals/PasswordModal'
 import { DeleteAccountModal } from './Modals/DeleteAccountModal'
+import { ChevronRightIcon } from '@heroicons/react/24/outline'
 
 export const AccountInfo = () => {
   const { authUser } = useAuth()
@@ -45,19 +46,23 @@ export const AccountInfo = () => {
     const tabs = tabInfo.map((tab, index) => {
       return (
         <div
-          className={`flex min-h-16 w-full cursor-pointer rounded border border-gray-500 p-2 ${tab.label === 'Delete Account' ? 'dark:bg-error-darkTheme bg-error text-text-primary-darkTheme' : ''}`}
+          className={`dark:border-border-darkTheme flex h-24 min-h-16 w-full cursor-pointer rounded border p-2 sm:text-xl ${tab.label === 'Delete Account' ? 'dark:bg-error-darkTheme bg-error text-text-primary-darkTheme' : ''}`}
           onClick={() => handleClick(tab.name)}
           key={index}
         >
-          <div className="flex grow flex-col">
-            <div className="flex grow items-center font-bold">{tab.label}</div>
+          <div className="flex grow flex-col justify-center">
+            <div className="flex font-bold sm:text-xl">{tab.label}</div>
             {tab.subtext ? (
-              <div className="text-gray-400">{tab.subtext}</div>
+              <div className="dark:text-text-muted-darkTheme text-text-muted">
+                {tab.subtext}
+              </div>
             ) : (
               ''
             )}
           </div>
-          <div className="self-center">---&gt;</div>
+          <div className="self-center">
+            <ChevronRightIcon className="w-8" />
+          </div>
         </div>
       )
     })
@@ -66,7 +71,7 @@ export const AccountInfo = () => {
   }
 
   return (
-    <div className="flex flex-col items-center gap-5">
+    <div className="flex flex-col items-center gap-5 sm:gap-8">
       <Tabs />
       {isOpen && (
         <Modal setIsOpen={setIsOpen}>

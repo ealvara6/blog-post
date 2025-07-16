@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div className="-mt-8 flex flex-col gap-15 sm:-mt-20">
       <Hero />
-      <div className="mx-auto max-w-screen px-4">
+      <div className="max-w-screen">
         <Carousels />
       </div>
     </div>

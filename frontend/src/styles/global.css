@@ -34,8 +34,16 @@ html {
 }
 
 @layer utilities {
+  /* Light mode autofill */
   input:-webkit-autofill {
-    box-shadow: 0 0 0px 1000px theme('colors.gray.800') inset;
-    -webkit-text-fill-color: theme('colors.white');
+    box-shadow: 0 0 0 1000px var(--color-card) inset;
+    -webkit-text-fill-color: var(--color-text-primary);
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /* Dark mode autofill */
+  .dark input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px var(--color-card-darkTheme) inset;
+    -webkit-text-fill-color: var(--color-text-primary-darkTheme);
   }
 }

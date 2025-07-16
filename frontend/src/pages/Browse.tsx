@@ -59,7 +59,7 @@ export const Browse = () => {
   if (serverError) return <div>{serverError}</div>
 
   return (
-    <div className="flex w-full max-w-[1000px] flex-col gap-14 md:py-36">
+    <div className="flex w-full max-w-[1000px] flex-col gap-14 px-3 md:py-36">
       <div className="text-center text-3xl font-semibold tracking-wide">
         Browse
       </div>

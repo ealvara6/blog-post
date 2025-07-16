@@ -58,7 +58,7 @@ export const MenuMobile = ({
     if (!authUser) {
       return (
         <div
-          className="dark:text-accent-darkTheme text-accent dark:hover:text-accent-hover-darkTheme hover:text-accent-hover font-thin underline"
+          className="dark:text-accent-darkTheme text-accent dark:hover:text-accent-hover-darkTheme hover:text-accent-hover text-lg font-thin underline"
           onClick={() => handleLogin()}
         >
           Sign In
@@ -67,7 +67,7 @@ export const MenuMobile = ({
     } else {
       return (
         <div
-          className="dark:text-accent-darkTheme text-accent dark:hover:text-accent-hover-darkTheme hover:text-accent-hover font-thin underline"
+          className="dark:text-accent-darkTheme text-accent dark:hover:text-accent-hover-darkTheme hover:text-accent-hover text-lg font-thin underline"
           onClick={() => handleLogout()}
         >
           Sign Out
@@ -89,7 +89,7 @@ export const MenuMobile = ({
         <ThemeButton />
       </div>
       <MenuItems
-        className="font-semi-bold text-xl"
+        className="font-semi-bold text-xl tracking-widest"
         handleNavigate={handleNavigate}
       />
       <Auth />

@@ -8,7 +8,7 @@ export const Post = () => {
   if (loading) return <p>Loading...</p>
 
   return (
-    <div className="w-full">
+    <div className="w-full px-3">
       {post ? <PostItem {...post} /> : <div>No post found</div>}
     </div>
   )

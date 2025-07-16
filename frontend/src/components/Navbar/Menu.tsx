@@ -10,7 +10,7 @@ export const Menu = () => {
   }
 
   return (
-    <div className="flex gap-10">
+    <div className="flex items-center gap-4 text-xl lg:gap-10 lg:text-2xl">
       <ThemeButton />
       <MenuItems handleNavigate={handleNavigate} className="self-center" />
     </div>

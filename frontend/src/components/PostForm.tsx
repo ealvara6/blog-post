@@ -16,6 +16,7 @@ interface PostFormProps {
     content: string
     categoryIds: number[]
   }
+  header: string
   submittingLabel?: string
   submitLabel?: string
   onSubmit: (data: {
@@ -32,6 +33,7 @@ export const PostForm = ({
   onSubmit,
   submittingLabel,
   submitLabel,
+  header,
 }: PostFormProps) => {
   const {
     register,
@@ -60,8 +62,13 @@ export const PostForm = ({
   }, [getCategories])
 
   return (
-    <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
-      <div className="text-2xl font-bold">New Post</div>
+    <form
+      className="flex flex-col gap-5 py-5"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="pt-7 text-center text-3xl font-bold tracking-wider">
+        {header}
+      </div>
       <div className="flex flex-col gap-2">
         {errors['title'] && <Error>{errors['title']?.message}</Error>}
         <input
@@ -76,7 +83,7 @@ export const PostForm = ({
         {errors['content'] && <Error>{errors['content']?.message}</Error>}
         <textarea
           {...register('content')}
-          className="h-[400px] w-full rounded border p-2 text-lg sm:h-[500px]"
+          className="h-[300px] w-full rounded border p-2 text-lg sm:h-[500px]"
           id="content"
           spellCheck={true}
           placeholder="Content"
@@ -85,8 +92,8 @@ export const PostForm = ({
       {loading ? (
         'Loading Categories...'
       ) : (
-        <div className="flex flex-col items-center gap-2.5">
-          <div className="text-lg font-bold">Category</div>
+        <div className="flex flex-col items-center gap-6">
+          <div className="text-xl font-bold">Category</div>
           <div className="grid w-full grid-cols-2 justify-items-center gap-5 sm:flex sm:justify-around">
             <Controller
               name="categoryIds"
@@ -106,7 +113,11 @@ export const PostForm = ({
           )}
         </div>
       )}
-      <Button disabled={isSubmitting} isActive={!isSubmitting}>
+      <Button
+        disabled={isSubmitting}
+        isActive={!isSubmitting}
+        className="text-xl font-bold tracking-wider md:h-15"
+      >
         {isSubmitting
           ? (submittingLabel ?? 'Submitting...')
           : (submitLabel ?? 'Submit')}

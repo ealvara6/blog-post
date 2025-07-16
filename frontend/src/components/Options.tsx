@@ -29,7 +29,7 @@ export const Options = ({
       const id = category.id.toString()
 
       return (
-        <div key={id} className="flex w-full text-center">
+        <div key={id} className="flex h-14 w-full justify-center text-center">
           <Input
             type="checkbox"
             checked={selected.includes(category.id)}
@@ -41,7 +41,7 @@ export const Options = ({
           <label
             htmlFor={id}
             className={clsx(
-              'dark:border-border-darkTheme border-border peer-checked:dark:bg-accent-darkTheme peer-checked:bg-accent w-36 cursor-pointer rounded border p-1 transition select-none peer-checked:font-semibold peer-checked:text-white',
+              'dark:border-border-darkTheme border-border peer-checked:dark:bg-accent-darkTheme peer-checked:bg-accent flex w-full max-w-2xl cursor-pointer items-center justify-center rounded border p-1 font-semibold transition select-none peer-checked:font-semibold peer-checked:text-white',
               className,
             )}
           >

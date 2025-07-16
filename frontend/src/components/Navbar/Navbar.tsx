@@ -23,7 +23,7 @@ const Navbar = () => {
   const LoginModal = () => {
     return (
       <Modal setIsOpen={setIsOpenModal}>
-        <div className="self-end p-4">
+        <div className="self-end">
           <XCircleIcon
             className="w-8 cursor-pointer"
             onClick={() => setIsOpenModal(null)}
@@ -35,7 +35,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border/5 flex min-h-18 border-b p-2 text-2xl">
+    <nav className="dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border/5 flex min-h-18 border-b p-2">
       <div className="flex min-h-full grow items-center justify-between">
         <div className="block sm:hidden">
           <Bars3Icon className="w-10" onClick={() => menuToggle()} />
@@ -54,11 +54,11 @@ const Navbar = () => {
             className={`self-center rounded-md border ${authUser ? 'block' : 'hidden'} sm:hidden`}
             onClick={() => navigate({ pathname: '/posts/create' })}
           >
-            <PlusIcon className="w-8 p-0.5" />
+            <PlusIcon className="w-7 p-0.5" />
           </div>
           {authUser && (
             <Link
-              className="hidden self-center sm:block"
+              className="hidden self-center text-xl sm:block lg:text-2xl"
               onClick={() => navigate({ pathname: '/posts/create' })}
             >
               Create Post

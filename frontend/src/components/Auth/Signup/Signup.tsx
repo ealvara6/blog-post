@@ -44,25 +44,36 @@ const Signup = () => {
       setServerError(parseErrorMessage(err))
     }
   }
+
+  const parseName = (name: string) => {
+    if (name === 'confirmPassword') return 'Confirm Password'
+    return name.charAt(0).toUpperCase() + name.slice(1)
+  }
+
   return (
     <form
-      className="dark:border-border-darkTheme dark:bg-card-darkTheme border-border bg-card flex size-fit w-lg flex-col gap-2 rounded border-2 p-4"
+      className="dark:border-border-darkTheme dark:bg-card-darkTheme border-border bg-card mx-3 flex size-fit w-full max-w-4xl flex-col gap-2 rounded border-2 p-4 pt-10"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="self-center text-2xl font-bold">Sign Up</div>
+      <div className="mb-5 self-center text-3xl font-bold tracking-wide lg:text-5xl">
+        Sign Up
+      </div>
       {fields.map(({ name, label, type }) => {
         return (
-          <div className="flex flex-col gap-1">
-            <label htmlFor={label} className="text-xl font-semibold">
+          <div className="flex flex-col gap-3">
+            <label
+              htmlFor={label}
+              className="text-xl font-semibold lg:text-2xl"
+            >
               {label}:{' '}
             </label>
             <input
               {...register(name)}
-              className={`dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border-darkTheme rounded border-2 p-1 ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
+              className={`dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border-darkTheme rounded border-2 p-2 text-lg lg:p-4 lg:text-xl ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
               type={type}
               name={name}
               id={name}
-              placeholder={name}
+              placeholder={parseName(name)}
             />
             {errors[name] && <Error>{errors[name].message}</Error>}
           </div>
@@ -71,7 +82,7 @@ const Signup = () => {
       {serverError && <Error>{serverError}</Error>}
       <button
         type="submit"
-        className={`text-text-primary-darkTheme mt-2 rounded p-2 text-xl font-bold ${isSubmitting ? 'bg-gray-600' : 'dark:bg-accent-darkTheme bg-accent'}`}
+        className={`text-text-primary-darkTheme mt-2 h-11 rounded p-2 text-xl font-bold tracking-wider lg:h-15 lg:text-2xl ${isSubmitting ? 'bg-gray-600' : 'dark:bg-accent-darkTheme bg-accent'}`}
         disabled={isSubmitting}
       >
         {isSubmitting ? 'Signing up...' : 'Sign up'}

@@ -41,7 +41,7 @@ export const Filter = () => {
           />
           <label
             htmlFor={id}
-            className="peer-checked:dark:bg-accent-darkTheme peer-checked:bg-accent flex h-12 w-full cursor-pointer items-center justify-center rounded border border-gray-500 p-1 text-center transition select-none peer-checked:font-semibold peer-checked:text-white lg:w-36"
+            className="peer-checked:dark:bg-accent-darkTheme peer-checked:bg-accent flex h-12 w-full cursor-pointer items-center justify-center rounded border border-gray-500 p-1 text-center transition select-none peer-checked:font-semibold peer-checked:text-white lg:h-15 lg:w-46 xl:w-64"
           >
             {category.name}
           </label>
@@ -65,7 +65,7 @@ export const Filter = () => {
     )
 
     return (
-      <div className="grid grid-cols-2 grid-rows-2 gap-2 lg:flex lg:justify-around">
+      <div className="grid grid-cols-2 grid-rows-2 gap-2 lg:flex lg:justify-around lg:text-xl">
         {buttonComponents}
       </div>
     )

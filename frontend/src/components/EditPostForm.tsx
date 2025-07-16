@@ -56,9 +56,10 @@ export const EditPostForm = ({
   }
 
   return (
-    <div>
+    <div className="mx-3 flex w-full max-w-4xl flex-col gap-2 rounded px-2 sm:px-6">
       <PostForm
         onSubmit={onSubmit}
+        header="Edit Post"
         defaultValues={{ title, content, categoryIds }}
       />
       {<Error>{serverError.msg}</Error>}

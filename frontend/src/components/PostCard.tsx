@@ -72,12 +72,12 @@ export const PostCard = ({
   return (
     <div className="flex flex-col gap-5">
       <div
-        className={`border-border-darkTheme flex flex-col border ${handleNavigate && 'cursor-pointer'}`}
+        className={`border-border-darkTheme flex flex-col rounded border ${handleNavigate && 'cursor-pointer'}`}
         onClick={() => handleNavigate && navigate(`/posts/${id}`)}
       >
         <div className="dark:border-border-darkTheme flex flex-col gap-2 border-b px-2 pt-2 pb-4 sm:px-3 sm:pt-3">
           <div className="flex justify-between">
-            <div className="grow text-2xl font-bold md:text-2xl">{title}</div>
+            <div className="grow text-xl font-bold sm:text-2xl">{title}</div>
             {!handleNavigate && authUser?.id === userId && <MenuComponent />}
           </div>
           <div className="flex justify-between">
@@ -89,7 +89,9 @@ export const PostCard = ({
             </div>
           </div>
         </div>
-        <div className="grow p-3">{content}</div>
+        <div className="dark:text-text-primary-darkTheme/80 text-text-primary/80 grow p-3">
+          {content}
+        </div>
         <div className="hidden flex-col justify-between p-3 text-end font-mono font-thin sm:flex">
           <div className="flex justify-end gap-2">
             <span className="text-lg font-semibold">Posted At: </span>
