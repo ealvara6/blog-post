@@ -34,8 +34,11 @@ export const UserNameModal = ({
   }
 
   return (
-    <form className="flex flex-col gap-4 p-2" onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="username" className="text-xl font-semibold">
+    <form
+      className="flex w-full flex-col gap-4 p-2"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <label htmlFor="username" className="text-lg font-semibold sm:text-xl">
         New Username:{' '}
       </label>
       <div className="flex flex-col gap-2">

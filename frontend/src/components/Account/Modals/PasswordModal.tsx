@@ -38,8 +38,11 @@ export const PasswordModal = ({
   }
 
   return (
-    <form className="flex flex-col gap-4 p-2" onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="password" className="text-xl font-semibold">
+    <form
+      className="flex w-full flex-col gap-4 p-2"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <label htmlFor="password" className="text-lg font-semibold sm:text-xl">
         New Password:{' '}
       </label>
       <div className="flex flex-col gap-2">
@@ -52,7 +55,10 @@ export const PasswordModal = ({
         />
         {errors['password'] && <Error>{errors['password']?.message}</Error>}
       </div>
-      <label htmlFor="confirmPassword" className="text-xl font-semibold">
+      <label
+        htmlFor="confirmPassword"
+        className="text-lg font-semibold sm:text-xl"
+      >
         Confirm Password:{' '}
       </label>
       <div className="flex flex-col gap-2">

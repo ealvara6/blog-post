@@ -57,7 +57,7 @@ export const CommentForm = ({
     >
       <input
         {...register('content')}
-        className="border-border-darkTheme focus:border-border w-full rounded border p-2"
+        className="border-border-darkTheme focus:border-border w-full rounded border p-3"
         type="text"
         name="content"
         id="content"

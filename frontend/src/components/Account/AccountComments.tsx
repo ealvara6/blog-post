@@ -33,7 +33,7 @@ export const AccountComments = () => {
 
   const fetchComments = () => {
     if (comments === undefined || Object.keys(comments).length === 0)
-      return <div>No Comments found</div>
+      return <div className="text-center">No Comments found</div>
 
     const commentItems = comments.map((comment, index) => {
       const date = new Date(comment.createdAt)
@@ -49,7 +49,8 @@ export const AccountComments = () => {
 
   if (loading) return <div>Loading...</div>
   if (serverError) return <Error>{serverError}</Error>
-  if (!comments || comments.length === 0) return <div>No Comments found</div>
+  if (!comments || comments.length === 0)
+    return <div className="text-center">No Comments found</div>
 
   return <div className="flex flex-col gap-8">{fetchComments()}</div>
 }

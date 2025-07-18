@@ -38,7 +38,7 @@ export const EmailModal = ({
       className="flex w-full flex-col gap-4 p-2"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <label htmlFor="email" className="text-xl font-semibold">
+      <label htmlFor="email" className="text-lg font-semibold sm:text-xl">
         New Email:
       </label>
       <div className="flex flex-col gap-2">

@@ -5,6 +5,14 @@ import React, { useState } from 'react'
 import { useDeleteComment } from '@/hooks/useDeleteComment'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { UpdateCommentForm } from './UpdateCommentForm'
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  MenuSeparator,
+} from '@headlessui/react'
+import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
 
 export const CommentItem = ({
   comment,
@@ -42,25 +50,29 @@ export const CommentItem = ({
     setIsEditing(!isEditing)
   }
 
-  const AuthButtons = () => {
+  const Auth = () => {
     if (comment.userId !== authUser?.id) return ''
     return (
-      <div className="flex w-fit gap-3 self-end">
-        {!isEditing && (
-          <>
-            <Button variant="transparent" onClick={() => toggleEdit()}>
-              Edit
-            </Button>
-            <Button
-              variant="danger"
-              onClick={() => onDelete()}
-              isActive={!isLoading}
-            >
-              {isLoading ? 'Deleting...' : 'Delete'}
-            </Button>
-          </>
-        )}
-      </div>
+      <Menu>
+        <MenuButton>
+          <EllipsisHorizontalIcon
+            className={`w-8 cursor-pointer ${isEditing ? 'hidden' : 'block'}`}
+          />
+        </MenuButton>
+
+        <MenuItems
+          anchor="bottom"
+          className='dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background sm:w-(--button-width)" w-30 rounded border p-2 text-center'
+        >
+          <MenuItem>
+            <button onClick={() => setIsEditing(true)}>Edit</button>
+          </MenuItem>
+          <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
+          <MenuItem>
+            <button onClick={() => onDelete()}>Delete</button>
+          </MenuItem>
+        </MenuItems>
+      </Menu>
     )
   }
 
@@ -69,8 +81,11 @@ export const CommentItem = ({
       className="border-border-darkTheme flex flex-col gap-4 rounded border p-3"
       key={index}
     >
-      <div className="text-lg font-semibold tracking-wider">
-        {comment.user.username}
+      <div className="flex justify-between">
+        <div className="text-lg font-bold tracking-wider sm:text-xl">
+          {comment.user.username}
+        </div>
+        <Auth />
       </div>
       {isEditing ? (
         <UpdateCommentForm
@@ -89,7 +104,6 @@ export const CommentItem = ({
                 {date.toLocaleString()}
               </span>
             </div>
-            <AuthButtons />
           </div>
         </>
       )}

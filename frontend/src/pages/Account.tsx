@@ -7,17 +7,17 @@ import { useNavigate } from 'react-router-dom'
 
 const tabs = [
   {
-    label: 'Account Information',
+    label: 'Account Info',
     value: 'account information',
     component: <AccountInfo />,
   },
   {
-    label: 'User Posts',
+    label: 'Posts',
     value: 'user posts',
     component: <AccountPosts />,
   },
   {
-    label: 'User Comments',
+    label: 'Comments',
     value: 'user comments',
     component: <AccountComments />,
   },
@@ -39,7 +39,7 @@ export const Account = () => {
   const Tabs = () => {
     return (
       <>
-        <div className="flex justify-between border-b p-2 text-center tracking-wide sm:text-xl">
+        <div className="text-md flex justify-between border-b p-2 text-center tracking-wide sm:text-xl">
           {tabs.map((tab, index) => (
             <div
               className={`${isActive === tab.value ? 'font-bold' : ''} cursor-pointer`}

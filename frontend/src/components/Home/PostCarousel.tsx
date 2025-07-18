@@ -4,7 +4,7 @@ import { Category, Post } from '@/types/posts'
 import { useEffect, useState } from 'react'
 import { useGetPosts } from '@/hooks/useGetPosts'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
-import { Pagination, Navigation } from 'swiper/modules'
+import { Pagination, Navigation, Autoplay } from 'swiper/modules'
 import { Error } from '../Error'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
@@ -42,7 +42,7 @@ export const PostCarousel = ({ category }: { category: Category }) => {
       </button>
 
       <Swiper
-        modules={[Pagination, Navigation]}
+        modules={[Pagination, Navigation, Autoplay]}
         spaceBetween={20}
         slidesPerView={1}
         breakpoints={{
@@ -51,6 +51,10 @@ export const PostCarousel = ({ category }: { category: Category }) => {
           1024: { slidesPerView: 2 },
           1280: { slidesPerView: 3 },
           1920: { slidesPerView: 3 },
+        }}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: true,
         }}
         pagination={{
           el: `.swiper-pagination-${category.id}`,
@@ -69,6 +73,7 @@ export const PostCarousel = ({ category }: { category: Category }) => {
                   title={post.title}
                   content={post.content}
                   id={post.id}
+                  comments={post.comments}
                 />
               </SwiperSlide>
             ))
