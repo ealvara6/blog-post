@@ -93,10 +93,18 @@ export const PostCard = ({
           {content}
         </div>
         <div className="hidden flex-col justify-between p-3 text-end font-mono font-thin sm:flex">
-          <div className="flex justify-end gap-2">
-            <span className="text-lg font-semibold">Posted At: </span>
-            <div className="mt-[1px] self-center">{date}</div>
+          <div className="flex justify-between">
+            <div className="dark:text-text-muted-darkTheme text-text-muted font-semibold tracking-wider">
+              {!post.comments?.length ? '0' : post.comments?.length} Comments
+            </div>
+            <div className="flex gap-3">
+              <span className="text-lg font-semibold">Posted At: </span>
+              <div className="mt-[1px] self-center">{date}</div>
+            </div>
           </div>
+        </div>
+        <div className="dark:text-text-muted-darkTheme text-text-muted self-end p-3 font-semibold tracking-wider sm:hidden">
+          {!post.comments?.length ? '0' : post.comments?.length} Comments
         </div>
       </div>
       {isOpen && <DeletePostModal setIsOpen={setIsOpen} id={id} />}

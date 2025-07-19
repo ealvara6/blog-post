@@ -11,6 +11,7 @@ export const PostItem = (post: Post) => {
   const [isOpen, setIsOpen] = useState<string | null>(null)
   let { comments } = post
   if (!comments) comments = []
+  const [numOfComments, setNumOfComments] = useState(comments.length)
   const { authUser } = useAuth()
   const [currentComments, setCurrentComments] = useState<Comment[]>(comments)
 
@@ -20,7 +21,7 @@ export const PostItem = (post: Post) => {
     if (!currentComments) return ''
     if (currentComments.length === 0)
       return (
-        <div className="text-center tracking-wide">
+        <div className="text-center font-semibold tracking-wide sm:text-xl">
           Be the first to Comment!
         </div>
       )
@@ -48,7 +49,7 @@ export const PostItem = (post: Post) => {
           <CommentForm
             postId={id}
             setCurrentComments={setCurrentComments}
-            className="dark:border-border-darkTheme border-b pb-5"
+            className="pb-5"
           />
         ) : (
           ''

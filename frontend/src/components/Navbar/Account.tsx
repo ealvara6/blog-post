@@ -27,13 +27,13 @@ export const Account = ({
     <>
       {!authUser ? (
         <UserCircleIcon
-          className="w-8 sm:w-12"
+          className="w-10 sm:w-12"
           onClick={() => setIsOpenModal('open')}
         />
       ) : (
         <Menu>
           <MenuButton className="flex justify-center gap-0 rounded-md sm:w-30">
-            <UserCircleIcon className="w-8 md:w-12" />
+            <UserCircleIcon className="w-10 md:w-12" />
             <ChevronDownIcon className="w-5" />
           </MenuButton>
 

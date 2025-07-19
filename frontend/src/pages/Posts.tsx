@@ -72,7 +72,7 @@ export const Posts = () => {
   return (
     <>
       {posts ? (
-        <div className="mx-3 flex w-full flex-col gap-15">
+        <div className="mx-3 flex w-full flex-col gap-15 sm:max-w-7xl">
           <SearchBar className="dark:border-border-darkTheme border-border dark:bg-card-darkTheme bg-card col-span-full border focus:outline" />
           <Filter />
           {posts.length !== 0 ? (

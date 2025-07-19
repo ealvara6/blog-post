@@ -1,14 +1,20 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { PostCard } from './PostCard'
 import { Category, Post } from '@/types/posts'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useGetPosts } from '@/hooks/useGetPosts'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Pagination, Navigation, Autoplay } from 'swiper/modules'
 import { Error } from '../Error'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
-export const PostCarousel = ({ category }: { category: Category }) => {
+export const PostCarousel = ({
+  category,
+  index,
+}: {
+  category: Category
+  index: number
+}) => {
   const [posts, setPosts] = useState<Post[] | null>(null)
   const [serverErr, setServerErr] = useState<string | null>(null)
   const getPosts = useGetPosts()
@@ -25,6 +31,10 @@ export const PostCarousel = ({ category }: { category: Category }) => {
 
     fetchPosts()
   }, [getPosts, category.id])
+
+  const delay = useMemo(() => {
+    return 3000 + index * 750
+  }, [index])
 
   if (serverErr) return <Error>{serverErr}</Error>
 
@@ -53,7 +63,7 @@ export const PostCarousel = ({ category }: { category: Category }) => {
           1920: { slidesPerView: 3 },
         }}
         autoplay={{
-          delay: 4000,
+          delay,
           disableOnInteraction: true,
         }}
         pagination={{

@@ -58,7 +58,7 @@ const Navbar = () => {
           </div>
           {authUser && (
             <Link
-              className="hidden self-center text-xl sm:block lg:text-2xl"
+              className="hidden self-center text-xl font-normal sm:block lg:text-2xl"
               onClick={() => navigate({ pathname: '/posts/create' })}
             >
               Create Post

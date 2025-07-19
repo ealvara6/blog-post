@@ -33,7 +33,7 @@ export const AccountPosts = () => {
       return <div className="text-center">No posts found</div>
 
     const postItems = posts.map((post, index) => {
-      return <PostCard post={post} key={index} />
+      return <PostCard post={post} key={index} handleNavigate />
     })
 
     return <div className="flex flex-col gap-8">{postItems}</div>
