@@ -24,13 +24,13 @@ export const Carousels = () => {
   }, [getCategories])
 
   const GetCarousels = () => {
-    const carousels = categories?.map((category) => {
+    const carousels = categories?.map((category, index) => {
       return (
-        <div className="flex flex-col 2xl:mx-30">
+        <div className="flex flex-col 2xl:mx-30" key={index}>
           <div className="mb-5 text-3xl font-bold tracking-wider">
             {category.name}
           </div>
-          <PostCarousel category={category} />
+          <PostCarousel category={category} index={index} />
         </div>
       )
     })
