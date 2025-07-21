@@ -50,12 +50,12 @@ const Navbar = () => {
           LOGO
         </div>
         <div className="flex gap-3 text-lg font-bold">
-          <div
+          {/* <div
             className={`self-center rounded-md border ${authUser ? 'block' : 'hidden'} sm:hidden`}
             onClick={() => navigate({ pathname: '/posts/create' })}
           >
             <PlusIcon className="w-7 p-0.5" />
-          </div>
+          </div> */}
           {authUser && (
             <Link
               className="hidden self-center text-xl font-normal sm:block lg:text-2xl"

@@ -61,15 +61,19 @@ export const CommentItem = ({
         </MenuButton>
 
         <MenuItems
-          anchor="bottom"
-          className='dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background sm:w-(--button-width)" w-30 rounded border p-2 text-center'
+          anchor="bottom end"
+          className='dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background sm:w-(--button-width)" w-30 rounded border p-2 text-center text-lg'
         >
           <MenuItem>
-            <button onClick={() => setIsEditing(true)}>Edit</button>
+            <button onClick={() => setIsEditing(true)} className="h-12">
+              Edit
+            </button>
           </MenuItem>
           <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
           <MenuItem>
-            <button onClick={() => onDelete()}>Delete</button>
+            <button onClick={() => onDelete()} className="h-12">
+              Delete
+            </button>
           </MenuItem>
         </MenuItems>
       </Menu>

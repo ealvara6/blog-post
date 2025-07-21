@@ -50,17 +50,23 @@ export const PostCard = ({
         </MenuButton>
 
         <MenuItems
-          anchor="bottom"
-          className='dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background sm:w-(--button-width)" w-30 rounded border p-2 text-center'
+          anchor="bottom end"
+          className='dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background sm:w-(--button-width)" w-28 rounded border p-2 text-center text-lg tracking-wide sm:w-36'
         >
           <MenuItem>
-            <button onClick={() => handleEdit()} className="cursor-pointer">
+            <button
+              onClick={() => handleEdit()}
+              className="h-12 cursor-pointer"
+            >
               Edit
             </button>
           </MenuItem>
           <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
           <MenuItem>
-            <button onClick={() => handleDelete()} className="cursor-pointer">
+            <button
+              onClick={() => handleDelete()}
+              className="h-12 cursor-pointer"
+            >
               Delete
             </button>
           </MenuItem>

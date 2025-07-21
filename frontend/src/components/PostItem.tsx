@@ -11,7 +11,6 @@ export const PostItem = (post: Post) => {
   const [isOpen, setIsOpen] = useState<string | null>(null)
   let { comments } = post
   if (!comments) comments = []
-  const [numOfComments, setNumOfComments] = useState(comments.length)
   const { authUser } = useAuth()
   const [currentComments, setCurrentComments] = useState<Comment[]>(comments)
 

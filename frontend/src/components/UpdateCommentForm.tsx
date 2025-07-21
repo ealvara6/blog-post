@@ -50,7 +50,7 @@ export const UpdateCommentForm = ({
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       <Input
-        className="border-border-darkTheme dark:text-text-muted-darkTheme text-text-primary border p-3 sm:text-lg"
+        className="border-border-darkTheme dark:text-text-primary-darkTheme text-text-primary border p-3 sm:text-lg"
         {...register('content')}
       />
       <div className="flex w-fit gap-3 self-end">
