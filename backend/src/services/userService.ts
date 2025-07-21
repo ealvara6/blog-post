@@ -95,14 +95,6 @@ export const findUserOnUsername = async (
 };
 
 export const deleteUserService = async (prisma: PrismaClient, id: number) => {
-  await prisma.comment.deleteMany({
-    where: { userId: id },
-  });
-
-  await prisma.post.deleteMany({
-    where: { userId: id },
-  });
-
   return await prisma.user.delete({
     where: { id },
   });
