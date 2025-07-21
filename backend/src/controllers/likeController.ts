@@ -1,7 +1,13 @@
 import { Request, Response } from 'express';
-import { likePostService } from '../services/likeService';
+import {
+  createLikeOnPostService,
+  deleteLikeOnPostService,
+} from '../services/likeService';
 
-export const likePost = async (req: Request, res: Response): Promise<void> => {
+export const createLikeOnPost = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     if (!req.user) {
       res.status(400).json({ error: 'Not Authorized' });
@@ -13,7 +19,10 @@ export const likePost = async (req: Request, res: Response): Promise<void> => {
     const { postId } = req.body;
     const numericPostId = Number(postId);
 
-    const like = await likePostService(prisma, { userId, numericPostId });
+    const like = await createLikeOnPostService(prisma, {
+      userId,
+      postId: numericPostId,
+    });
 
     res.status(201).json({ like });
     return;
@@ -22,6 +31,37 @@ export const likePost = async (req: Request, res: Response): Promise<void> => {
       res
         .status(500)
         .json({ error: 'Failed to like post', details: err.message });
+      return;
+    }
+  }
+};
+
+export const deleteLikeOnPost = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(400).json({ error: 'Not Authorized' });
+      return;
+    }
+
+    const prisma = req.prisma;
+    const userId = req.user?.id;
+    const { postId } = req.body;
+    const numericPostId = Number(postId);
+
+    const unlike = await deleteLikeOnPostService(prisma, {
+      userId,
+      postId: numericPostId,
+    });
+
+    res.status(201).json({ unlike });
+  } catch (err) {
+    if (err instanceof Error) {
+      res
+        .status(500)
+        .json({ error: 'Failed to unlike post', details: err.message });
       return;
     }
   }

@@ -2,17 +2,31 @@ import { PrismaClient } from '@prisma/client/extension';
 
 type LikePostDTO = {
   userId: number;
-  numericPostId: number;
+  postId: number;
 };
 
-export const likePostService = async (
+export const createLikeOnPostService = async (
   prisma: PrismaClient,
-  { userId, numericPostId }: LikePostDTO
+  { userId, postId }: LikePostDTO
 ) => {
   return await prisma.likeOnPost.create({
     data: {
-      postId: numericPostId,
+      postId: postId,
       userId,
+    },
+  });
+};
+
+export const deleteLikeOnPostService = async (
+  prisma: PrismaClient,
+  { userId, postId }: LikePostDTO
+) => {
+  return await prisma.likeOnPost.delete({
+    where: {
+      postId_userId: {
+        postId: postId,
+        userId,
+      },
     },
   });
 };
