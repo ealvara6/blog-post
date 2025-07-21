@@ -22,7 +22,10 @@ model User {
   blogAuthor Boolean @default(false)
   posts Post[]
   comments Comment[]
+  post_likes LikeOnPost[]
+  comment_likes LikeOnComment[]
 }
+
 
 model Post {
   id Int @id @default(autoincrement())
@@ -30,10 +33,11 @@ model Post {
   content String?
   published Boolean @default(false)
   userId Int
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   comments Comment[]
   categories Category[]
+  likes LikeOnPost[]
 }
 
 model Category {
@@ -47,7 +51,29 @@ model Comment {
   content String
   createdAt DateTime @default(now())
   postId Int
-  post Post @relation(fields: [postId], references: [id])
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
   userId Int
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes LikeOnComment[]
+}
+
+model LikeOnPost {
+  id Int @id @default(autoincrement())
+  postId Int
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId])
+}
+
+model LikeOnComment {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  commentId Int
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, userId])
 }
