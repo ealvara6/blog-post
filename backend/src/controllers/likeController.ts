@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import {
   createLikeOnPostService,
   deleteLikeOnPostService,
+  getLikesOnPostService,
 } from '../services/likeService';
 
 export const createLikeOnPost = async (
@@ -16,8 +17,8 @@ export const createLikeOnPost = async (
 
     const prisma = req.prisma;
     const userId = req.user?.id;
-    const { postId } = req.body;
-    const numericPostId = Number(postId);
+    const { id } = req.params;
+    const numericPostId = Number(id);
 
     const like = await createLikeOnPostService(prisma, {
       userId,
@@ -48,8 +49,8 @@ export const deleteLikeOnPost = async (
 
     const prisma = req.prisma;
     const userId = req.user?.id;
-    const { postId } = req.body;
-    const numericPostId = Number(postId);
+    const { id } = req.params;
+    const numericPostId = Number(id);
 
     const unlike = await deleteLikeOnPostService(prisma, {
       userId,
@@ -62,6 +63,27 @@ export const deleteLikeOnPost = async (
       res
         .status(500)
         .json({ error: 'Failed to unlike post', details: err.message });
+      return;
+    }
+  }
+};
+
+export const getLikesOnPost = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+    const { id } = req.params;
+
+    let likeCount = await getLikesOnPostService(prisma, Number(id));
+
+    res.status(200).json({ likeCount });
+  } catch (err) {
+    if (err instanceof Error) {
+      res
+        .status(500)
+        .json({ error: 'Failed to get like count', details: err.message });
       return;
     }
   }

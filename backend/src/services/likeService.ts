@@ -30,3 +30,12 @@ export const deleteLikeOnPostService = async (
     },
   });
 };
+
+export const getLikesOnPostService = async (
+  prisma: PrismaClient,
+  postId: number
+) => {
+  return await prisma.likeOnPost.count({
+    where: { postId },
+  });
+};
