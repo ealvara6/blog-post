@@ -1,37 +1,19 @@
-import Login from '../Auth/Login/Login'
 import { Bars3Icon, XCircleIcon } from '@heroicons/react/16/solid'
 import { useState } from 'react'
 import { MenuMobile } from './MenuMobile'
 import { Menu } from './Menu'
-import { Modal } from '../Modal'
 import { useNavigate } from 'react-router-dom'
 import { Account } from './Account'
-import { PlusIcon } from '@heroicons/react/24/outline'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Link } from '../Link'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [isOpenModal, setIsOpenModal] = useState<string | null>(null)
   const navigate = useNavigate()
   const { authUser } = useAuth()
 
   const menuToggle = () => {
     setIsOpen((prev) => !prev)
-  }
-
-  const LoginModal = () => {
-    return (
-      <Modal setIsOpen={setIsOpenModal}>
-        <div className="self-end">
-          <XCircleIcon
-            className="w-8 cursor-pointer"
-            onClick={() => setIsOpenModal(null)}
-          />
-        </div>
-        <Login className="border-none" setIsOpenModal={setIsOpenModal} />
-      </Modal>
-    )
   }
 
   return (
@@ -50,12 +32,6 @@ const Navbar = () => {
           LOGO
         </div>
         <div className="flex gap-3 text-lg font-bold">
-          {/* <div
-            className={`self-center rounded-md border ${authUser ? 'block' : 'hidden'} sm:hidden`}
-            onClick={() => navigate({ pathname: '/posts/create' })}
-          >
-            <PlusIcon className="w-7 p-0.5" />
-          </div> */}
           {authUser && (
             <Link
               className="hidden self-center text-xl font-normal sm:block lg:text-2xl"
@@ -65,7 +41,7 @@ const Navbar = () => {
             </Link>
           )}
 
-          <Account setIsOpenModal={setIsOpenModal} />
+          <Account />
         </div>
       </div>
       <div className="block sm:hidden">
@@ -75,7 +51,6 @@ const Navbar = () => {
           menuToggle={menuToggle}
         />
       </div>
-      {isOpenModal && <LoginModal />}
     </nav>
   )
 }

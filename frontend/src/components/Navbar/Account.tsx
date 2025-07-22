@@ -1,4 +1,5 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
+import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
 import {
   Menu,
   MenuButton,
@@ -7,15 +8,11 @@ import {
   MenuSeparator,
 } from '@headlessui/react'
 import { ChevronDownIcon, UserCircleIcon } from '@heroicons/react/24/outline'
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export const Account = ({
-  setIsOpenModal,
-}: {
-  setIsOpenModal: React.Dispatch<React.SetStateAction<string | null>>
-}) => {
+export const Account = () => {
   const { authUser, logout } = useAuth()
+  const { openLoginModal } = useLoginModal()
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -28,7 +25,7 @@ export const Account = ({
       {!authUser ? (
         <UserCircleIcon
           className="w-10 sm:w-12"
-          onClick={() => setIsOpenModal('open')}
+          onClick={() => openLoginModal()}
         />
       ) : (
         <Menu>

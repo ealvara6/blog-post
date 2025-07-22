@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 
 export const Modal = ({
-  setIsOpen,
+  onClose,
   children,
 }: {
-  setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
+  onClose: () => void
   children: React.ReactNode
 }) => {
   const modalRef = useRef<HTMLDivElement>(null)
@@ -15,12 +15,12 @@ export const Modal = ({
         modalRef.current &&
         !modalRef.current?.contains(event.target as Node)
       ) {
-        setIsOpen(null)
+        onClose()
       }
     }
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setIsOpen(null)
+        onClose()
       }
     }
 
@@ -30,7 +30,7 @@ export const Modal = ({
       document.removeEventListener('mousedown', handleClickOutside)
       document.removeEventListener('keydown', handleEscape)
     }
-  }, [setIsOpen])
+  }, [onClose])
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 shadow-lg">

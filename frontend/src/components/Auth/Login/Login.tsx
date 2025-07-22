@@ -12,13 +12,7 @@ import clsx from 'clsx'
 
 type FormData = z.infer<typeof loginSchema>
 
-const Login = ({
-  className,
-  setIsOpenModal,
-}: {
-  className?: string
-  setIsOpenModal?: React.Dispatch<React.SetStateAction<string | null>>
-}) => {
+const Login = ({ className }: { className?: string }) => {
   const [serverError, setServerError] = useState({ msg: '' })
 
   const {
@@ -33,7 +27,6 @@ const Login = ({
   const onSubmit = async (data: FormData) => {
     try {
       await login(data.email, data.password)
-      if (setIsOpenModal) setIsOpenModal(null)
       navigate({ pathname: '/' }, { replace: true })
     } catch (err) {
       setServerError({ msg: parseErrorMessage(err) })
