@@ -7,6 +7,8 @@ import { HeartIcon } from '@heroicons/react/24/solid'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
+import { useCreateLikePost } from '@/hooks/useCreateLikePost'
+import { useDeleteLikePost } from '@/hooks/useDeleteLikePost'
 
 export const PostCard = ({
   title,
@@ -27,6 +29,8 @@ export const PostCard = ({
   const [error, setError] = useState(true)
   const getPostLikes = useGetPostLikes()
   const getPostLiked = useGetPostLiked()
+  const createLikePost = useCreateLikePost()
+  const deleteLikePost = useDeleteLikePost()
 
   useEffect(() => {
     const fetchPostLikes = async () => {
@@ -58,9 +62,22 @@ export const PostCard = ({
     )
   }
 
-  const handleHeartClick = (e: React.MouseEvent) => {
+  const handleHeartClick = async (e: React.MouseEvent) => {
     e.stopPropagation()
+
     if (!authUser) openLoginModal()
+    else {
+      setPostLiked(!postLiked)
+      try {
+        if (postLiked) {
+          await deleteLikePost(id)
+        } else {
+          await createLikePost(id)
+        }
+      } catch (err) {
+        console.log(parseErrorMessage(err))
+      }
+    }
   }
 
   return (
