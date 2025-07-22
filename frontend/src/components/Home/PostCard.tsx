@@ -48,7 +48,8 @@ export const PostCard = ({
     }
 
     fetchPostLikes()
-  }, [authUser, getPostLiked, getPostLikes, id])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
 
   const Hearts = () => {
     return (
@@ -65,18 +66,25 @@ export const PostCard = ({
   const handleHeartClick = async (e: React.MouseEvent) => {
     e.stopPropagation()
 
-    if (!authUser) openLoginModal()
-    else {
-      setPostLiked(!postLiked)
-      try {
-        if (postLiked) {
-          await deleteLikePost(id)
-        } else {
-          await createLikePost(id)
-        }
-      } catch (err) {
-        console.log(parseErrorMessage(err))
+    if (!authUser) {
+      openLoginModal()
+      return
+    }
+
+    const nextLiked = !postLiked
+    setPostLiked(nextLiked)
+    setPostLikes((prev) => (nextLiked ? prev + 1 : prev - 1))
+
+    try {
+      if (!nextLiked) {
+        await deleteLikePost(id)
+      } else {
+        await createLikePost(id)
       }
+    } catch (err) {
+      console.log(parseErrorMessage(err))
+      setPostLiked(!nextLiked)
+      setPostLikes((prev) => (nextLiked ? prev - 1 : prev + 1))
     }
   }
 
@@ -90,7 +98,7 @@ export const PostCard = ({
         {content}
       </div>
       <div className="dark:text-text-muted-darkTheme text-text-muted flex grow items-end justify-between gap-3 font-semibold tracking-wider sm:text-lg">
-        {!error && <Hearts />}
+        {error && <Hearts />}
         <div>
           {comments?.length === 0 ? '0' : `${comments?.length}`} Comments
         </div>
