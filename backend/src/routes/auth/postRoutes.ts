@@ -24,6 +24,7 @@ import { validatePostLike } from '../../middleware/validators/validateLike.valid
 import {
   createLikeOnPost,
   deleteLikeOnPost,
+  postLiked,
 } from '../../controllers/likeController';
 
 export const authPostRoutes = (prisma: PrismaClient) => {
@@ -40,6 +41,8 @@ export const authPostRoutes = (prisma: PrismaClient) => {
     .route('/:id/like')
     .post(authenticateToken, validatePostLike, createLikeOnPost)
     .delete(authenticateToken, validatePostLike, deleteLikeOnPost);
+
+  router.get('/:id/like/me', authenticateToken, validatePostLike, postLiked);
 
   router.post('/:id/comments', validateCommentCreation, createComment);
 

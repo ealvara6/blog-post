@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
+import { Request, response, Response } from 'express';
 import {
   createLikeOnPostService,
   deleteLikeOnPostService,
   getLikesOnPostService,
+  postLikedService,
 } from '../services/likeService';
 
 export const createLikeOnPost = async (
@@ -76,7 +77,7 @@ export const getLikesOnPost = async (
     const prisma = req.prisma;
     const { id } = req.params;
 
-    let likeCount = await getLikesOnPostService(prisma, Number(id));
+    const likeCount = await getLikesOnPostService(prisma, Number(id));
 
     res.status(200).json({ likeCount });
   } catch (err) {
@@ -85,6 +86,23 @@ export const getLikesOnPost = async (
         .status(500)
         .json({ error: 'Failed to get like count', details: err.message });
       return;
+    }
+  }
+};
+
+export const postLiked = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+    const { id } = req.params;
+    const userId = req.user?.id;
+
+    const liked = await postLikedService(prisma, Number(id), Number(userId));
+    res.status(200).json({ liked: Boolean(liked) });
+  } catch (err) {
+    if (err instanceof Error) {
+      res
+        .status(500)
+        .json({ error: 'Failed to check liked post', details: err.message });
     }
   }
 };

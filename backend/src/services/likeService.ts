@@ -39,3 +39,13 @@ export const getLikesOnPostService = async (
     where: { postId },
   });
 };
+
+export const postLikedService = async (
+  prisma: PrismaClient,
+  postId: number,
+  userId: number
+) => {
+  return await prisma.likeOnPost.findFirst({
+    where: { postId, userId },
+  });
+};
