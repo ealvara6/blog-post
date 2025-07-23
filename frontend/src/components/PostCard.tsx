@@ -13,6 +13,7 @@ import {
 import { useState } from 'react'
 import { DeletePostModal } from './DeletePostModal'
 import { useAuth } from '@/context/AuthProvider/useAuth'
+import { Hearts } from './Hearts'
 
 export const PostCard = ({
   post,
@@ -76,9 +77,9 @@ export const PostCard = ({
   }
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="dark:bg-card-darkTheme bg-card flex flex-col gap-5">
       <div
-        className={`border-border-darkTheme flex flex-col rounded border ${handleNavigate && 'cursor-pointer'}`}
+        className={`border-border-darkTheme flex flex-col rounded border p-3 ${handleNavigate && 'cursor-pointer'}`}
         onClick={() => handleNavigate && navigate(`/posts/${id}`)}
       >
         <div className="dark:border-border-darkTheme flex flex-col gap-2 border-b px-2 pt-2 pb-4 sm:px-3 sm:pt-3">
@@ -98,19 +99,13 @@ export const PostCard = ({
         <div className="dark:text-text-primary-darkTheme/80 text-text-primary/80 grow p-3">
           {content}
         </div>
-        <div className="hidden flex-col justify-between p-3 text-end font-mono font-thin sm:flex">
-          <div className="flex justify-between">
-            <div className="dark:text-text-muted-darkTheme text-text-muted font-semibold tracking-wider">
+        <div className="flex flex-col justify-between p-3 text-end font-mono font-thin">
+          <div className="dark:text-text-muted-darkTheme text-text-muted flex justify-between gap-2 font-semibold tracking-wider">
+            <Hearts id={id} />
+            <div>
               {!post.comments?.length ? '0' : post.comments?.length} Comments
             </div>
-            <div className="flex gap-3">
-              <span className="text-lg font-semibold">Posted At: </span>
-              <div className="mt-[1px] self-center">{date}</div>
-            </div>
           </div>
-        </div>
-        <div className="dark:text-text-muted-darkTheme text-text-muted self-end p-3 font-semibold tracking-wider sm:hidden">
-          {!post.comments?.length ? '0' : post.comments?.length} Comments
         </div>
       </div>
       {isOpen && <DeletePostModal setIsOpen={setIsOpen} id={id} />}
