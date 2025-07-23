@@ -1,6 +1,5 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -9,11 +8,16 @@ import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Error } from '@/components/Error'
 import { Button } from '@/components/Button'
 import clsx from 'clsx'
+import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
+import { usePost } from '@/context/Post/usePost'
+import { useCategory } from '@/context/CategoryProvider/useCategory'
 
 type FormData = z.infer<typeof loginSchema>
 
 const Login = ({ className }: { className?: string }) => {
   const [serverError, setServerError] = useState({ msg: '' })
+  const { fetchPostsByCategory } = usePost()
+  const { categories } = useCategory()
 
   const {
     register,
@@ -22,12 +26,16 @@ const Login = ({ className }: { className?: string }) => {
   } = useForm<FormData>({ resolver: zodResolver(loginSchema) })
 
   const { login } = useAuth()
-  const navigate = useNavigate()
+  const { closeLoginModal } = useLoginModal()
 
   const onSubmit = async (data: FormData) => {
     try {
       await login(data.email, data.password)
-      navigate({ pathname: '/' }, { replace: true })
+
+      await Promise.all(
+        categories.map((cat) => fetchPostsByCategory(String(cat.id))),
+      )
+      closeLoginModal()
     } catch (err) {
       setServerError({ msg: parseErrorMessage(err) })
     }

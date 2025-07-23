@@ -49,7 +49,7 @@ export const PostCard = ({
 
     fetchPostLikes()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [id, authUser])
 
   const Hearts = () => {
     return (

@@ -1,12 +1,10 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { PostCard } from './PostCard'
-import { Category, Post } from '@/types/posts'
-import { useEffect, useMemo, useState } from 'react'
-import { useGetPosts } from '@/hooks/useGetPosts'
-import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { Category } from '@/types/posts'
+import { useEffect, useMemo } from 'react'
 import { Pagination, Navigation, Autoplay } from 'swiper/modules'
-import { Error } from '../Error'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import { usePost } from '@/context/Post/usePost'
 
 export const PostCarousel = ({
   category,
@@ -15,28 +13,19 @@ export const PostCarousel = ({
   category: Category
   index: number
 }) => {
-  const [posts, setPosts] = useState<Post[] | null>(null)
-  const [serverErr, setServerErr] = useState<string | null>(null)
-  const getPosts = useGetPosts()
+  const { postsByCategory, fetchPostsByCategory } = usePost()
+
+  const posts = postsByCategory[String(category.id)]
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const posts = await getPosts({ categoryId: String(category.id) })
-        setPosts(posts.posts)
-      } catch (err) {
-        setServerErr(parseErrorMessage(err))
-      }
+    if (!posts) {
+      fetchPostsByCategory(String(category.id))
     }
-
-    fetchPosts()
-  }, [getPosts, category.id])
+  }, [category.id, fetchPostsByCategory, posts])
 
   const delay = useMemo(() => {
     return 3000 + index * 750
   }, [index])
-
-  if (serverErr) return <Error>{serverErr}</Error>
 
   return (
     <div className="relative">
