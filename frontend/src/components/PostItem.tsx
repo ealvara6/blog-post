@@ -42,7 +42,7 @@ export const PostItem = (post: Post) => {
   return (
     <div className="flex flex-col gap-8">
       <PostCard post={post} />
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 md:mx-6">
         <div className="text-2xl font-bold">Comments</div>
         {authUser ? (
           <CommentForm
