@@ -14,7 +14,7 @@ export const PostItem = (post: Post) => {
   const { authUser } = useAuth()
   const [currentComments, setCurrentComments] = useState<Comment[]>(comments)
 
-  useEffect(() => {}, [currentComments])
+  useEffect(() => {}, [])
 
   const GetComments = () => {
     if (!currentComments) return ''
@@ -41,7 +41,7 @@ export const PostItem = (post: Post) => {
 
   return (
     <div className="flex flex-col gap-8">
-      <PostCard post={post} />
+      <PostCard post={post} currentComments={currentComments} />
       <div className="flex flex-col gap-4 md:mx-6">
         <div className="text-2xl font-bold">Comments</div>
         {authUser ? (

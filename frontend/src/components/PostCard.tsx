@@ -1,4 +1,4 @@
-import { Post } from '@/types/posts'
+import { Comment, Post } from '@/types/posts'
 import { useNavigate } from 'react-router-dom'
 import { CategoriesList } from './CategoriesList'
 import { format } from 'date-fns'
@@ -18,9 +18,11 @@ import { Hearts } from './Hearts'
 export const PostCard = ({
   post,
   handleNavigate,
+  currentComments,
 }: {
   post: Post
   handleNavigate?: boolean
+  currentComments: Comment[] | undefined
 }) => {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState<string | null>(null)
@@ -103,7 +105,7 @@ export const PostCard = ({
           <div className="dark:text-text-muted-darkTheme text-text-muted flex justify-between gap-2 font-semibold tracking-wider">
             <Hearts id={id} />
             <div>
-              {!post.comments?.length ? '0' : post.comments?.length} Comments
+              {!currentComments?.length ? '0' : currentComments.length} Comments
             </div>
           </div>
         </div>
