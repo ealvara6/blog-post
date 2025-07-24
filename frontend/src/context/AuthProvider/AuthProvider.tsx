@@ -23,10 +23,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const storedUser = localStorage.getItem(LOCAL_STORAGE_KEY)
     const token = localStorage.getItem('token')
+
     if (token && storedUser) {
       const decoded: { exp: number } = jwtDecode(token)
-      if (decoded.exp * 1000 > Date.now()) {
+      const expiry = decoded.exp * 1000
+
+      if (expiry > Date.now()) {
         setAuthUser(JSON.parse(storedUser))
+
+        const timeout = setTimeout(() => {
+          logout()
+        }, expiry - Date.now())
+
+        return () => clearTimeout(timeout)
       } else {
         logout()
       }
