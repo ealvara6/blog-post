@@ -2,10 +2,9 @@ import { Filter } from '@/components/Filter'
 import { GetPosts } from '@/components/GetPosts'
 import { Pagination } from '@/components/Pagination'
 import { SearchBar } from '@/components/SearchBar'
-import { useGetPosts } from '@/hooks/useGetPosts'
-import { Post } from '@/types/posts'
-import { parseErrorMessage } from '@/utils/parseErrorMessage'
-import { useEffect, useMemo, useState } from 'react'
+import { usePosts } from '@/hooks/usePosts'
+
+import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
 export const Posts = () => {
@@ -18,37 +17,21 @@ export const Posts = () => {
       categoryId: query.get('categoryId') || '',
     }
   }, [location.search])
+  const { data, isLoading } = usePosts(queryData)
+  if (!data) return
 
-  const [posts, setPosts] = useState<Post[]>()
-  const [pageInfo, setPageInfo] = useState()
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const getPosts = useGetPosts()
+  const pageInfo = {
+    currentPage: String(data.pageInfo.currentPage),
+    total: String(data.pageInfo.total),
+    totalPage: String(data.pageInfo.totalPage),
+  }
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await getPosts(queryData)
-        setPosts(response.posts)
-        setPageInfo(response.pageInfo)
-      } catch (err) {
-        setError(parseErrorMessage(err))
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchPosts()
-  }, [getPosts, queryData])
-
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>{error}</p>
-  if (!posts) return
+  if (isLoading) return <p>Loading...</p>
 
   const PageSection = () => {
     return (
       <>
-        <GetPosts posts={posts} pageInfo={pageInfo} />
+        <GetPosts posts={data.posts} />
         <div className="block sm:hidden">
           <Pagination
             className="col-span-full"
@@ -71,11 +54,11 @@ export const Posts = () => {
 
   return (
     <>
-      {posts ? (
+      {data.posts ? (
         <div className="mx-3 flex w-full flex-col gap-15 sm:max-w-7xl">
           <SearchBar className="dark:border-border-darkTheme border-border dark:bg-card-darkTheme bg-card col-span-full border focus:outline" />
           <Filter />
-          {posts.length !== 0 ? (
+          {data.posts.length !== 0 ? (
             <PageSection />
           ) : (
             <p className="self-center text-2xl font-bold">No posts found</p>

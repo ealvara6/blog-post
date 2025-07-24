@@ -4,7 +4,7 @@ import { Category } from '@/types/posts'
 import { useMemo } from 'react'
 import { Pagination, Navigation, Autoplay } from 'swiper/modules'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
-import { usePostsByCategory } from '@/hooks/usePostsByCategory'
+import { usePosts } from '@/hooks/usePosts'
 
 export const PostCarousel = ({
   category,
@@ -13,7 +13,7 @@ export const PostCarousel = ({
   category: Category
   index: number
 }) => {
-  const { data, isLoading } = usePostsByCategory(String(category.id))
+  const { data, isLoading } = usePosts({ categoryId: String(category.id) })
 
   const delay = useMemo(() => {
     return 3000 + index * 750
@@ -58,7 +58,7 @@ export const PostCarousel = ({
         className="mb-10"
       >
         {data
-          ? data?.map((post, i) => (
+          ? data?.posts.map((post, i) => (
               <SwiperSlide key={i}>
                 {isLoading ? (
                   'Loading...'

@@ -24,7 +24,7 @@ export const useGetPosts = () => {
       const response = await api.get(`/posts?${queryString}`)
       return response.data
     } catch (err) {
-      parseErrorMessage(err)
+      throw parseErrorMessage(err)
     }
   }, [])
 }
