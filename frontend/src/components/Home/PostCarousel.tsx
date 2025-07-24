@@ -1,10 +1,10 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { PostCard } from './PostCard'
 import { Category } from '@/types/posts'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { Pagination, Navigation, Autoplay } from 'swiper/modules'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
-import { usePost } from '@/context/Post/usePost'
+import { usePostsByCategory } from '@/hooks/usePostsByCategory'
 
 export const PostCarousel = ({
   category,
@@ -13,15 +13,7 @@ export const PostCarousel = ({
   category: Category
   index: number
 }) => {
-  const { postsByCategory, fetchPostsByCategory } = usePost()
-
-  const posts = postsByCategory[String(category.id)]
-
-  useEffect(() => {
-    if (!posts) {
-      fetchPostsByCategory(String(category.id))
-    }
-  }, [category.id, fetchPostsByCategory, posts])
+  const { data, isLoading } = usePostsByCategory(String(category.id))
 
   const delay = useMemo(() => {
     return 3000 + index * 750
@@ -65,15 +57,19 @@ export const PostCarousel = ({
         }}
         className="mb-10"
       >
-        {posts
-          ? posts.map((post, i) => (
+        {data
+          ? data?.map((post, i) => (
               <SwiperSlide key={i}>
-                <PostCard
-                  title={post.title}
-                  content={post.content}
-                  id={post.id}
-                  comments={post.comments}
-                />
+                {isLoading ? (
+                  'Loading...'
+                ) : (
+                  <PostCard
+                    title={post.title}
+                    content={post.content}
+                    id={post.id}
+                    comments={post.comments}
+                  />
+                )}
               </SwiperSlide>
             ))
           : 'Loading...'}
