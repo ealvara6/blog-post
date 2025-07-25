@@ -1,7 +1,13 @@
 import PostCard from './PostCard'
 import { Post } from '@/types/posts'
 
-export const GetPosts = ({ posts }: { posts: Post[] }) => {
+export const GetPosts = ({
+  posts,
+  isFetching,
+}: {
+  posts: Post[]
+  isFetching?: boolean
+}) => {
   return (
     <div className="flex w-full flex-col gap-5">
       {posts.map((post) => {
@@ -11,6 +17,7 @@ export const GetPosts = ({ posts }: { posts: Post[] }) => {
             post={post}
             handleNavigate={true}
             currentComments={post.comments}
+            isFetching={isFetching}
           />
         )
       })}

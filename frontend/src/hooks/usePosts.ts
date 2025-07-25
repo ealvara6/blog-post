@@ -16,5 +16,6 @@ export const usePosts = (query?: GetPostsQuery) => {
     queryKey: ['posts', query],
     queryFn: () => getPosts(query),
     staleTime: 1000 * 60 * 5,
+    placeholderData: (prev) => prev,
   })
 }

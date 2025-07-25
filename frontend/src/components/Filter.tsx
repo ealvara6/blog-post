@@ -1,32 +1,31 @@
-import { useGetCategories } from '@/hooks/useGetCategories'
-import { Category } from '@/types/posts'
-import { useEffect, useState } from 'react'
 import { useUpdateQueryParams } from '@/hooks/useUpdateQueryParams'
 import { useLocation } from 'react-router-dom'
+import { useCategories } from '@/hooks/useCategories'
 
 export const Filter = () => {
-  const getCategories = useGetCategories()
-  const [categories, setCategories] = useState<Category[]>()
   const location = useLocation()
   const query = new URLSearchParams(location.search)
   const updateQuery = useUpdateQueryParams()
   const selectedCategory = query.get('categoryId') || ''
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const categories = await getCategories()
-      setCategories(categories)
-    }
-
-    fetchCategories()
-  }, [getCategories, selectedCategory])
+  const { data, isLoading } = useCategories()
 
   const handleChange = (categoryId: string) => {
     updateQuery({ categoryId: categoryId, page: 1 })
   }
 
+  const SkeletonCard = () => {
+    const skeleton = [...Array(5)].map((_, i) => {
+      return (
+        <div className="h-12 w-full animate-pulse rounded bg-gray-300 dark:bg-gray-700" />
+      )
+    })
+
+    return skeleton
+  }
+
   const CategoryButtons = () => {
-    const buttonComponents = categories?.map((category) => {
+    const buttonComponents = data?.map((category) => {
       const id = category.id.toString()
       return (
         <div key={id}>
@@ -66,12 +65,10 @@ export const Filter = () => {
 
     return (
       <div className="grid grid-cols-2 grid-rows-2 gap-2 lg:flex lg:justify-around lg:text-xl">
-        {buttonComponents}
+        {isLoading ? <SkeletonCard /> : buttonComponents}
       </div>
     )
   }
-
-  if (!categories) return <p>Loading...</p>
 
   return <CategoryButtons />
 }

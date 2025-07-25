@@ -1,7 +1,6 @@
 import { Comment, Post } from '@/types/posts'
 import { useNavigate } from 'react-router-dom'
 import { CategoriesList } from './CategoriesList'
-import { format } from 'date-fns'
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
 import {
   MenuButton,
@@ -19,16 +18,18 @@ export const PostCard = ({
   post,
   handleNavigate,
   currentComments,
+  isFetching,
 }: {
   post: Post
   handleNavigate?: boolean
   currentComments: Comment[] | undefined
+  isFetching?: boolean
 }) => {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState<string | null>(null)
   const { authUser } = useAuth()
-  const { title, content, createdAt, id, user, categories, userId } = post
-  const date = format(new Date(createdAt), 'MMM dd, yyy  • h:mm a')
+  const { title, content, id, user, categories, userId } = post
+  // const date = format(new Date(createdAt), 'MMM dd, yyy  • h:mm a')
 
   const handleEdit = () => {
     const categoryIds = categories?.map((category) => category.id)
@@ -79,7 +80,9 @@ export const PostCard = ({
   }
 
   return (
-    <div className="dark:bg-card-darkTheme bg-card flex flex-col gap-5">
+    <div
+      className={`dark:bg-card-darkTheme bg-card flex flex-col gap-5 transition-opacity ${isFetching ? 'opacity-50' : 'opacity-100'}`}
+    >
       <div
         className={`border-border-darkTheme flex flex-col rounded border p-3 ${handleNavigate && 'cursor-pointer'}`}
         onClick={() => handleNavigate && navigate(`/posts/${id}`)}

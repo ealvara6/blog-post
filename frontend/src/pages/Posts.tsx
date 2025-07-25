@@ -1,6 +1,7 @@
 import { Filter } from '@/components/Filter'
 import { GetPosts } from '@/components/GetPosts'
 import { Pagination } from '@/components/Pagination'
+import { PostCardSkeleton } from '@/components/PostCardSkeleton'
 import { SearchBar } from '@/components/SearchBar'
 import { usePosts } from '@/hooks/usePosts'
 
@@ -17,7 +18,9 @@ export const Posts = () => {
       categoryId: query.get('categoryId') || '',
     }
   }, [location.search])
-  const { data, isLoading } = usePosts(queryData)
+
+  const { data, isLoading, isFetching } = usePosts(queryData)
+
   if (!data) return
 
   const pageInfo = {
@@ -26,12 +29,14 @@ export const Posts = () => {
     totalPage: String(data.pageInfo.totalPage),
   }
 
-  if (isLoading) return <p>Loading...</p>
-
   const PageSection = () => {
     return (
       <>
-        <GetPosts posts={data.posts} />
+        {isLoading ? (
+          [...Array(5)].map((_, i) => <PostCardSkeleton key={i} />)
+        ) : (
+          <GetPosts posts={data.posts} isFetching={isFetching} />
+        )}
         <div className="block sm:hidden">
           <Pagination
             className="col-span-full"

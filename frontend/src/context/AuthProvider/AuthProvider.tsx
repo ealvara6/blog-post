@@ -35,6 +35,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           logout()
         }, expiry - Date.now())
 
+        setLoading(false)
+
         return () => clearTimeout(timeout)
       } else {
         logout()
@@ -79,7 +81,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
-  if (loading) return null
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="text-lg">Loading...</p>
+      </div>
+    )
+  }
 
   return (
     <AuthContext.Provider
