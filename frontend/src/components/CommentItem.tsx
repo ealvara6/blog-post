@@ -12,7 +12,8 @@ import {
   MenuItems,
   MenuSeparator,
 } from '@headlessui/react'
-import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
+import { EllipsisHorizontalIcon, HeartIcon } from '@heroicons/react/24/outline'
+import { useCommentLikes } from '@/hooks/useLikes'
 
 export const CommentItem = ({
   comment,
@@ -30,6 +31,7 @@ export const CommentItem = ({
   const deleteComment = useDeleteComment()
   const [isLoading, setIsLoading] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
+  const { data } = useCommentLikes(id)
 
   const onDelete = async () => {
     try {
@@ -101,13 +103,15 @@ export const CommentItem = ({
       ) : (
         <>
           <div>{comment.content}</div>
-          <div className="flex flex-col gap-2 font-mono font-thin">
-            <div>
+          <div className="flex gap-2 self-end font-mono font-thin">
+            <div>{data.likeCount}</div>
+            <HeartIcon className="w-6" />
+            {/* <div>
               <span className="font-bold">created: </span>
               <span className="dark:text-text-muted-darkTheme">
                 {date.toLocaleString()}
               </span>
-            </div>
+            </div> */}
           </div>
         </>
       )}
