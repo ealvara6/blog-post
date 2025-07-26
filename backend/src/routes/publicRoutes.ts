@@ -11,7 +11,10 @@ import { getComment, getComments } from '../controllers/commentController';
 import { getUser, getUsers } from '../controllers/userController';
 import { createUser } from '../controllers/authController';
 import { getCategories } from '../controllers/categoryController';
-import { getLikesOnPost } from '../controllers/likeController';
+import {
+  getLikesOnComment,
+  getLikesOnPost,
+} from '../controllers/likeController';
 
 export const publicRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
@@ -25,6 +28,7 @@ export const publicRoutes = (prisma: PrismaClient): Router => {
   router.get('/posts/:id/comments', validateId, getComments);
   router.get('/posts/:id/comments/:commentId', validateCommentId, getComment);
   router.get('/posts/:id/likes', getLikesOnPost);
+  router.get('/posts/:id/comments/:commentId/likes', getLikesOnComment);
   router.post(
     '/register',
     [...validateUser, checkValidationResults],

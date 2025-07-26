@@ -20,9 +20,14 @@ import {
   validatePostUpdate,
 } from '../../middleware/validators/validationMiddleware';
 import { authenticateToken } from '../../middleware/authMiddleware';
-import { validatePostLike } from '../../middleware/validators/validateLike.validator';
 import {
+  validateCommentLike,
+  validatePostLike,
+} from '../../middleware/validators/validateLike.validator';
+import {
+  createLikeOnComment,
   createLikeOnPost,
+  deleteLikeOnComment,
   deleteLikeOnPost,
   postLiked,
 } from '../../controllers/likeController';
@@ -50,6 +55,11 @@ export const authPostRoutes = (prisma: PrismaClient) => {
     .route('/comments/:commentId')
     .put(validateCommentUpdate, updateComment)
     .delete(validateCommentDeletion, deleteComment);
+
+  router
+    .route('/comments/:commentId/like')
+    .post(authenticateToken, validateCommentLike, createLikeOnComment)
+    .delete(authenticateToken, validateCommentLike, deleteLikeOnComment);
 
   return router;
 };

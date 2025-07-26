@@ -1,10 +1,14 @@
 import { Request, response, Response } from 'express';
 import {
+  createLikeOnCommentService,
   createLikeOnPostService,
+  deleteLikeOnCommentService,
   deleteLikeOnPostService,
+  getLikesOnCommentService,
   getLikesOnPostService,
   postLikedService,
 } from '../services/likeService';
+import { handleError } from '../utils/errorhandler';
 
 export const createLikeOnPost = async (
   req: Request,
@@ -17,7 +21,7 @@ export const createLikeOnPost = async (
     }
 
     const prisma = req.prisma;
-    const userId = req.user?.id;
+    const userId = req.user.id;
     const { id } = req.params;
     const numericPostId = Number(id);
 
@@ -29,12 +33,9 @@ export const createLikeOnPost = async (
     res.status(201).json({ like });
     return;
   } catch (err) {
-    if (err instanceof Error) {
-      res
-        .status(500)
-        .json({ error: 'Failed to like post', details: err.message });
-      return;
-    }
+    handleError(err, res, {
+      errorMessage: 'Failed to like post',
+    });
   }
 };
 
@@ -60,12 +61,9 @@ export const deleteLikeOnPost = async (
 
     res.status(201).json({ unlike });
   } catch (err) {
-    if (err instanceof Error) {
-      res
-        .status(500)
-        .json({ error: 'Failed to unlike post', details: err.message });
-      return;
-    }
+    handleError(err, res, {
+      errorMessage: 'Failed to unlike post',
+    });
   }
 };
 
@@ -81,12 +79,9 @@ export const getLikesOnPost = async (
 
     res.status(200).json({ likeCount });
   } catch (err) {
-    if (err instanceof Error) {
-      res
-        .status(500)
-        .json({ error: 'Failed to get like count', details: err.message });
-      return;
-    }
+    handleError(err, res, {
+      errorMessage: 'Failed to get like count',
+    });
   }
 };
 
@@ -99,10 +94,74 @@ export const postLiked = async (req: Request, res: Response): Promise<void> => {
     const liked = await postLikedService(prisma, Number(id), Number(userId));
     res.status(200).json({ liked: Boolean(liked) });
   } catch (err) {
-    if (err instanceof Error) {
-      res
-        .status(500)
-        .json({ error: 'Failed to check liked post', details: err.message });
+    handleError(err, res, {
+      errorMessage: 'Failed to check liked post',
+    });
+  }
+};
+
+export const getLikesOnComment = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+    const id = Number(req.params.commentId);
+
+    const likeCount = await getLikesOnCommentService(prisma, id);
+
+    res.status(200).json({ likeCount });
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to get comment likes',
+    });
+  }
+};
+
+export const createLikeOnComment = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(400).json({ error: 'Not Authorized ' });
+      return;
     }
+
+    const prisma = req.prisma;
+    const userId = req.user.id;
+    const id = Number(req.params.commentId);
+
+    const like = await createLikeOnCommentService(prisma, id, userId);
+
+    res.status(200).json({ like });
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to like comment',
+    });
+  }
+};
+
+export const deleteLikeOnComment = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(400).json({ error: 'Not Authorized' });
+      return;
+    }
+
+    const prisma = req.prisma;
+    const userId = req.user.id;
+    const id = Number(req.params.commentId);
+
+    const unLike = await deleteLikeOnCommentService(prisma, id, userId);
+
+    res.status(200).json({ unLike });
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to unlike comment',
+    });
   }
 };

@@ -24,7 +24,7 @@ export const deleteLikeOnPostService = async (
   return await prisma.likeOnPost.delete({
     where: {
       postId_userId: {
-        postId: postId,
+        postId,
         userId,
       },
     },
@@ -47,5 +47,42 @@ export const postLikedService = async (
 ) => {
   return await prisma.likeOnPost.findFirst({
     where: { postId, userId },
+  });
+};
+
+export const getLikesOnCommentService = async (
+  prisma: PrismaClient,
+  commentId: number
+) => {
+  return await prisma.likeOnComment.count({
+    where: { commentId },
+  });
+};
+
+export const createLikeOnCommentService = async (
+  prisma: PrismaClient,
+  commentId: number,
+  userId: number
+) => {
+  return await prisma.likeOnComment.create({
+    data: {
+      commentId,
+      userId,
+    },
+  });
+};
+
+export const deleteLikeOnCommentService = async (
+  prisma: PrismaClient,
+  commentId: number,
+  userId: number
+) => {
+  return await prisma.likeOnComment.delete({
+    where: {
+      commentId_userId: {
+        commentId,
+        userId,
+      },
+    },
   });
 };

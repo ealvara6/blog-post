@@ -7,3 +7,11 @@ export const validatePostLike: ValidationChain[] = [
     .isNumeric()
     .withMessage('Invalid PostId'),
 ];
+
+export const validateCommentLike: ValidationChain[] = [
+  body('commentId')
+    .notEmpty()
+    .withMessage('CommentId is required')
+    .isNumeric()
+    .withMessage('Invalid CommentId'),
+];
