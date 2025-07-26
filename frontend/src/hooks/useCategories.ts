@@ -1,4 +1,4 @@
-import { getCategories } from '@/api/getCategories'
+import { getCategories } from '@/api/categoriesApi'
 import { Category } from '@/types/posts'
 import { useQuery } from '@tanstack/react-query'
 

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { getPosts, GetPostsQuery } from '@/api/getPosts'
+import { getPosts, GetPostsQuery } from '@/api/postsApi'
 import { Post } from '@/types/posts'
 
 interface PostsResponse {
