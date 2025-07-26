@@ -28,7 +28,7 @@ export const publicRoutes = (prisma: PrismaClient): Router => {
   router.get('/posts/:id/comments', validateId, getComments);
   router.get('/posts/:id/comments/:commentId', validateCommentId, getComment);
   router.get('/posts/:id/likes', getLikesOnPost);
-  router.get('/posts/:id/comments/:commentId/likes', getLikesOnComment);
+  router.get('/comments/:commentId/likes', getLikesOnComment);
   router.post(
     '/register',
     [...validateUser, checkValidationResults],
