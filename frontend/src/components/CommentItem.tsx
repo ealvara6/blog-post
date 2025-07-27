@@ -14,6 +14,7 @@ import {
 } from '@headlessui/react'
 import { EllipsisHorizontalIcon, HeartIcon } from '@heroicons/react/24/outline'
 import { useCommentLikes } from '@/hooks/useLikes'
+import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
 
 export const CommentItem = ({
   comment,
@@ -28,10 +29,11 @@ export const CommentItem = ({
 }) => {
   const { id } = comment
   const { authUser } = useAuth()
+  const { openLoginModal } = useLoginModal()
   const deleteComment = useDeleteComment()
   const [isLoading, setIsLoading] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
-  const { data } = useCommentLikes(id)
+  const { data, isLoading: isLoadingLikes } = useCommentLikes(id)
 
   const onDelete = async () => {
     try {
@@ -50,6 +52,14 @@ export const CommentItem = ({
 
   const toggleEdit = async () => {
     setIsEditing(!isEditing)
+  }
+
+  const handleHeartClick = () => {
+    console.log('heart click handled')
+    if (!authUser) {
+      openLoginModal()
+    }
+    
   }
 
   const Auth = () => {
@@ -104,14 +114,8 @@ export const CommentItem = ({
         <>
           <div>{comment.content}</div>
           <div className="flex gap-2 self-end font-mono font-thin">
-            <div>{data.likeCount}</div>
-            <HeartIcon className="w-6" />
-            {/* <div>
-              <span className="font-bold">created: </span>
-              <span className="dark:text-text-muted-darkTheme">
-                {date.toLocaleString()}
-              </span>
-            </div> */}
+            {isLoadingLikes ? '0' : <div>{data.likeCount}</div>}
+            <HeartIcon className="w-6" onClick={() => handleHeartClick()} />
           </div>
         </>
       )}
