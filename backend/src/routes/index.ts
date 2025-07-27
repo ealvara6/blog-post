@@ -5,6 +5,7 @@ import authPostRoutes from './auth/postRoutes';
 import { PrismaClient } from '@prisma/client';
 import { prismaMiddleWare } from '../middleware/prismaMiddleware';
 import authUserRoutes from './auth/userRoutes';
+import authCommentRoutes from './auth/commentRoutes';
 
 export const createRoutes = (prisma: PrismaClient): Router => {
   const router = Router();
@@ -14,6 +15,7 @@ export const createRoutes = (prisma: PrismaClient): Router => {
   router.use('/auth', authRoutes(prisma));
   router.use('/auth/posts', authPostRoutes(prisma));
   router.use('/auth/users', authUserRoutes(prisma));
+  router.use('/auth/comments', authCommentRoutes(prisma));
 
   router.get('/health', (req: Request, res: Response): void => {
     res.status(200).json({ status: 'This is a public health check' });

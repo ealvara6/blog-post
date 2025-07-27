@@ -86,3 +86,13 @@ export const deleteLikeOnCommentService = async (
     },
   });
 };
+
+export const commentLikedService = async (
+  prisma: PrismaClient,
+  commentId: number,
+  userId: number
+) => {
+  return await prisma.likeOnComment.findFirst({
+    where: { commentId, userId },
+  });
+};

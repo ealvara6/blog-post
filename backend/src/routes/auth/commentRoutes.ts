@@ -5,6 +5,7 @@ import {
   deleteComment,
 } from '../../controllers/commentController';
 import {
+  commentLiked,
   createLikeOnComment,
   deleteLikeOnComment,
 } from '../../controllers/likeController';
@@ -18,14 +19,21 @@ import {
 export const authCommentRoutes = (prisma: PrismaClient) => {
   const router = Router();
   router
-    .route('/comments/:commentId')
+    .route('/:commentId')
     .put(validateCommentUpdate, updateComment)
     .delete(validateCommentDeletion, deleteComment);
 
   router
-    .route('/comments/:commentId/like')
+    .route('/:commentId/like')
     .post(authenticateToken, validateCommentLike, createLikeOnComment)
     .delete(authenticateToken, validateCommentLike, deleteLikeOnComment);
+
+  router.get(
+    '/:commentId/like/me',
+    authenticateToken,
+    validateCommentLike,
+    commentLiked
+  );
 
   return router;
 };

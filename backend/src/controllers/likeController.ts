@@ -1,5 +1,6 @@
 import { Request, response, Response } from 'express';
 import {
+  commentLikedService,
   createLikeOnCommentService,
   createLikeOnPostService,
   deleteLikeOnCommentService,
@@ -162,6 +163,29 @@ export const deleteLikeOnComment = async (
   } catch (err) {
     handleError(err, res, {
       errorMessage: 'Failed to unlike comment',
+    });
+  }
+};
+
+export const commentLiked = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+    const { commentId } = req.params;
+    const userId = req.user?.id;
+
+    const liked = await commentLikedService(
+      prisma,
+      Number(commentId),
+      Number(userId)
+    );
+
+    res.status(200).json({ liked: Boolean(liked) });
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to check liked comment',
     });
   }
 };
