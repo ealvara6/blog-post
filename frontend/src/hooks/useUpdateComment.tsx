@@ -10,12 +10,12 @@ export const useUpdateComment = () => {
     commentId: number
   }) => {
     try {
-      const response = await api.put(`/auth/posts/comments/${commentId}`, {
+      const response = await api.put(`auth/comments/${commentId}`, {
         content: content,
       })
       return response.data.data
     } catch (err) {
-      parseErrorMessage(err)
+      throw parseErrorMessage(err)
     }
   }
 }
