@@ -3,7 +3,7 @@ import axios from 'axios'
 const LOCAL_STORAGE_KEY = 'token'
 
 const api = axios.create({
-  baseURL: 'https://blog-post-production-cb9e.up.railway.app/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

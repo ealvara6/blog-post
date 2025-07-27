@@ -14,66 +14,65 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  username String @unique
-  email String @unique
-  password String
-  createdAt DateTime @default(now())
-  blogAuthor Boolean @default(false)
-  posts Post[]
-  comments Comment[]
-  post_likes LikeOnPost[]
+  id            Int             @id @default(autoincrement())
+  username      String          @unique
+  email         String          @unique
+  password      String
+  createdAt     DateTime        @default(now())
+  blogAuthor    Boolean         @default(false)
+  posts         Post[]
+  comments      Comment[]
+  post_likes    LikeOnPost[]
   comment_likes LikeOnComment[]
 }
 
-
 model Post {
-  id Int @id @default(autoincrement())
-  title String
-  content String?
-  published Boolean @default(false)
-  userId Int
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  comments Comment[]
+  id         Int          @id @default(autoincrement())
+  title      String
+  content    String?
+  published  Boolean      @default(false)
+  userId     Int
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime     @default(now())
+  comments   Comment[]
   categories Category[]
-  likes LikeOnPost[]
+  likes      LikeOnPost[]
 }
 
 model Category {
-  id Int @id @default(autoincrement())
-  name String
+  id    Int    @id @default(autoincrement())
+  name  String
   posts Post[]
 }
 
 model Comment {
-  id Int @id @default(autoincrement())
-  content String
-  createdAt DateTime @default(now())
-  postId Int
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-  userId Int
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  likes LikeOnComment[]
+  id        Int             @id @default(autoincrement())
+  content   String
+  createdAt DateTime        @default(now())
+  postId    Int
+  post      Post            @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    Int
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes     LikeOnComment[]
 }
 
 model LikeOnPost {
-  id Int @id @default(autoincrement())
+  id     Int  @id @default(autoincrement())
   postId Int
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
   userId Int
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([postId, userId])
 }
 
 model LikeOnComment {
-  id Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  userId Int
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   commentId Int
-  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
   @@unique([commentId, userId])
 }
