@@ -1,6 +1,5 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Comment } from '@/types/posts'
-import { Button } from './Button'
 import React, { useState } from 'react'
 import { useDeleteComment } from '@/hooks/useDeleteComment'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
@@ -12,8 +11,12 @@ import {
   MenuItems,
   MenuSeparator,
 } from '@headlessui/react'
-import { EllipsisHorizontalIcon, HeartIcon } from '@heroicons/react/24/outline'
-import { useCommentLikes } from '@/hooks/useLikes'
+import { EllipsisHorizontalIcon, HeartIcon } from '@heroicons/react/24/solid'
+import {
+  useCommentLikes,
+  useToggleCommentLike,
+  useUserLikedComment,
+} from '@/hooks/useLikes'
 import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
 
 export const CommentItem = ({
@@ -33,7 +36,9 @@ export const CommentItem = ({
   const deleteComment = useDeleteComment()
   const [isLoading, setIsLoading] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
-  const { data, isLoading: isLoadingLikes } = useCommentLikes(id)
+  const { data: likeData, isLoading: isLoadingLikes } = useCommentLikes(id)
+  const { data: likedData } = useUserLikedComment(id)
+  const toggleLike = useToggleCommentLike(id, likedData?.liked)
 
   const onDelete = async () => {
     try {
@@ -54,12 +59,13 @@ export const CommentItem = ({
     setIsEditing(!isEditing)
   }
 
-  const handleHeartClick = () => {
-    console.log('heart click handled')
+  const handleHeartClick = (e: React.MouseEvent<SVGSVGElement>) => {
+    e.stopPropagation()
     if (!authUser) {
       openLoginModal()
+      return
     }
-    
+    toggleLike.mutate()
   }
 
   const Auth = () => {
@@ -113,9 +119,12 @@ export const CommentItem = ({
       ) : (
         <>
           <div>{comment.content}</div>
-          <div className="flex gap-2 self-end font-mono font-thin">
-            {isLoadingLikes ? '0' : <div>{data.likeCount}</div>}
-            <HeartIcon className="w-6" onClick={() => handleHeartClick()} />
+          <div className="dark:text-text-muted-darkTheme text-text-muted flex gap-2 self-end font-mono font-thin select-none">
+            {isLoadingLikes ? '0' : <div>{likeData.likeCount}</div>}
+            <HeartIcon
+              className={`w-6 ${likedData?.liked && 'dark:text-error-darkTheme text-error'}`}
+              onClick={(e) => handleHeartClick(e)}
+            />
           </div>
         </>
       )}
