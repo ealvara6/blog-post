@@ -74,7 +74,7 @@ export const AccountInfo = () => {
     <div className="flex flex-col items-center gap-5 sm:gap-8">
       <Tabs />
       {isOpen && (
-        <Modal setIsOpen={setIsOpen}>
+        <Modal onClose={() => setIsOpen(null)}>
           {tabInfo.find((tab) => tab.name === isOpen)?.component}
         </Modal>
       )}

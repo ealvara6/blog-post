@@ -22,7 +22,7 @@ export const PostCard = ({
 }: {
   post: Post
   handleNavigate?: boolean
-  currentComments: Comment[] | undefined
+  currentComments?: Comment[] | undefined
   isFetching?: boolean
 }) => {
   const navigate = useNavigate()
