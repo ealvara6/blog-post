@@ -5,7 +5,6 @@ import { commentSchema } from '@/validations/commentValidation'
 import { useUpdateComment } from '@/hooks/useUpdateComment'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Comment } from '@/types/posts'
-import React from 'react'
 import { Input } from '@/components/shared/Input'
 
 export const UpdateCommentForm = ({

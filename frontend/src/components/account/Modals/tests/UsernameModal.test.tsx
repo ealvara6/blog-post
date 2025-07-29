@@ -1,5 +1,5 @@
 import { customRender } from '@/utils/test-utils'
-import { UserNameModal } from './UsernameModal'
+import { UserNameModal } from '@/components/account/Modals/UsernameModal'
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'

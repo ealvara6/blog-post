@@ -2,7 +2,7 @@ import { mockFormData } from '@/__mocks__/mockFormData'
 import { customRender } from '@/utils/test-utils'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
-import Login from './Login'
+import Login from '../Login'
 import { screen } from '@testing-library/react'
 
 describe('Login', () => {

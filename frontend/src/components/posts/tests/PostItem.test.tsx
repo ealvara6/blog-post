@@ -1,5 +1,5 @@
 import { customRender } from '@/utils/test-utils'
-import PostItem from './posts/PostItem'
+import PostItem from '@/components/posts/PostItem'
 import { vi } from 'vitest'
 import { mockPosts, postNoComments } from '@/__mocks__/mockPosts'
 import { screen } from '@testing-library/react'

@@ -1,6 +1,6 @@
 import { customRender } from '@/utils/test-utils'
 import { vi } from 'vitest'
-import { EditPostForm } from './EditPostForm'
+import { EditPostForm } from '../EditPostForm'
 import { mockPosts } from '@/__mocks__/mockPosts'
 import { screen } from '@testing-library/react'
 

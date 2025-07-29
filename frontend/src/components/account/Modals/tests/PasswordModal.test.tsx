@@ -1,6 +1,6 @@
 import { customRender } from '@/utils/test-utils'
 import userEvent from '@testing-library/user-event'
-import { PasswordModal } from './PasswordModal'
+import { PasswordModal } from '../PasswordModal'
 import { screen, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 

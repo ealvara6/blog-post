@@ -1,6 +1,6 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Comment } from '@/types/posts'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useDeleteComment } from '@/hooks/useDeleteComment'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { UpdateCommentForm } from '@/components/comment/UpdateCommentForm'

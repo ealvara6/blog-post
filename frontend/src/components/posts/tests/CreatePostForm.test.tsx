@@ -1,6 +1,6 @@
 import { customRender } from '@/utils/test-utils'
 import { vi } from 'vitest'
-import { CreatePostForm } from './CreatePostForm'
+import { CreatePostForm } from '../CreatePostForm'
 import userEvent from '@testing-library/user-event'
 import { screen } from '@testing-library/react'
 
