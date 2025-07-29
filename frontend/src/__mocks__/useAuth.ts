@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { SignUpInterface } from '@/components/Auth/Signup/Signup'
+import { SignUpInterface } from '@/components/auth/Signup/Signup'
 
 export const mockAuthUser = {
   id: 1,

@@ -1,4 +1,4 @@
-import { Button } from '@/components/Button'
+import { Button } from '@/components/shared/Button'
 import { useGetCategories } from '@/hooks/useGetCategories'
 import { Category } from '@/types/posts'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'

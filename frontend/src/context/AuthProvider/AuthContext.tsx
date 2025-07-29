@@ -1,5 +1,5 @@
 import React, { createContext } from 'react'
-import { SignUpInterface } from '@/components/Auth/Signup/Signup'
+import { SignUpInterface } from '@/components/auth/Signup/Signup'
 
 export type User = {
   id: number

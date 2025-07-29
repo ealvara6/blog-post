@@ -1,9 +1,9 @@
 import { useDeletePost } from '@/hooks/useDeletePost'
-import { Button } from './Button'
-import { Modal } from './Modal'
+import { Button } from './shared/Button'
+import { Modal } from './shared/Modal'
 import { useState } from 'react'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
-import { Error } from './Error'
+import { Error } from './shared/Error'
 import { useNavigate } from 'react-router-dom'
 
 export const DeletePostModal = ({
@@ -27,7 +27,7 @@ export const DeletePostModal = ({
   }
 
   return (
-    <Modal setIsOpen={setIsOpen}>
+    <Modal onClose={() => setIsOpen(null)}>
       <div className="flex flex-col justify-center gap-6 p-5">
         <div className="flex flex-col gap-1">
           <div className="text-3xl font-bold tracking-wide">Delete Post?</div>

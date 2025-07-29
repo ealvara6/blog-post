@@ -1,8 +1,8 @@
-import { Filter } from '@/components/Filter'
-import { GetPosts } from '@/components/GetPosts'
-import { Pagination } from '@/components/Pagination'
-import { PostCardSkeleton } from '@/components/PostCardSkeleton'
-import { SearchBar } from '@/components/SearchBar'
+import { Filter } from '@/components/posts/Filter'
+import { GetPosts } from '@/components/posts/GetPosts'
+import { Pagination } from '@/components/shared/Pagination'
+import { PostCardSkeleton } from '@/components/posts/PostCardSkeleton'
+import { SearchBar } from '@/components/posts/SearchBar'
 import { usePosts } from '@/hooks/usePosts'
 
 import { useMemo } from 'react'
