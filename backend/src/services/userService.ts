@@ -100,9 +100,12 @@ export const deleteUserService = async (prisma: PrismaClient, id: number) => {
   });
 };
 
-export const getUserPostsService = async (prisma: PrismaClient, id: number) => {
+export const getUserPostsService = async (
+  prisma: PrismaClient,
+  userId: number
+) => {
   return await prisma.post.findMany({
-    where: { userId: id },
+    where: { userId },
     select: {
       id: true,
       createdAt: true,

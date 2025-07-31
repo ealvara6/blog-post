@@ -9,3 +9,12 @@ export const getUserComments = async () => {
     throw parseErrorMessage(err)
   }
 }
+
+export const getUserPosts = async () => {
+  try {
+    const response = await api.get('/auth/users/posts/me')
+    return response.data
+  } catch (err) {
+    throw parseErrorMessage(err)
+  }
+}

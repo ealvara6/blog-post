@@ -176,10 +176,10 @@ export const getUserPosts = async (
 ): Promise<void> => {
   try {
     const prisma = req.prisma;
-    const id = Number(req.params.id);
-    let posts = await getUserPostsService(prisma, id);
+    const userId = Number(req.user?.id);
+    let posts = await getUserPostsService(prisma, userId);
 
-    res.status(200).json({ data: posts });
+    res.status(200).json({ posts });
     return;
   } catch (err) {
     handleError(err, res, {
