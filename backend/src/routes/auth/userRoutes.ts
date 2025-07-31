@@ -11,6 +11,7 @@ import {
   validateUserUpdate,
 } from '../../middleware/validators/validationMiddleware';
 import { validateId } from '../../middleware/validators';
+import { authenticateToken } from '../../middleware/authMiddleware';
 
 export const authUserRoutes = (prisma: PrismaClient) => {
   const router = Router();
@@ -21,7 +22,7 @@ export const authUserRoutes = (prisma: PrismaClient) => {
     .delete(validateUserDeletion, deleteUser);
 
   router.get('/:id/posts', validateId, getUserPosts);
-  router.get('/:id/comments', validateId, getUserComments);
+  router.get('/comments/me', authenticateToken, getUserComments);
 
   return router;
 };

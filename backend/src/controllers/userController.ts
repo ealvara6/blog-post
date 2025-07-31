@@ -194,10 +194,10 @@ export const getUserComments = async (
 ): Promise<void> => {
   try {
     const prisma = req.prisma;
-    const id = Number(req.params.id);
-    let comments = await getUserCommentsService(prisma, id);
+    const userId = Number(req.user?.id);
+    let comments = await getUserCommentsService(prisma, userId);
 
-    res.status(200).json({ data: comments });
+    res.status(200).json({ comments });
     return;
   } catch (err) {
     handleError(err, res, {

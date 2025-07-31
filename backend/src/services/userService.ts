@@ -119,10 +119,10 @@ export const getUserPostsService = async (prisma: PrismaClient, id: number) => {
 
 export const getUserCommentsService = async (
   prisma: PrismaClient,
-  id: number
+  userId: number
 ) => {
   return await prisma.comment.findMany({
-    where: { userId: id },
+    where: { userId },
     select: {
       id: true,
       createdAt: true,

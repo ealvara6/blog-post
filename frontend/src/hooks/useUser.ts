@@ -1,24 +1,11 @@
-import { useEffect, useState } from 'react'
-import { User } from '@/types/posts'
-import api from '@/api/axios'
-import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { getUserComments } from '@/api/userApi'
+import { useQuery } from '@tanstack/react-query'
 
-export const useUser = (id: string) => {
-  const [user, setUser] = useState<User>()
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const result = await api.get(`users/${id}`)
-        setUser(result.data.user)
-      } catch (err) {
-        parseErrorMessage(err)
-      }
-    }
-    fetchUser()
-  }, [id])
-
-  return { user }
+export const useUserComments = (userId?: number) => {
+  return useQuery({
+    queryKey: ['userComments', userId],
+    queryFn: () => getUserComments(),
+    staleTime: 1000 * 60,
+    enabled: !!userId,
+  })
 }
-
-export default useUser
