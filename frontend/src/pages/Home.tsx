@@ -1,5 +1,5 @@
-import { Carousels } from '@/components/carousels/Carousels'
-import { Hero } from '@/components/home/Hero'
+import { Carousels } from '@/components/Carousels/Carousels'
+import { Hero } from '@/components/Home/Hero'
 
 const Home = () => {
   return (

@@ -1,0 +1,63 @@
+import { useAuth } from '@/context/AuthProvider/useAuth'
+import { Post, Comment } from '@/types/posts'
+import { CommentForm } from '../Comment/CommentForm'
+import { useEffect, useState } from 'react'
+import { CommentItem } from '@/components/Comment/CommentItem'
+import PostCard from '@/components/Posts/PostCard'
+import { DeletePostModal } from '../DeletePostModal'
+
+export const PostItem = (post: Post) => {
+  const { id } = post
+  const [isOpen, setIsOpen] = useState<string | null>(null)
+  let { comments } = post
+  if (!comments) comments = []
+  const { authUser } = useAuth()
+  const [currentComments, setCurrentComments] = useState<Comment[]>(comments)
+
+  useEffect(() => {}, [])
+
+  const GetComments = () => {
+    if (!currentComments) return ''
+    if (currentComments.length === 0)
+      return (
+        <div className="text-center font-semibold tracking-wide sm:text-xl">
+          Be the first to Comment!
+        </div>
+      )
+    return currentComments.map((comment, index) => {
+      const date = new Date(comment.createdAt)
+      return (
+        <div key={index}>
+          <CommentItem
+            comment={comment}
+            index={index}
+            date={date}
+            setCurrentComments={setCurrentComments}
+          />
+        </div>
+      )
+    })
+  }
+
+  return (
+    <div className="flex flex-col gap-8">
+      <PostCard post={post} currentComments={currentComments} />
+      <div className="flex flex-col gap-4 md:mx-6">
+        <div className="text-2xl font-bold">Comments</div>
+        {authUser ? (
+          <CommentForm
+            postId={id}
+            setCurrentComments={setCurrentComments}
+            className="pb-5"
+          />
+        ) : (
+          ''
+        )}
+        <GetComments />
+        {isOpen && <DeletePostModal setIsOpen={setIsOpen} id={id} />}
+      </div>
+    </div>
+  )
+}
+
+export default PostItem

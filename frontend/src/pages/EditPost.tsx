@@ -1,4 +1,4 @@
-import { EditPostForm } from '@/components/posts/EditPostForm'
+import { EditPostForm } from '@/components/Posts/EditPostForm'
 import { useLocation } from 'react-router-dom'
 
 export const EditPost = () => {

@@ -1,4 +1,4 @@
-import PostItem from '@/components/posts/PostItem'
+import PostItem from '@/components/Posts/PostItem'
 import { useGetPost } from '@/hooks/useGetPost'
 import { useParams } from 'react-router-dom'
 

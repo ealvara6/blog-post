@@ -1,9 +1,9 @@
 import { useDeletePost } from '@/hooks/useDeletePost'
-import { Button } from './shared/Button'
-import { Modal } from './shared/Modal'
+import { Button } from './Shared/Button'
+import { Modal } from './Shared/Modal'
 import { useState } from 'react'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
-import { Error } from './shared/Error'
+import { Error } from './Shared/Error'
 import { useNavigate } from 'react-router-dom'
 
 export const DeletePostModal = ({

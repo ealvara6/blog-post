@@ -1,5 +1,5 @@
 import api from '@/api/axios'
-import { SignUpInterface } from '@/components/auth/Signup/Signup'
+import { SignUpInterface } from '@/components/Auth/Signup/Signup'
 import { jwtDecode } from 'jwt-decode'
 import { useState, useCallback, useEffect } from 'react'
 import { User, AuthContext } from './AuthContext'

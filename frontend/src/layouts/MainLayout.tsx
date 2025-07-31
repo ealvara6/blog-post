@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom'
-import Navbar from '@/components/navbar/Navbar'
-import Footer from '@/components/shared/Footer'
-import Login from '@/components/auth/Login/Login'
-import { Modal } from '@/components/shared/Modal'
+import Navbar from '@/components/Navbar/Navbar'
+import Footer from '@/components/Shared/Footer'
+import Login from '@/components/Auth/Login/Login'
+import { Modal } from '@/components/Shared/Modal'
 import { XCircleIcon } from '@heroicons/react/16/solid'
 import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
 

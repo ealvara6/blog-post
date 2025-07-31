@@ -1,0 +1,69 @@
+import { useForm } from 'react-hook-form'
+import { Button } from '@/components/Shared/Button'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { commentSchema } from '@/validations/commentValidation'
+import { useUpdateComment } from '@/hooks/useUpdateComment'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { Comment } from '@/types/posts'
+import { Input } from '@/components/Shared/Input'
+
+export const UpdateCommentForm = ({
+  content,
+  commentId,
+  toggleEdit,
+  setCurrentComments,
+}: {
+  content: string
+  commentId: number
+  toggleEdit: () => void
+  setCurrentComments?: React.Dispatch<React.SetStateAction<Comment[]>>
+}) => {
+  const {
+    register,
+    formState: { isValid, isSubmitting },
+    handleSubmit,
+  } = useForm<{ content: string }>({
+    resolver: zodResolver(commentSchema),
+    defaultValues: { content },
+    mode: 'onChange',
+  })
+  const updateComment = useUpdateComment()
+
+  const onSubmit = async (data: { content: string }) => {
+    try {
+      const updatedComment = await updateComment({ ...data, commentId })
+      if (!setCurrentComments) return
+
+      setCurrentComments((prev) =>
+        prev.map((comment) =>
+          comment.id === updatedComment.id
+            ? { ...comment, ...updatedComment }
+            : comment,
+        ),
+      )
+    } catch (err) {
+      parseErrorMessage(err)
+    }
+  }
+
+  return (
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <Input
+        className="border-border-darkTheme dark:text-text-primary-darkTheme text-text-primary border p-3 sm:text-lg"
+        {...register('content')}
+      />
+      <div className="flex w-fit gap-3 self-end">
+        <Button variant="danger" type="button" onClick={() => toggleEdit()}>
+          Cancel
+        </Button>
+        <Button
+          disabled={!isValid || isSubmitting}
+          isActive={isValid && !isSubmitting}
+          type="submit"
+        >
+          {isSubmitting ? 'Saving...' : 'Save'}
+        </Button>
+      </div>
+    </form>
+  )
+}
