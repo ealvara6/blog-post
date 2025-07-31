@@ -17,7 +17,7 @@ export const authUserRoutes = (prisma: PrismaClient) => {
   const router = Router();
 
   router
-    .route('/:id')
+    .route('/me')
     .put(validateUserUpdate, updateUser)
     .delete(validateUserDeletion, deleteUser);
 

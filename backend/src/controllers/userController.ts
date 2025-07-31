@@ -147,26 +147,21 @@ export const deleteUser = async (
 ): Promise<void> => {
   try {
     const prisma = req.prisma;
-    const id = Number(req.params.id);
-    const user = await findUser(prisma, id);
+    const userId = Number(req.user?.id);
+    const user = await findUser(prisma, userId);
 
     if (!user) {
       res.status(404).json({ error: 'User does not exist' });
       return;
     }
 
-    const deletedUser = await deleteUserService(prisma, id);
+    const deletedUser = await deleteUserService(prisma, userId);
 
     res.status(200).json({ message: 'User successfully deleted', deletedUser });
   } catch (err) {
-    if (err instanceof Error) {
-      res.status(500).json({
-        error: 'Failed to delete user',
-        details: err.message,
-      });
-      return;
-    }
-    res.status(500).json({ error: 'an unknown error occured' });
+    handleError(err, res, {
+      errorMessage: 'Failed to delete User',
+    });
   }
 };
 

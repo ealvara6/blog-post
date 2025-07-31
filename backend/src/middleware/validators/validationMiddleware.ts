@@ -63,8 +63,4 @@ export const validateUserUpdate = [
   checkValidationResults,
 ];
 
-export const validateUserDeletion = [
-  authenticateToken,
-  validateId,
-  canModifyUser,
-];
+export const validateUserDeletion = [authenticateToken];

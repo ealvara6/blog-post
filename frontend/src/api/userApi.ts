@@ -18,3 +18,12 @@ export const getUserPosts = async () => {
     throw parseErrorMessage(err)
   }
 }
+
+export const deleteUser = async () => {
+  try {
+    const response = await api.delete('/auth/users/me')
+    return response.data
+  } catch (err) {
+    throw parseErrorMessage(err)
+  }
+}
