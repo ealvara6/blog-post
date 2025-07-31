@@ -1,4 +1,9 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/__tests__/**"]
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/__tests__/**"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["DOM", "ESNext"],
+    "moduleResolution": "bundler"
+  }
 }
