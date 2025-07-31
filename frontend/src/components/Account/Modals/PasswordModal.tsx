@@ -2,11 +2,10 @@ import { Button } from '@/components/Shared/Button'
 import { Error } from '@/components/Shared/Error'
 import { Input } from '@/components/Shared/Input'
 import { useAuth } from '@/context/AuthProvider/useAuth'
-import { useUpdateUser } from '@/hooks/useUpdateUser'
-import { handleUserUpdate } from '@/utils/handleUserUpdate'
+import { useUpdateUser } from '@/hooks/useUser'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { passwordSchema } from '@/validations/authValidations'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const PasswordModal = ({
@@ -15,26 +14,18 @@ export const PasswordModal = ({
   setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
 }) => {
   const { authUser, setAuthUser } = useAuth()
-  const updateUser = useUpdateUser()
+  const { mutateAsync: updateUser, isError, error } = useUpdateUser()
   const {
     register,
     formState: { isSubmitting, errors },
     handleSubmit,
   } = useForm({ resolver: zodResolver(passwordSchema) })
-  const [serverError, setServerError] = useState('')
 
-  const onSubmit = async (data: {
-    password: string
-    confirmPassword: string
-  }) => {
+  const onSubmit = async (data: { password: string }) => {
     if (!authUser?.id) return
-    const { confirmPassword: _, ...rest } = data
-    handleUserUpdate(
-      { ...rest, id: authUser.id },
-      setAuthUser,
-      updateUser,
-      setServerError,
-    )
+    const { updatedUser } = await updateUser({ password: data.password })
+    localStorage.setItem('user', JSON.stringify(updatedUser))
+    setAuthUser(updatedUser)
   }
 
   return (
@@ -73,7 +64,7 @@ export const PasswordModal = ({
           <Error>{errors['confirmPassword']?.message}</Error>
         )}
       </div>
-      {serverError && <div>{serverError}</div>}
+      {isError && <div>{parseErrorMessage(error)}</div>}
       <div className="flex justify-end gap-3">
         <Button variant="transparent" onClick={() => setIsOpen(null)}>
           Cancel

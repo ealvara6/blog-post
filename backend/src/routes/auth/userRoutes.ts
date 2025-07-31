@@ -10,7 +10,6 @@ import {
   validateUserDeletion,
   validateUserUpdate,
 } from '../../middleware/validators/validationMiddleware';
-import { validateId } from '../../middleware/validators';
 import { authenticateToken } from '../../middleware/authMiddleware';
 
 export const authUserRoutes = (prisma: PrismaClient) => {

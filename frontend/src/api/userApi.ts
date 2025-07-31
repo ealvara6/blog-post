@@ -1,5 +1,6 @@
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import api from './axios'
+import { EditUser } from '@/hooks/useUpdateUser'
 
 export const getUserComments = async () => {
   try {
@@ -22,6 +23,16 @@ export const getUserPosts = async () => {
 export const deleteUser = async () => {
   try {
     const response = await api.delete('/auth/users/me')
+    return response.data
+  } catch (err) {
+    throw parseErrorMessage(err)
+  }
+}
+
+export const updateUser = async (data: EditUser) => {
+  try {
+    console.log(data)
+    const response = await api.put('/auth/users/me', data)
     return response.data
   } catch (err) {
     throw parseErrorMessage(err)

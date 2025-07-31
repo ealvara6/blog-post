@@ -4,13 +4,13 @@ import { CommentItem } from '@/components/Comment/CommentItem'
 import { useNavigate } from 'react-router-dom'
 import { Error } from '../Shared/Error'
 import { useUserComments } from '@/hooks/useUser'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 export const AccountComments = () => {
   const { authUser } = useAuth()
   const navigate = useNavigate()
 
-  const { data, isLoading, isError } = useUserComments(authUser?.id)
-  console.log(data)
+  const { data, isLoading, isError, error } = useUserComments(authUser?.id)
 
   const fetchComments = () => {
     if (data.comments === undefined || Object.keys(data.comments).length === 0)
@@ -31,9 +31,9 @@ export const AccountComments = () => {
   }
 
   if (isLoading) return <div>Loading...</div>
-  if (isError) return <Error>{isError}</Error>
+  if (isError) return <Error>{parseErrorMessage(error)}</Error>
   if (!data.comments || data.comments.length === 0)
-    return <div className="text-center">No data.comments found</div>
+    return <div className="text-center">No comments found</div>
 
   return <div className="flex flex-col gap-8">{fetchComments()}</div>
 }
