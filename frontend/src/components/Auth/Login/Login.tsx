@@ -9,15 +9,11 @@ import { Error } from '@/components/Shared/Error'
 import { Button } from '@/components/Shared/Button'
 import clsx from 'clsx'
 import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
-import { usePost } from '@/context/Post/usePost'
-import { useCategory } from '@/context/CategoryProvider/useCategory'
 
 type FormData = z.infer<typeof loginSchema>
 
 const Login = ({ className }: { className?: string }) => {
   const [serverError, setServerError] = useState({ msg: '' })
-  const { fetchPostsByCategory } = usePost()
-  const { categories } = useCategory()
 
   const {
     register,
@@ -31,10 +27,6 @@ const Login = ({ className }: { className?: string }) => {
   const onSubmit = async (data: FormData) => {
     try {
       await login(data.email, data.password)
-
-      await Promise.all(
-        categories.map((cat) => fetchPostsByCategory(String(cat.id))),
-      )
       closeLoginModal()
     } catch (err) {
       setServerError({ msg: parseErrorMessage(err) })
