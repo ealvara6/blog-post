@@ -4,9 +4,9 @@ import {
   getUserPosts,
   updateUser,
 } from '@/api/userApi'
+import { EditUser } from '@/types/user'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { EditUser } from './useUpdateUser'
 
 export const useUserComments = (userId?: number) => {
   return useQuery({

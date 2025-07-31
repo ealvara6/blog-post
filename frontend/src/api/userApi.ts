@@ -1,6 +1,6 @@
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import api from './axios'
-import { EditUser } from '@/hooks/useUpdateUser'
+import { EditUser } from '@/types/user'
 
 export const getUserComments = async () => {
   try {
