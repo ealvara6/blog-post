@@ -57,8 +57,6 @@ export const validateCommentDeletion = [
 
 export const validateUserUpdate = [
   authenticateToken,
-  validateId,
-  canModifyUser,
   ...validateUpdateFields,
   checkValidationResults,
 ];

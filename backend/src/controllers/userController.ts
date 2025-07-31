@@ -87,7 +87,7 @@ export const updateUser = async (
 ): Promise<void> => {
   try {
     const prisma = req.prisma;
-    const id = Number(req.params.id);
+    const userId = Number(req.user?.id);
     const updateData = req.body;
 
     if (!req.user) {
@@ -117,27 +117,23 @@ export const updateUser = async (
       req.body.password = await hashPassword(req.body.password);
     }
 
-    const user = await findUser(prisma, id);
+    const user = await findUser(prisma, userId);
 
     if (!user) {
       res.status(404).json({ error: 'User does not exist' });
       return;
     }
 
-    const updatedUser = await updateUserService(prisma, id, updateData);
+    const updatedUser = await updateUserService(prisma, userId, updateData);
 
     res.status(200).json({
       message: 'User successfully updated',
       updatedUser,
     });
   } catch (err) {
-    if (err instanceof Error) {
-      res.status(500).json({
-        error: 'Failed to update user',
-        details: err.message,
-      });
-      return;
-    }
+    handleError(err, res, {
+      errorMessage: 'Failed to update user information',
+    });
   }
 };
 

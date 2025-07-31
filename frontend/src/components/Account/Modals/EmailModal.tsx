@@ -1,13 +1,12 @@
 import { Button } from '@/components/Shared/Button'
 import { Input } from '@/components/Shared/Input'
 import { useAuth } from '@/context/AuthProvider/useAuth'
-import { useUpdateUser } from '@/hooks/useUpdateUser'
-import { handleUserUpdate } from '@/utils/handleUserUpdate'
 import { emailSchema } from '@/validations/authValidations'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Error } from '@/components/Shared/Error'
+import { useUpdateUser } from '@/hooks/useUser'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
 export const EmailModal = ({
   setIsOpen,
@@ -15,22 +14,19 @@ export const EmailModal = ({
   setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
 }) => {
   const { authUser, setAuthUser } = useAuth()
-  const updateUser = useUpdateUser()
+  const { mutateAsync: updateUser, isError, error } = useUpdateUser()
+
   const {
     register,
     formState: { isSubmitting, errors },
     handleSubmit,
   } = useForm({ resolver: zodResolver(emailSchema) })
-  const [serverError, setServerError] = useState('')
 
   const onSubmit = async (updateData: { email: string }) => {
     if (!authUser?.id) return
-    handleUserUpdate(
-      { ...updateData, id: authUser.id },
-      setAuthUser,
-      updateUser,
-      setServerError,
-    )
+    const { updatedUser } = await updateUser(updateData)
+    localStorage.setItem('user', JSON.stringify(updatedUser))
+    setAuthUser(updatedUser)
   }
 
   return (
@@ -49,7 +45,7 @@ export const EmailModal = ({
         />
         {errors['email'] && <Error>{errors['email']?.message}</Error>}
       </div>
-      {serverError && <Error>{serverError}</Error>}
+      {isError && <Error>{parseErrorMessage(error)}</Error>}
       <div className="flex justify-end gap-3">
         <Button
           type="button"

@@ -1,5 +1,12 @@
-import { getUserComments, getUserPosts } from '@/api/userApi'
-import { useQuery } from '@tanstack/react-query'
+import {
+  deleteUser,
+  getUserComments,
+  getUserPosts,
+  updateUser,
+} from '@/api/userApi'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { EditUser } from './useUpdateUser'
 
 export const useUserComments = (userId?: number) => {
   return useQuery({
@@ -16,5 +23,29 @@ export const useUserPosts = (userId?: number) => {
     queryFn: () => getUserPosts(),
     staleTime: 1000 * 60,
     enabled: !!userId,
+  })
+}
+
+export const useDeleteUser = (userId?: number) => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: () => deleteUser(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userComments', userId] })
+      queryClient.invalidateQueries({ queryKey: ['userPosts', userId] })
+    },
+    onError: (err) => {
+      throw parseErrorMessage(err)
+    },
+  })
+}
+
+export const useUpdateUser = () => {
+  return useMutation({
+    mutationFn: (data: EditUser) => updateUser(data),
+    onError: (err) => {
+      throw parseErrorMessage(err)
+    },
   })
 }
