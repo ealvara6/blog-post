@@ -9,3 +9,16 @@ export const getCommentsByPostId = async (postId: number) => {
     throw parseErrorMessage(err)
   }
 }
+
+export const createComment = async (data: {
+  content: string
+  postId: number
+}) => {
+  try {
+    const response = await api.post(`/auth/posts/${data.postId}/comments`, data)
+    console.log(response.data)
+    return response.data
+  } catch (err) {
+    throw parseErrorMessage(err)
+  }
+}

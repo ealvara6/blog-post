@@ -61,7 +61,8 @@ export const createComment = async (
 ): Promise<void> => {
   try {
     const prisma = req.prisma;
-    const createData = req.body;
+    const userId = Number(req.user?.id);
+    const createData = { ...req.body, userId };
 
     const comment = await createCommentService(prisma, createData);
 

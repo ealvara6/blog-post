@@ -3,11 +3,10 @@ import { Button } from '../Shared/Button'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { commentSchema } from '@/validations/commentValidation'
-import { useCreateComment } from '@/hooks/useCreateComment'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Comment } from '@/types/posts'
-import { useAuth } from '@/context/AuthProvider/useAuth'
 import clsx from 'clsx'
+import { useCreateComment } from '@/hooks/useComments'
 
 type CommentFormProps = {
   postId: number
@@ -19,8 +18,7 @@ export const CommentForm = ({
   setCurrentComments,
   className,
 }: CommentFormProps) => {
-  const { authUser } = useAuth()
-  const userId = authUser?.id
+  const { mutateAsync: createComment } = useCreateComment()
   const [toggleButtons, setToggleButtons] = useState(false)
   const {
     register,
@@ -28,7 +26,6 @@ export const CommentForm = ({
     handleSubmit,
     reset,
   } = useForm({ resolver: zodResolver(commentSchema) })
-  const createComment = useCreateComment()
 
   const onFocus = () => {
     setToggleButtons(true)
@@ -41,7 +38,7 @@ export const CommentForm = ({
 
   const onSubmit = async (data: { content: string }) => {
     try {
-      const createdComment = await createComment({ ...data, postId, userId })
+      const createdComment = await createComment({ ...data, postId })
       reset()
       setToggleButtons(false)
       setCurrentComments((prev) => [...prev, createdComment])

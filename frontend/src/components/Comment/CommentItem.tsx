@@ -105,7 +105,7 @@ export const CommentItem = ({
     >
       <div className="flex justify-between">
         <div className="text-lg font-bold tracking-wider sm:text-xl">
-          {comment.user.username}
+          {comment.user?.username}
         </div>
         <Auth />
       </div>
