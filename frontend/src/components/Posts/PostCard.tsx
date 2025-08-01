@@ -29,7 +29,6 @@ export const PostCard = ({
   const { authUser } = useAuth()
   const { title, content, id, user, categories, userId } = post
   const { data } = useComments(id)
-  // const date = format(new Date(createdAt), 'MMM dd, yyy  • h:mm a')
 
   const handleEdit = () => {
     const categoryIds = categories?.map((category) => category.id)

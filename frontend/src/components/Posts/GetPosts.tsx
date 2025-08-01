@@ -16,7 +16,6 @@ export const GetPosts = ({
             key={post.id}
             post={post}
             handleNavigate={true}
-            currentComments={post.comments}
             isFetching={isFetching}
           />
         )
