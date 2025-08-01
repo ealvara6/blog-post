@@ -2,9 +2,9 @@ import {
   createComment,
   deleteComment,
   getCommentsByPostId,
+  updateComment,
 } from '@/api/commentsApi'
 import { Comment } from '@/types/posts'
-import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 type CreateDataFn = {
@@ -16,6 +16,13 @@ type CreateDataFn = {
 type DeleteDataFn = {
   commentId: number
   postId?: number
+}
+
+type UpdateDataFn = {
+  content: string
+  commentId: number
+  postId?: number
+  username?: string
 }
 
 export const useComments = (postId: number) => {
@@ -112,6 +119,45 @@ export const useDeleteComment = () => {
         ['comments', newComment.postId],
         context?.previousComments,
       )
+    },
+
+    onSettled: (_data, _err, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['comments', variables.postId],
+      })
+    },
+  })
+}
+
+export const useUpdateComment = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: UpdateDataFn) =>
+      updateComment({ commentId: data.commentId, content: data.content }),
+
+    onMutate: async (updatedComment) => {
+      await queryClient.cancelQueries({
+        queryKey: ['comments', updatedComment.postId],
+      })
+
+      const previousComments = queryClient.getQueryData([
+        'comments',
+        updatedComment.postId,
+      ])
+
+      queryClient.setQueryData<{ comments: Comment[] }>(
+        ['comments', updatedComment.postId],
+        (old) => ({
+          comments: (old?.comments ?? []).map((comment) =>
+            comment.id === updatedComment.commentId
+              ? { ...comment, content: updatedComment.content }
+              : comment,
+          ),
+        }),
+      )
+
+      return { previousComments }
     },
 
     onSettled: (_data, _err, variables) => {

@@ -15,6 +15,9 @@ export const getCommentsService = async (
     where: { postId: id },
     select: {
       content: true,
+      id: true,
+      userId: true,
+      postId: true,
       user: {
         select: {
           username: true,

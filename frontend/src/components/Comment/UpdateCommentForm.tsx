@@ -2,21 +2,18 @@ import { useForm } from 'react-hook-form'
 import { Button } from '@/components/Shared/Button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { commentSchema } from '@/validations/commentValidation'
-import { useUpdateComment } from '@/hooks/useUpdateComment'
-import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Comment } from '@/types/posts'
 import { Input } from '@/components/Shared/Input'
+import { useUpdateComment } from '@/hooks/useComments'
 
 export const UpdateCommentForm = ({
   content,
-  commentId,
+  comment,
   toggleEdit,
-  setCurrentComments,
 }: {
   content: string
-  commentId: number
+  comment: Comment
   toggleEdit: () => void
-  setCurrentComments?: React.Dispatch<React.SetStateAction<Comment[]>>
 }) => {
   const {
     register,
@@ -27,23 +24,16 @@ export const UpdateCommentForm = ({
     defaultValues: { content },
     mode: 'onChange',
   })
-  const updateComment = useUpdateComment()
+  const { mutateAsync: updateComment } = useUpdateComment()
 
   const onSubmit = async (data: { content: string }) => {
-    try {
-      const updatedComment = await updateComment({ ...data, commentId })
-      if (!setCurrentComments) return
-
-      setCurrentComments((prev) =>
-        prev.map((comment) =>
-          comment.id === updatedComment.id
-            ? { ...comment, ...updatedComment }
-            : comment,
-        ),
-      )
-    } catch (err) {
-      parseErrorMessage(err)
-    }
+    const updatedComment = updateComment({
+      ...data,
+      commentId: comment.id,
+      postId: comment.postId,
+      username: comment.user.username,
+    })
+    console.log(updatedComment)
   }
 
   return (

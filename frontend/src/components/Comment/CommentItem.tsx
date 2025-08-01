@@ -1,8 +1,6 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Comment } from '@/types/posts'
 import { useState } from 'react'
-import { useDeleteComment } from '@/hooks/useDeleteComment'
-import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { UpdateCommentForm } from '@/components/Comment/UpdateCommentForm'
 import {
   Menu,
@@ -18,41 +16,31 @@ import {
   useUserLikedComment,
 } from '@/hooks/useLikes'
 import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
+import { useDeleteComment } from '@/hooks/useComments'
 
 export const CommentItem = ({
   comment,
   index,
-  date,
-  setCurrentComments,
 }: {
   comment: Comment
   index: number
   date: Date
-  setCurrentComments?: React.Dispatch<React.SetStateAction<Comment[]>>
 }) => {
   const { id } = comment
   const { authUser } = useAuth()
   const { openLoginModal } = useLoginModal()
-  const deleteComment = useDeleteComment()
-  const [isLoading, setIsLoading] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const { data: likeData, isLoading: isLoadingLikes } = useCommentLikes(id)
   const { data: likedData } = useUserLikedComment(id)
+  const { mutate: deleteComment } = useDeleteComment()
   const toggleLike = useToggleCommentLike(id, likedData?.liked)
 
   const onDelete = async () => {
-    try {
-      setIsLoading(true)
-      const deletedComment = await deleteComment(id)
-      if (!setCurrentComments) return
-      setCurrentComments((prev) =>
-        prev.filter((comment) => comment.id !== deletedComment.id),
-      )
-    } catch (err) {
-      parseErrorMessage(err)
-    } finally {
-      setIsLoading(false)
-    }
+    const deletedComment = deleteComment({
+      commentId: comment.id,
+      postId: comment.postId,
+    })
+    console.log(deletedComment)
   }
 
   const toggleEdit = async () => {
@@ -112,9 +100,8 @@ export const CommentItem = ({
       {isEditing ? (
         <UpdateCommentForm
           content={comment.content}
-          commentId={id}
+          comment={comment}
           toggleEdit={toggleEdit}
-          setCurrentComments={setCurrentComments}
         />
       ) : (
         <>

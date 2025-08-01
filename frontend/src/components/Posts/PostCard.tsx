@@ -13,22 +13,22 @@ import { useState } from 'react'
 import { DeletePostModal } from '@/components/DeletePostModal'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Hearts } from '@/components/Shared/Hearts'
+import { useComments } from '@/hooks/useComments'
 
 export const PostCard = ({
   post,
   handleNavigate,
-  currentComments,
   isFetching,
 }: {
   post: Post
   handleNavigate?: boolean
-  currentComments?: Comment[] | undefined
   isFetching?: boolean
 }) => {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState<string | null>(null)
   const { authUser } = useAuth()
   const { title, content, id, user, categories, userId } = post
+  const { data } = useComments(id)
   // const date = format(new Date(createdAt), 'MMM dd, yyy  • h:mm a')
 
   const handleEdit = () => {
@@ -108,7 +108,7 @@ export const PostCard = ({
           <div className="dark:text-text-muted-darkTheme text-text-muted flex justify-between gap-2 font-semibold tracking-wider">
             <Hearts id={id} />
             <div>
-              {!currentComments?.length ? '0' : currentComments.length} Comments
+              {!data?.comments.length ? '0' : data?.comments.length} Comments
             </div>
           </div>
         </div>

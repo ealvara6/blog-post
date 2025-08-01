@@ -23,7 +23,7 @@ export const getComments = async (
       return;
     }
 
-    res.status(200).json({ data: comments });
+    res.status(200).json({ comments });
     return;
   } catch (err) {
     handleError(err, res, {
