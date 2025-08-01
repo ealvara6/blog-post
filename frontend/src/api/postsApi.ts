@@ -20,3 +20,12 @@ export const getPosts = async (query?: GetPostsQuery) => {
     throw parseErrorMessage(err)
   }
 }
+
+export const getPostById = async (postId: number) => {
+  try {
+    const response = await api.get(`/posts/${postId}`)
+    return response.data
+  } catch (err) {
+    throw parseErrorMessage(err)
+  }
+}

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { getPosts, GetPostsQuery } from '@/api/postsApi'
+import { getPostById, getPosts, GetPostsQuery } from '@/api/postsApi'
 import { Post } from '@/types/posts'
 
 interface PostsResponse {
@@ -17,5 +17,13 @@ export const usePosts = (query?: GetPostsQuery) => {
     queryFn: () => getPosts(query),
     staleTime: 1000 * 60 * 5,
     placeholderData: (prev) => prev,
+  })
+}
+
+export const usePost = (postId: number) => {
+  return useQuery({
+    queryKey: ['post', postId],
+    queryFn: () => getPostById(postId),
+    staleTime: 1000 * 60 * 5,
   })
 }

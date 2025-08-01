@@ -1,15 +1,15 @@
 import PostItem from '@/components/Posts/PostItem'
-import { useGetPost } from '@/hooks/useGetPost'
+import { usePost } from '@/hooks/usePosts'
 import { useParams } from 'react-router-dom'
 
 export const Post = () => {
   const { id } = useParams()
-  const { post, loading } = useGetPost(id)
-  if (loading) return <p>Loading...</p>
+  const { data, isLoading } = usePost(Number(id))
+  if (isLoading) return <p>Loading...</p>
 
   return (
     <div className="w-full px-3 sm:max-w-7xl">
-      {post ? <PostItem {...post} /> : <div>No post found</div>}
+      {data.post ? <PostItem {...data.post} /> : <div>No post found</div>}
     </div>
   )
 }
