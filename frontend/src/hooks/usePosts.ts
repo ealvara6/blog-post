@@ -1,10 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   createPost,
-  createPostQuery,
+  CreatePostProps,
+  EditPostProps,
   getPostById,
   getPosts,
   GetPostsQuery,
+  updatePost,
 } from '@/api/postsApi'
 import { Post } from '@/types/posts'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
@@ -41,11 +43,27 @@ export const useCreatePost = () => {
   const navigate = useNavigate()
 
   return useMutation({
-    mutationFn: (data: createPostQuery) => createPost(data),
+    mutationFn: (data: CreatePostProps) => createPost(data),
     onSuccess: (newPost) => {
       queryClient.invalidateQueries({ queryKey: ['posts'] })
-      console.log(newPost)
       navigate({ pathname: `/posts/${newPost.data.id}` }, { replace: true })
+    },
+    onError: (err) => {
+      throw parseErrorMessage(err)
+    },
+  })
+}
+
+export const useUpdatePost = () => {
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+
+  return useMutation({
+    mutationFn: (data: EditPostProps) => updatePost(data),
+    onSuccess: (updatedPost) => {
+      queryClient.setQueryData(['post', updatedPost.data.id], updatedPost.data)
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
+      navigate({ pathname: `/posts/${updatedPost.data.id}` }, { replace: true })
     },
     onError: (err) => {
       throw parseErrorMessage(err)

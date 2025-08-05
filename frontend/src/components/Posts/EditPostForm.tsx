@@ -1,14 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { PostForm } from './PostForm'
-import { useUpdatePost } from '@/hooks/useUpdatePost'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import postSchema from '@/validations/postValidations'
-import { parseErrorMessage } from '@/utils/parseErrorMessage'
-import { useGetCategories } from '@/hooks/useGetCategories'
-import { Category } from '@/types/posts'
 import { Error } from '../Shared/Error'
+import { useUpdatePost } from '@/hooks/usePosts'
+import { useCategories } from '@/hooks/useCategories'
 
 type FormData = z.infer<typeof postSchema>
 
@@ -28,31 +26,24 @@ export const EditPostForm = ({
   if (!categoryIds) categoryIds = []
   const navigate = useNavigate()
   const { authUser } = useAuth()
-  const editPost = useUpdatePost()
-  const getCategories = useGetCategories()
-  const [serverError, setServerError] = useState({ msg: '' })
+  const { mutate: updatePost, isError, error } = useUpdatePost()
+  const { data: allCategories } = useCategories()
 
   useEffect(() => {
     if (authUser?.id !== userId) navigate('/posts')
   }, [userId, authUser?.id, navigate])
 
   const onSubmit = async (data: FormData) => {
-    try {
-      const allCategories: Category[] = await getCategories()
-      const categories = allCategories.filter((category) =>
-        data.categoryIds.includes(category.id),
-      )
-      await editPost({
-        title: data.title,
-        content: data.content,
-        categories: categories,
-        userId: authUser?.id,
-        id,
-      })
-      navigate({ pathname: `/posts/${id}` }, { replace: true })
-    } catch (err) {
-      setServerError({ msg: parseErrorMessage(err) })
-    }
+    const categories = allCategories?.filter((category) =>
+      data.categoryIds.includes(category.id),
+    )
+    updatePost({
+      title: data.title,
+      content: data.content,
+      categories: categories,
+      userId: authUser?.id,
+      id,
+    })
   }
 
   return (
@@ -62,7 +53,7 @@ export const EditPostForm = ({
         header="Edit Post"
         defaultValues={{ title, content, categoryIds }}
       />
-      {<Error>{serverError.msg}</Error>}
+      {isError && <Error>{error.message}</Error>}
     </div>
   )
 }

@@ -8,11 +8,19 @@ export type GetPostsQuery = {
   categoryId?: string
 }
 
-export type createPostQuery = {
+export type CreatePostProps = {
   title: string
   content: string
   userId: number
   categories?: Category[]
+}
+
+export type EditPostProps = {
+  id: number
+  title: string
+  content: string
+  categories?: Category[]
+  userId?: number
 }
 
 export const getPosts = async (query?: GetPostsQuery) => {
@@ -38,9 +46,18 @@ export const getPostById = async (postId: number) => {
   }
 }
 
-export const createPost = async (data: createPostQuery) => {
+export const createPost = async (data: CreatePostProps) => {
   try {
     const response = await api.post('auth/posts', data)
+    return response.data
+  } catch (err) {
+    throw parseErrorMessage(err)
+  }
+}
+
+export const updatePost = async (data: EditPostProps) => {
+  try {
+    const response = await api.put(`/auth/posts/${data.id}`, data)
     return response.data
   } catch (err) {
     throw parseErrorMessage(err)
