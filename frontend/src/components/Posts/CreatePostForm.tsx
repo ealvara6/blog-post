@@ -5,10 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { PostForm } from '@/components/Posts/PostForm'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
-import { useGetCategories } from '@/hooks/useGetCategories'
-import { Category } from '@/types/posts'
 import { Error } from '@/components/Shared/Error'
 import { useCreatePost } from '@/hooks/usePosts'
+import { useCategories } from '@/hooks/useCategories'
 
 type FormData = z.infer<typeof postSchema>
 
@@ -16,7 +15,7 @@ export const CreatePostForm = () => {
   const navigate = useNavigate()
   const { authUser } = useAuth()
   const { mutate: createPost } = useCreatePost()
-  const getCategories = useGetCategories()
+  const { data: allCategories } = useCategories()
   const [serverError, setServerError] = useState({ msg: '' })
 
   useEffect(() => {
@@ -27,8 +26,7 @@ export const CreatePostForm = () => {
     try {
       if (!authUser) return navigate('/login')
 
-      const allCategories: Category[] = await getCategories()
-      const categories = allCategories.filter((category) =>
+      const categories = allCategories?.filter((category) =>
         data.categoryIds.includes(category.id),
       )
 

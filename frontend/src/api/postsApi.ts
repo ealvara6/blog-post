@@ -12,7 +12,7 @@ export type createPostQuery = {
   title: string
   content: string
   userId: number
-  categories: Category[]
+  categories?: Category[]
 }
 
 export const getPosts = async (query?: GetPostsQuery) => {
