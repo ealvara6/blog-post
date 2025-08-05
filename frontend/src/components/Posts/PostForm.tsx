@@ -3,12 +3,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '@/components/Shared/Button'
-import { useEffect, useState } from 'react'
-import { Category } from '@/types/posts'
-import { useGetCategories } from '@/hooks/useGetCategories'
-import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Options } from '@/components/Posts/Options'
 import { Error } from '@/components/Shared/Error'
+import { useCategories } from '@/hooks/useCategories'
 
 interface PostFormProps {
   defaultValues?: {
@@ -41,25 +38,21 @@ export const PostForm = ({
     control,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({ resolver: zodResolver(postSchema), defaultValues })
-  const getCategories = useGetCategories()
 
-  const [categories, setCategories] = useState<Category[]>()
-  const [loading, setLoading] = useState(true)
+  const { data: categories, isLoading } = useCategories()
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const fetchedCategories: Category[] = await getCategories()
-        setCategories(fetchedCategories)
-      } catch (err) {
-        parseErrorMessage(err)
-      } finally {
-        setLoading(false)
-      }
-    }
+  const SkeletonCard = () => {
+    const skeleton = [...Array(5)].map((_, i) => {
+      return (
+        <div
+          key={i}
+          className="h-12 w-full animate-pulse rounded bg-gray-300 dark:bg-gray-700"
+        />
+      )
+    })
 
-    fetchCategories()
-  }, [getCategories])
+    return <div className="flex gap-6">{skeleton}</div>
+  }
 
   return (
     <form
@@ -89,8 +82,8 @@ export const PostForm = ({
           placeholder="Content"
         />
       </div>
-      {loading ? (
-        'Loading Categories...'
+      {isLoading ? (
+        <SkeletonCard />
       ) : (
         <div className="flex flex-col items-center gap-6">
           <div className="text-xl font-bold">Category</div>
