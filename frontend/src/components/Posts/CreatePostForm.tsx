@@ -3,19 +3,19 @@ import { useEffect, useState } from 'react'
 import { z } from 'zod'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthProvider/useAuth'
-import { useCreatePost } from '@/hooks/useCreatePost'
 import { PostForm } from '@/components/Posts/PostForm'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { useGetCategories } from '@/hooks/useGetCategories'
 import { Category } from '@/types/posts'
 import { Error } from '@/components/Shared/Error'
+import { useCreatePost } from '@/hooks/usePosts'
 
 type FormData = z.infer<typeof postSchema>
 
 export const CreatePostForm = () => {
   const navigate = useNavigate()
   const { authUser } = useAuth()
-  const createPost = useCreatePost()
+  const { mutate: createPost } = useCreatePost()
   const getCategories = useGetCategories()
   const [serverError, setServerError] = useState({ msg: '' })
 
@@ -32,13 +32,12 @@ export const CreatePostForm = () => {
         data.categoryIds.includes(category.id),
       )
 
-      const post = await createPost({
+      createPost({
         title: data.title,
         content: data.content,
         categories: categories,
         userId: authUser.id,
       })
-      navigate({ pathname: `/posts/${post.id}` }, { replace: true })
     } catch (err) {
       setServerError({ msg: parseErrorMessage(err) })
     }

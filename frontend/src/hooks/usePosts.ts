@@ -1,8 +1,16 @@
-import { useQuery } from '@tanstack/react-query'
-import { getPostById, getPosts, GetPostsQuery } from '@/api/postsApi'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  createPost,
+  createPostQuery,
+  getPostById,
+  getPosts,
+  GetPostsQuery,
+} from '@/api/postsApi'
 import { Post } from '@/types/posts'
+import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { useNavigate } from 'react-router'
 
-interface PostsResponse {
+type PostsResponse = {
   posts: Post[]
   pageInfo: {
     total: number
@@ -25,5 +33,22 @@ export const usePost = (postId: number) => {
     queryKey: ['post', postId],
     queryFn: () => getPostById(postId),
     staleTime: 1000 * 60 * 5,
+  })
+}
+
+export const useCreatePost = () => {
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+
+  return useMutation({
+    mutationFn: (data: createPostQuery) => createPost(data),
+    onSuccess: (newPost) => {
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
+      console.log(newPost)
+      navigate({ pathname: `/posts/${newPost.data.id}` }, { replace: true })
+    },
+    onError: (err) => {
+      throw parseErrorMessage(err)
+    },
   })
 }
