@@ -63,3 +63,12 @@ export const updatePost = async (data: EditPostProps) => {
     throw parseErrorMessage(err)
   }
 }
+
+export const deletePost = async (postId: number) => {
+  try {
+    const response = await api.delete(`auth/posts/${postId}`)
+    return response.data
+  } catch (err) {
+    throw parseErrorMessage(err)
+  }
+}

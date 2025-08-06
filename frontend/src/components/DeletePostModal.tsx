@@ -1,10 +1,8 @@
-import { useDeletePost } from '@/hooks/useDeletePost'
 import { Button } from './Shared/Button'
 import { Modal } from './Shared/Modal'
-import { useState } from 'react'
-import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Error } from './Shared/Error'
 import { useNavigate } from 'react-router-dom'
+import { useDeletePost } from '@/hooks/usePosts'
 
 export const DeletePostModal = ({
   setIsOpen,
@@ -13,17 +11,12 @@ export const DeletePostModal = ({
   setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
   id: number
 }) => {
-  const deletePost = useDeletePost()
-  const [serverError, setServerError] = useState('')
+  const { mutate: deletePost, isError, error } = useDeletePost()
   const navigate = useNavigate()
 
   const handleDelete = async () => {
-    try {
-      await deletePost(id)
-      navigate({ pathname: '/posts' }, { replace: true })
-    } catch (err) {
-      setServerError(parseErrorMessage(err))
-    }
+    deletePost(id)
+    navigate({ pathname: '/posts' }, { replace: true })
   }
 
   return (
@@ -47,7 +40,7 @@ export const DeletePostModal = ({
             Delete
           </Button>
         </div>
-        {serverError && <Error>{serverError}</Error>}
+        {isError && <Error>{error.message}</Error>}
       </div>
     </Modal>
   )
