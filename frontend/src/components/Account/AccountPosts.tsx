@@ -4,6 +4,7 @@ import { useUserPosts } from '@/hooks/useUser'
 import { Post } from '@/types/posts'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Error } from '../Shared/Error'
+import { PostCardSkeleton } from '../Posts/PostCardSkeleton'
 
 export const AccountPosts = () => {
   const { authUser } = useAuth()
@@ -20,7 +21,7 @@ export const AccountPosts = () => {
     return <div className="flex flex-col gap-8">{postItems}</div>
   }
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <PostCardSkeleton />
   if (isError) return <Error>{parseErrorMessage(error)}</Error>
   if (!data.posts || data.posts.length === 0)
     return <div className="text-center">No posts found</div>

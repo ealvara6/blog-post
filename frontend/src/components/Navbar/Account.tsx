@@ -37,6 +37,7 @@ export const Account = () => {
           <MenuItems
             transition
             anchor="bottom end"
+            modal={false}
             className="dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background z-50 mt-2 w-36 rounded border p-2 text-center text-lg sm:w-(--button-width)"
           >
             <MenuItem>

@@ -21,7 +21,7 @@ export const Carousels = () => {
     if (isError) return <Error>{parseErrorMessage(error)}</Error>
 
     return (
-      <div className="relative mx-auto flex max-w-[calc(100vw-20px)] flex-col gap-52 px-1 sm:px-20">
+      <div className="relative mx-auto flex max-w-[calc(100vw-20px)] flex-col gap-30 px-1 sm:px-20">
         {carousels}
       </div>
     )

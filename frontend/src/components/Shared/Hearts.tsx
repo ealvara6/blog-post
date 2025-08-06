@@ -23,7 +23,7 @@ export const Hearts = ({ id }: { id: number }) => {
     toggleLike()
   }
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 select-none">
       <HeartIcon
         className={`h-6 ${likedData?.liked && 'dark:text-error-darkTheme text-error'}`}
         onClick={(e) => handleHeartClick(e)}

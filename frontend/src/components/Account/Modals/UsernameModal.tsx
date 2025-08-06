@@ -30,7 +30,7 @@ export const UserNameModal = ({
 
   return (
     <form
-      className="flex w-full flex-col gap-4 p-2"
+      className="flex w-full flex-col gap-4 p-3 py-6 sm:p-6"
       onSubmit={handleSubmit(onSubmit)}
     >
       <label htmlFor="username" className="text-lg font-semibold sm:text-xl">
@@ -38,7 +38,7 @@ export const UserNameModal = ({
       </label>
       <div className="flex flex-col gap-2">
         <Input
-          className="border-border-darkTheme rounded border p-2 text-white"
+          className="border-border-darkTheme rounded border p-2 py-4 text-white"
           defaultValue={authUser?.username}
           {...register('username')}
         />
@@ -48,7 +48,7 @@ export const UserNameModal = ({
       <div className="flex gap-3 self-end">
         <Button
           type="button"
-          variant="transparent"
+          variant="dangerTransparent"
           onClick={() => setIsOpen(null)}
         >
           Cancel

@@ -31,7 +31,7 @@ export const EmailModal = ({
 
   return (
     <form
-      className="flex w-full flex-col gap-4 p-2"
+      className="flex w-full flex-col gap-4 p-3 py-4 sm:p-6"
       onSubmit={handleSubmit(onSubmit)}
     >
       <label htmlFor="email" className="text-lg font-semibold sm:text-xl">
@@ -40,7 +40,7 @@ export const EmailModal = ({
       <div className="flex flex-col gap-2">
         <Input
           defaultValue={authUser?.email}
-          className="border-border-darkTheme text-text-primary-darkTheme rounded border p-2"
+          className="border-border-darkTheme text-text-primary-darkTheme rounded border p-3"
           {...register('email')}
         />
         {errors['email'] && <Error>{errors['email']?.message}</Error>}
@@ -49,7 +49,7 @@ export const EmailModal = ({
       <div className="flex justify-end gap-3">
         <Button
           type="button"
-          variant="transparent"
+          variant="dangerTransparent"
           onClick={() => setIsOpen(null)}
         >
           Cancel

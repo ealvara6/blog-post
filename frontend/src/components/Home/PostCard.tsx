@@ -26,7 +26,7 @@ export const PostCard = ({
       </div>
       <div className="dark:text-text-muted-darkTheme text-text-muted flex grow items-end justify-between gap-3 font-semibold tracking-wider sm:text-lg">
         <Hearts id={id} />
-        <div>
+        <div className="select-none">
           {comments?.length === 0 ? '0' : `${comments?.length}`} Comments
         </div>
       </div>

@@ -56,7 +56,7 @@ export const CommentForm = ({ postId, className }: CommentFormProps) => {
       {toggleButtons && (
         <div className="flex gap-2 self-end">
           <Button
-            variant="transparent"
+            variant="dangerTransparent"
             className="border-border-darkTheme"
             type="button"
             onClick={() => onCancel()}
@@ -67,9 +67,9 @@ export const CommentForm = ({ postId, className }: CommentFormProps) => {
             disabled={!isValid || isSubmitting}
             isActive={isValid && !isSubmitting}
             type="submit"
-            className="font-bold"
+            className="font-semibold"
           >
-            {isSubmitting ? 'Submitting...' : 'Comment'}
+            {isSubmitting ? 'Submitting...' : 'Submit'}
           </Button>
         </div>
       )}

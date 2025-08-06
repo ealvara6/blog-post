@@ -106,7 +106,7 @@ export const PostCard = ({
         <div className="flex flex-col justify-between p-3 text-end font-mono font-thin">
           <div className="dark:text-text-muted-darkTheme text-text-muted flex justify-between gap-2 font-semibold tracking-wider">
             <Hearts id={id} />
-            <div>
+            <div className="select-none">
               {!data?.comments.length ? '0' : data?.comments.length} Comments
             </div>
           </div>

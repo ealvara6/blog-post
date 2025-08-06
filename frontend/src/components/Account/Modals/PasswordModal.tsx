@@ -30,7 +30,7 @@ export const PasswordModal = ({
 
   return (
     <form
-      className="flex w-full flex-col gap-4 p-2"
+      className="flex w-full flex-col gap-4 p-2 sm:p-6"
       onSubmit={handleSubmit(onSubmit)}
     >
       <label htmlFor="password" className="text-lg font-semibold sm:text-xl">
@@ -66,7 +66,7 @@ export const PasswordModal = ({
       </div>
       {isError && <div>{parseErrorMessage(error)}</div>}
       <div className="flex justify-end gap-3">
-        <Button variant="transparent" onClick={() => setIsOpen(null)}>
+        <Button variant="dangerTransparent" onClick={() => setIsOpen(null)}>
           Cancel
         </Button>
         <Button type="submit" size="md" disabled={isSubmitting}>
