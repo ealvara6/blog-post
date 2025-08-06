@@ -4,7 +4,7 @@ import { CommentForm } from '../Comment/CommentForm'
 import { useState } from 'react'
 import { CommentItem } from '@/components/Comment/CommentItem'
 import PostCard from '@/components/Posts/PostCard'
-import { DeletePostModal } from '../DeletePostModal'
+import { DeletePostModal } from './DeletePostModal'
 import { useComments } from '@/hooks/useComments'
 
 export const PostItem = (post: Post) => {

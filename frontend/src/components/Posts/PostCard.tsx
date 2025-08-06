@@ -10,7 +10,7 @@ import {
   MenuSeparator,
 } from '@headlessui/react'
 import { useState } from 'react'
-import { DeletePostModal } from '@/components/DeletePostModal'
+import { DeletePostModal } from '@/components/Posts/DeletePostModal'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Hearts } from '@/components/Shared/Hearts'
 import { useComments } from '@/hooks/useComments'
