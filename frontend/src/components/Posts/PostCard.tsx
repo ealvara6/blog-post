@@ -1,4 +1,4 @@
-import { Comment, Post } from '@/types/posts'
+import { Post } from '@/types/posts'
 import { useNavigate } from 'react-router-dom'
 import { CategoriesList } from '@/components/Category/CategoriesList'
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'

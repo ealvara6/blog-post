@@ -1,28 +1,11 @@
 import { Button } from '@/components/Shared/Button'
-import { useGetCategories } from '@/hooks/useGetCategories'
+import { useCategories } from '@/hooks/useCategories'
 import { Category } from '@/types/posts'
-import { parseErrorMessage } from '@/utils/parseErrorMessage'
-import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export const Browse = () => {
-  const getCategories = useGetCategories()
-  const [categories, setCategories] = useState<Category[]>()
-  const [serverError, setServerError] = useState('')
+  const { data: categories, isError, error } = useCategories()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const categories: Category[] = await getCategories()
-        setCategories(categories)
-      } catch (err) {
-        setServerError(parseErrorMessage(err))
-      }
-    }
-
-    fetchCategories()
-  }, [getCategories])
 
   const CategoryItems = () => {
     const categoryItems = categories?.map((category: Category) => {
@@ -56,7 +39,7 @@ export const Browse = () => {
     )
   }
 
-  if (serverError) return <div>{serverError}</div>
+  if (isError) return <div>{error.message}</div>
 
   return (
     <div className="flex w-full max-w-5xl flex-col gap-14 px-3 md:py-36">
