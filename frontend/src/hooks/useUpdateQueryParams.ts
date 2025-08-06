@@ -1,7 +1,8 @@
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export const useUpdateQueryParams = () => {
   const navigate = useNavigate()
+  const location = useLocation()
 
   return (filters: { categoryId?: string; page?: number; search?: string }) => {
     const params = new URLSearchParams(location.search)
