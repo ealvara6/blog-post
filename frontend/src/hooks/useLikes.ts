@@ -46,8 +46,8 @@ export const useTogglePostLike = (postId: number, liked: boolean) => {
 
       queryClient.setQueryData(
         ['postLikes', postId],
-        (prev: { likedCount: number } | undefined) => ({
-          likedCount: (prev?.likedCount ?? 0) + (liked ? -1 : 1),
+        (prev: { likeCount: number } | undefined) => ({
+          likeCount: (prev?.likeCount ?? 0) + (liked ? -1 : 1),
         }),
       )
 
