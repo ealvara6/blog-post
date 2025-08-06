@@ -1,6 +1,6 @@
-import { Button } from './Shared/Button'
-import { Modal } from './Shared/Modal'
-import { Error } from './Shared/Error'
+import { Button } from '../Shared/Button'
+import { Modal } from '../Shared/Modal'
+import { Error } from '../Shared/Error'
 import { useNavigate } from 'react-router-dom'
 import { useDeletePost } from '@/hooks/usePosts'
 

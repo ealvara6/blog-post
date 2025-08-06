@@ -22,8 +22,6 @@ export const Hearts = ({ id }: { id: number }) => {
     }
     toggleLike()
   }
-  console.log(likeData)
-
   return (
     <div className="flex gap-2">
       <HeartIcon
