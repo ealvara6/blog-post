@@ -5,6 +5,7 @@ import { Post } from '@/types/posts'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Error } from '../Shared/Error'
 import { PostCardSkeleton } from '../Posts/PostCardSkeleton'
+import { _ } from 'react-router/dist/development/index-react-server-client-Bi_fx8qz'
 
 export const AccountPosts = () => {
   const { authUser } = useAuth()
@@ -21,7 +22,14 @@ export const AccountPosts = () => {
     return <div className="flex flex-col gap-8">{postItems}</div>
   }
 
-  if (isLoading) return <PostCardSkeleton />
+  if (isLoading)
+    return (
+      <>
+        {[...Array(3)].map((_, i) => (
+          <PostCardSkeleton key={i} />
+        ))}
+      </>
+    )
   if (isError) return <Error>{parseErrorMessage(error)}</Error>
   if (!data.posts || data.posts.length === 0)
     return <div className="text-center">No posts found</div>
