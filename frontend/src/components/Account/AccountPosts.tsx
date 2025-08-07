@@ -5,7 +5,6 @@ import { Post } from '@/types/posts'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { Error } from '../Shared/Error'
 import { PostCardSkeleton } from '../Posts/PostCardSkeleton'
-import { _ } from 'react-router/dist/development/index-react-server-client-Bi_fx8qz'
 
 export const AccountPosts = () => {
   const { authUser } = useAuth()
