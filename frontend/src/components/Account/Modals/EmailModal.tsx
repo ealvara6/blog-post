@@ -14,13 +14,13 @@ export const EmailModal = ({
   setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
 }) => {
   const { authUser, setAuthUser } = useAuth()
-  const { mutateAsync: updateUser, isError, error } = useUpdateUser()
+  const { mutateAsync: updateUser, isError, error, isPending } = useUpdateUser()
 
   const {
     register,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isValid },
     handleSubmit,
-  } = useForm({ resolver: zodResolver(emailSchema) })
+  } = useForm({ resolver: zodResolver(emailSchema), mode: 'onChange' })
 
   const onSubmit = async (updateData: { email: string }) => {
     if (!authUser?.id) return
@@ -54,8 +54,12 @@ export const EmailModal = ({
         >
           Cancel
         </Button>
-        <Button type="submit" size="md" disabled={isSubmitting}>
-          {isSubmitting ? 'Saving...' : 'Save'}
+        <Button
+          type="submit"
+          disabled={isSubmitting || !isValid || isPending}
+          isInactive={!isValid || isSubmitting || isPending}
+        >
+          {isSubmitting || isPending ? 'Saving...' : 'Save'}
         </Button>
       </div>
     </form>

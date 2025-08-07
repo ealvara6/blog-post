@@ -14,12 +14,12 @@ export const UserNameModal = ({
   setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
 }) => {
   const { authUser, setAuthUser } = useAuth()
-  const { mutateAsync: updateUser, isError, error } = useUpdateUser()
+  const { mutateAsync: updateUser, isError, error, isPending } = useUpdateUser()
   const {
     register,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isValid },
     handleSubmit,
-  } = useForm({ resolver: zodResolver(usernameSchema) })
+  } = useForm({ resolver: zodResolver(usernameSchema), mode: 'onChange' })
 
   const onSubmit = async (updateData: { username: string }) => {
     if (!authUser?.id) return
@@ -53,8 +53,12 @@ export const UserNameModal = ({
         >
           Cancel
         </Button>
-        <Button type="submit" disabled={isSubmitting} size="md">
-          {isSubmitting ? 'Saving...' : 'Save'}
+        <Button
+          type="submit"
+          disabled={isSubmitting || isPending || !isValid}
+          isInactive={isSubmitting || isPending || !isValid}
+        >
+          {isSubmitting || isPending ? 'Saving...' : 'Save'}
         </Button>
       </div>
     </form>

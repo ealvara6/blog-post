@@ -25,14 +25,14 @@ export const Hero = () => {
           <div className="flex gap-10">
             <Button
               variant="transparent"
-              className="text-text-primary-darkTheme border-accent sm:w-36"
+              className="text-text-primary-darkTheme border-accent dark:border-accent-darkTheme sm:w-36"
               onClick={() => navigate('/browse')}
             >
               Browse
             </Button>
             <Button
               variant="transparent"
-              className="text-text-primary-darkTheme border-accent sm:w-36"
+              className="text-text-primary-darkTheme border-accent dark:border-accent-darkTheme sm:w-36"
               onClick={() => navigate('/signup')}
             >
               Sign Up

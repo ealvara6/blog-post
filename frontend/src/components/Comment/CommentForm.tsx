@@ -65,7 +65,7 @@ export const CommentForm = ({ postId, className }: CommentFormProps) => {
           </Button>
           <Button
             disabled={!isValid || isSubmitting}
-            isActive={isValid && !isSubmitting}
+            isInactive={!isValid || isSubmitting}
             type="submit"
             className="font-semibold"
           >

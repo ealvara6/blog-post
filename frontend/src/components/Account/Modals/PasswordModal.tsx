@@ -14,12 +14,12 @@ export const PasswordModal = ({
   setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
 }) => {
   const { authUser, setAuthUser } = useAuth()
-  const { mutateAsync: updateUser, isError, error } = useUpdateUser()
+  const { mutateAsync: updateUser, isError, error, isPending } = useUpdateUser()
   const {
     register,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isValid },
     handleSubmit,
-  } = useForm({ resolver: zodResolver(passwordSchema) })
+  } = useForm({ resolver: zodResolver(passwordSchema), mode: 'onChange' })
 
   const onSubmit = async (data: { password: string }) => {
     if (!authUser?.id) return
@@ -69,8 +69,12 @@ export const PasswordModal = ({
         <Button variant="dangerTransparent" onClick={() => setIsOpen(null)}>
           Cancel
         </Button>
-        <Button type="submit" size="md" disabled={isSubmitting}>
-          {isSubmitting ? 'Saving....' : 'Save'}
+        <Button
+          type="submit"
+          isInactive={isSubmitting || isPending || !isValid}
+          disabled={isSubmitting || isPending || !isValid}
+        >
+          {isSubmitting || isPending ? 'Saving...' : 'Save'}
         </Button>
       </div>
     </form>

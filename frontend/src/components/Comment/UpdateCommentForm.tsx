@@ -27,13 +27,13 @@ export const UpdateCommentForm = ({
   const { mutateAsync: updateComment } = useUpdateComment()
 
   const onSubmit = async (data: { content: string }) => {
-    const updatedComment = updateComment({
+    updateComment({
       ...data,
       commentId: comment.id,
       postId: comment.postId,
       username: comment.user.username,
     })
-    console.log(updatedComment)
+    toggleEdit()
   }
 
   return (
@@ -48,7 +48,7 @@ export const UpdateCommentForm = ({
         </Button>
         <Button
           disabled={!isValid || isSubmitting}
-          isActive={isValid && !isSubmitting}
+          isInactive={!isValid || isSubmitting}
           type="submit"
         >
           {isSubmitting ? 'Saving...' : 'Save'}

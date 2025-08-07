@@ -38,6 +38,7 @@ export const DeleteAccountModal = ({
           className="dark:bg-error-darkTheme bg-error"
           onClick={onDelete}
           disabled={isPending}
+          isInactive={isPending}
         >
           {isPending ? 'Deleting...' : 'Delete'}
         </Button>

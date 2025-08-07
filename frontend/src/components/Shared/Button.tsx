@@ -5,8 +5,7 @@ import { twMerge } from 'tailwind-merge'
 type ButtonProps = {
   children: React.ReactNode
   variant?: 'primary' | 'danger' | 'transparent' | 'dangerTransparent'
-  isActive?: boolean
-  size?: 'sm' | 'md' | 'lg'
+  isInactive?: boolean
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const baseStyles = {
@@ -15,14 +14,14 @@ const baseStyles = {
   transparent:
     'border text-text-primary dark:text-text-primary-darkTheme hover:text-text-primary-darkTheme border-border-darkTheme hover:bg-accent dark:hover:bg-accent-darkTheme  transition',
   danger:
-    'dark:border-error-darkTheme border-error dark:text-text-primary-darkTheme text-text-primary  hover:text-text-primary-darkTheme dark:hover:bg-error-darkTheme hover:bg-error dark:focus:bg-error-darkTheme  border transition border',
+    'dark:border-error-darkTheme dark:bg-error-darkTheme bg-error border-error border transition border',
   dangerTransparent:
     'dark:border-error-darkTheme border-error dark:text-text-primary-darkTheme text-text-primary  hover:text-text-primary-darkTheme dark:hover:bg-error-darkTheme hover:bg-error dark:focus:bg-error-darkTheme  border transition border',
 }
 
 export const Button = ({
   variant = 'primary',
-  isActive = true,
+  isInactive = false,
   children,
   className,
   ...props
@@ -32,7 +31,7 @@ export const Button = ({
       className={twMerge(
         clsx(
           `min-h-12 min-w-24 rounded p-2 text-lg text-white`,
-          !isActive
+          isInactive
             ? 'cursor-default bg-gray-600'
             : `cursor-pointer ${baseStyles[variant]}`,
           className,

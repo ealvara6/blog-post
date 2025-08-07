@@ -11,7 +11,7 @@ export const DeletePostModal = ({
   setIsOpen: React.Dispatch<React.SetStateAction<string | null>>
   id: number
 }) => {
-  const { mutate: deletePost, isError, error } = useDeletePost()
+  const { mutate: deletePost, isError, error, isPending } = useDeletePost()
   const navigate = useNavigate()
 
   const handleDelete = async () => {
@@ -36,8 +36,13 @@ export const DeletePostModal = ({
           >
             Cancel
           </Button>
-          <Button variant="danger" onClick={() => handleDelete()}>
-            Delete
+          <Button
+            variant="danger"
+            onClick={() => handleDelete()}
+            disabled={isPending}
+            isInactive={isPending}
+          >
+            {isPending ? 'Deleting...' : 'Delete'}
           </Button>
         </div>
         {isError && <Error>{error.message}</Error>}

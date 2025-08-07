@@ -109,7 +109,7 @@ export const PostForm = ({
         )}
         <Button
           disabled={isSubmitting}
-          isActive={!isSubmitting}
+          isInactive={isSubmitting}
           className="w-full text-xl font-bold tracking-wider md:h-15"
         >
           {isSubmitting
