@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Error } from '../Shared/Error'
 import { useUserComments } from '@/hooks/useUser'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import { CommentSkeleton } from '../Comment/CommentSkeleton'
 
 export const AccountComments = () => {
   const { authUser } = useAuth()
@@ -30,7 +31,14 @@ export const AccountComments = () => {
     return commentItems
   }
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading)
+    return (
+      <>
+        {[...Array(3)].map((_, i) => (
+          <CommentSkeleton key={i} />
+        ))}
+      </>
+    )
   if (isError) return <Error>{parseErrorMessage(error)}</Error>
   if (!data.comments || data.comments.length === 0)
     return <div className="text-center">No comments found</div>
