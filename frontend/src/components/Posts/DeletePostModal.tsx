@@ -21,7 +21,7 @@ export const DeletePostModal = ({
 
   return (
     <Modal onClose={() => setIsOpen(null)}>
-      <div className="flex flex-col justify-center gap-6 p-5">
+      <div className="flex w-full flex-col justify-center gap-6 p-5">
         <div className="flex flex-col gap-1">
           <div className="text-3xl font-bold tracking-wide">Delete Post?</div>
           <div className="text-lg font-thin">

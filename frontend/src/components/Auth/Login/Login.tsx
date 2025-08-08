@@ -81,7 +81,7 @@ const Login = ({ className }: { className?: string }) => {
         variant="primary"
         type="submit"
         disabled={isSubmitting}
-        isInactive={!isSubmitting}
+        isInactive={isSubmitting}
         className={`h-12 text-xl tracking-wider md:h-14`}
       >
         {isSubmitting ? 'Logging in...' : 'Login'}

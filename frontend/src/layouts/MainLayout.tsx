@@ -28,7 +28,7 @@ const MainLayout = () => {
       {showLoginModal && <LoginModal />}
       <Navbar />
       <main className="flex grow justify-center pt-4 pb-8 sm:py-20">
-        <div className="flex w-full justify-center">
+        <div className="flex w-full max-w-7xl justify-center">
           <Outlet />
         </div>
       </main>
