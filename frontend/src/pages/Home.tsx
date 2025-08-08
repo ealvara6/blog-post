@@ -1,10 +1,14 @@
 import { Carousels } from '@/components/Carousels/Carousels'
 import { Hero } from '@/components/Home/Hero'
+import { useAuth } from '@/context/AuthProvider/useAuth'
 
 const Home = () => {
+  const { authUser } = useAuth()
   return (
-    <div className="-mt-4 flex flex-col gap-15 sm:-mt-20">
-      <Hero />
+    <div
+      className={`-mt-4 flex flex-col gap-15 ${authUser ? '' : 'sm:-mt-20'}`}
+    >
+      {!authUser && <Hero />}
       <div className="max-w-screen">
         <Carousels />
       </div>
