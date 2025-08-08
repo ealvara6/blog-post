@@ -61,6 +61,15 @@ export const Account = () => {
             <MenuItem>
               <button
                 className="h-12 cursor-pointer tracking-wide"
+                onClick={() => navigate({ pathname: '/history' })}
+              >
+                History
+              </button>
+            </MenuItem>
+            <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
+            <MenuItem>
+              <button
+                className="h-12 cursor-pointer tracking-wide"
                 onClick={() => handleLogout()}
               >
                 Sign Out

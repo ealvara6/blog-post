@@ -38,3 +38,14 @@ export const updateUser = async (data: EditUser) => {
     throw parseErrorMessage(err)
   }
 }
+
+export const getLikedPosts = async (pageParam: string | null) => {
+  try {
+    const response = await api.get(`/auth/users/likes/posts/me`, {
+      params: { page: pageParam, limit: 5 },
+    })
+    return response.data
+  } catch (err) {
+    throw parseErrorMessage(err)
+  }
+}

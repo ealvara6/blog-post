@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { PrismaClient } from '@prisma/client/extension';
 import {
   deleteUser,
+  getLikedPosts,
   getUserComments,
   getUserPosts,
   updateUser,
@@ -22,6 +23,7 @@ export const authUserRoutes = (prisma: PrismaClient) => {
 
   router.get('/posts/me', authenticateToken, getUserPosts);
   router.get('/comments/me', authenticateToken, getUserComments);
+  router.get('/likes/posts/me', authenticateToken, getLikedPosts);
 
   return router;
 };

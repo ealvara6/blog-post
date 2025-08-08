@@ -1,12 +1,18 @@
 import {
   deleteUser,
+  getLikedPosts,
   getUserComments,
   getUserPosts,
   updateUser,
 } from '@/api/userApi'
 import { EditUser } from '@/types/user'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 
 export const useUserComments = (userId?: number) => {
   return useQuery({
@@ -47,5 +53,14 @@ export const useUpdateUser = () => {
     onError: (err) => {
       throw parseErrorMessage(err)
     },
+  })
+}
+
+export const useLikedPosts = () => {
+  return useInfiniteQuery({
+    queryKey: ['likedPosts'],
+    initialPageParam: null,
+    queryFn: ({ pageParam }) => getLikedPosts(pageParam),
+    getNextPageParam: (last) => (last.hasMore ? last.page + 1 : undefined),
   })
 }

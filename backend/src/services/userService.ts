@@ -1,10 +1,18 @@
 import { Prisma, User } from '@prisma/client';
 import { PrismaClient } from '@prisma/client/extension';
 
-interface CheckUserDTO {
+type CheckUserDTO = {
   username: string;
   email: string;
-}
+};
+
+type LikedPostsProps = {
+  page: number;
+  limit: number;
+  skip: number;
+  prisma: PrismaClient;
+  userId?: number;
+};
 
 export const getUsersService = async (
   prisma: PrismaClient
@@ -137,5 +145,20 @@ export const getUserCommentsService = async (
         },
       },
     },
+  });
+};
+
+export const getLikedPostsService = async ({
+  page,
+  limit,
+  skip,
+  prisma,
+  userId,
+}: LikedPostsProps) => {
+  return await prisma.likeOnPost.findMany({
+    where: { userId },
+    include: { post: { include: { user: true } } },
+    skip,
+    take: limit,
   });
 };
