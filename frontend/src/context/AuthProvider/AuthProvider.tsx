@@ -5,12 +5,14 @@ import { useState, useCallback, useEffect } from 'react'
 import { User, AuthContext } from './AuthContext'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from 'react-router'
 
 const LOCAL_STORAGE_KEY = 'user'
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [authUser, setAuthUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
 
   const logout = useCallback(() => {
@@ -33,6 +35,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         const timeout = setTimeout(() => {
           logout()
+          navigate('/')
         }, expiry - Date.now())
 
         setLoading(false)
@@ -40,10 +43,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return () => clearTimeout(timeout)
       } else {
         logout()
+        navigate('/')
       }
     }
     setLoading(false)
-  }, [logout])
+  }, [logout, navigate])
 
   const login = useCallback(async (email: string, password: string) => {
     try {
