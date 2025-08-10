@@ -14,6 +14,7 @@ import { EditPost } from '@/pages/EditPost'
 import { Browse } from '@/pages/Browse'
 import { LoginModalProvider } from '@/context/LoginModalProvider/LoginModalProvider'
 import { History } from '@/pages/History'
+import { ScrollToTop } from '@/components/Shared/ScrollToTop'
 
 const AppRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AppRoutes = () => {
       <AuthProvider>
         <ThemeProvider>
           <LoginModalProvider>
+            <ScrollToTop />
             <Routes>
               <Route element={<MainLayout />}>
                 <Route path="/" element={<Home />} />
