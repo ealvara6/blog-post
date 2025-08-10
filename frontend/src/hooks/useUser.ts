@@ -1,5 +1,6 @@
 import {
   deleteUser,
+  getLikedComments,
   getLikedPosts,
   getUserComments,
   getUserPosts,
@@ -61,6 +62,15 @@ export const useLikedPosts = () => {
     queryKey: ['likedPosts'],
     initialPageParam: null,
     queryFn: ({ pageParam }) => getLikedPosts(pageParam),
+    getNextPageParam: (last) => (last.hasMore ? last.page + 1 : undefined),
+  })
+}
+
+export const useLikedComments = () => {
+  return useInfiniteQuery({
+    queryKey: ['likedComments'],
+    initialPageParam: null,
+    queryFn: ({ pageParam }) => getLikedComments(pageParam),
     getNextPageParam: (last) => (last.hasMore ? last.page + 1 : undefined),
   })
 }

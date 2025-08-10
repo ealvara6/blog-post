@@ -9,6 +9,7 @@ import {
   getUserPostsService,
   getUserCommentsService,
   getLikedPostsService,
+  getLikedCommentsService,
 } from '../services/userService';
 import { handleError } from '../utils/errorhandler';
 import hashPassword from '../utils/hashPassword';
@@ -224,6 +225,37 @@ export const getLikedPosts = async (
   } catch (err) {
     handleError(err, res, {
       errorMessage: 'Failed to get user liked posts',
+    });
+  }
+};
+
+export const getLikedComments = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = req.user?.id;
+    const prisma = req.prisma;
+    const page = Number(req.query.page ?? 1);
+    const limit = Number(req.query.limit ?? 10);
+    const skip = (page - 1) * limit;
+
+    const data = {
+      page,
+      limit,
+      skip,
+      prisma,
+      userId,
+    };
+
+    const comments = await getLikedCommentsService(data);
+    res
+      .status(200)
+      .json({ comments, page, hasMore: comments.length === limit });
+    return;
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to get user liked comments',
     });
   }
 };

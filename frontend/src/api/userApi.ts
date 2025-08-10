@@ -49,3 +49,14 @@ export const getLikedPosts = async (pageParam: string | null) => {
     throw parseErrorMessage(err)
   }
 }
+
+export const getLikedComments = async (pageParam: string | null) => {
+  try {
+    const response = await api.get(`/auth/users/likes/comments/me`, {
+      params: { page: pageParam, limit: 5 },
+    })
+    return response.data
+  } catch (err) {
+    throw parseErrorMessage(err)
+  }
+}

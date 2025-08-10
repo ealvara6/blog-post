@@ -14,6 +14,14 @@ type LikedPostsProps = {
   userId?: number;
 };
 
+type LikedCommentsProps = {
+  page: number;
+  limit: number;
+  skip: number;
+  prisma: PrismaClient;
+  userId?: number;
+};
+
 export const getUsersService = async (
   prisma: PrismaClient
 ): Promise<User[]> => {
@@ -158,6 +166,21 @@ export const getLikedPostsService = async ({
   return await prisma.likeOnPost.findMany({
     where: { userId },
     include: { post: { include: { user: true } } },
+    skip,
+    take: limit,
+  });
+};
+
+export const getLikedCommentsService = async ({
+  page,
+  limit,
+  skip,
+  prisma,
+  userId,
+}: LikedCommentsProps) => {
+  return await prisma.likeOnComment.findMany({
+    where: { userId },
+    include: { comment: { include: { user: true } } },
     skip,
     take: limit,
   });
