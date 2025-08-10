@@ -2,8 +2,14 @@ import { AccountComments } from '@/components/Account/AccountComments'
 import { AccountInfo } from '@/components/Account/AccountInfo'
 import { AccountPosts } from '@/components/Account/AccountPosts'
 import { useAuth } from '@/context/AuthProvider/useAuth'
-import { useEffect, useState } from 'react'
+import { JSX, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+type TabsProps = {
+  label: string
+  value: string
+  component: JSX.Element
+}
 
 const tabs = [
   {
@@ -24,17 +30,21 @@ const tabs = [
 ]
 
 export const Account = () => {
-  const [isActive, setIsActive] = useState<
-    'account information' | 'user posts' | 'user comments' | string
-  >('account information')
+  const [isActive, setIsActive] = useState<TabsProps>(() => {
+    const saved = localStorage.getItem('accountView')
+    const value = saved || 'account information'
+    return tabs.find((tab) => tab.value === value) ?? tabs[0]
+  })
+
   const { authUser } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
+    localStorage.setItem('accountView', isActive.value)
     if (!authUser?.username) {
       navigate('/login')
     }
-  })
+  }, [isActive.value, authUser, navigate])
 
   const Tabs = () => {
     return (
@@ -42,15 +52,15 @@ export const Account = () => {
         <div className="text-md flex justify-between border-b p-2 text-center tracking-wide sm:text-xl">
           {tabs.map((tab, index) => (
             <div
-              className={`${isActive === tab.value ? 'font-bold' : ''} cursor-pointer`}
-              onClick={() => setIsActive(tab.value)}
+              className={`${isActive.value === tab.value ? 'font-bold' : ''} cursor-pointer`}
+              onClick={() => setIsActive(tab)}
               key={index}
             >
               {tab.label}
             </div>
           ))}
         </div>
-        {tabs.find((tab) => tab.value === isActive)?.component}
+        {tabs.find((tab) => tab.value === isActive.value)?.component}
       </>
     )
   }
