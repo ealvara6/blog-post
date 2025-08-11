@@ -33,10 +33,9 @@ export const PostItem = ({ id }: { id: number }) => {
         </div>
       )
     return data.comments.map((comment: Comment, index: number) => {
-      const date = new Date(comment.createdAt)
       return (
         <div key={index}>
-          <CommentItem comment={comment} index={index} date={date} />
+          <CommentItem comment={comment} index={index} />
         </div>
       )
     })

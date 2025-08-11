@@ -19,10 +19,9 @@ export const AccountComments = () => {
 
     const commentItems = data.comments.map(
       (comment: Comment, index: number) => {
-        const date = new Date(comment.createdAt)
         return (
           <div key={index} onClick={() => navigate(`/posts/${comment.postId}`)}>
-            <CommentItem comment={comment} index={index} date={date} />
+            <CommentItem comment={comment} index={index} />
           </div>
         )
       },
