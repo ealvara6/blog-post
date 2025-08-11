@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="pfy" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded square background -->
+  <rect width="64" height="64" rx="14" fill="url(#pfy)"/>
+
+  <!-- Chat bubble -->
+  <path d="M18 18h28a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H26l-8 6v-6h-0a4 4 0 0 1-4-4V22a4 4 0 0 1 4-4z"
+        fill="rgba(255,255,255,0.15)" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Paper plane -->
+  <path d="M22 24l20 8-20 8 4-8-4-8z" fill="#FFFFFF"/>
+  <path d="M22 24l20 8-20 8 4-8-4-8z" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>
