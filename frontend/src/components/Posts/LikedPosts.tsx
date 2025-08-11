@@ -36,7 +36,7 @@ export const LikedPosts = () => {
           disabled={isFetchingNextPage}
           isInactive={isFetchingNextPage}
         >
-          {isFetchingNextPage ? 'Loading More...' : 'Load more'}
+          {isFetchingNextPage ? 'Loading More...' : 'Load More'}
         </Button>
       )}
     </div>

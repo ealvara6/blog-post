@@ -24,7 +24,6 @@ export const CommentItem = ({
 }: {
   comment: Comment
   index: number
-  date: Date
 }) => {
   const { id } = comment
   const { authUser } = useAuth()
@@ -88,10 +87,10 @@ export const CommentItem = ({
 
   return (
     <div
-      className="border-border-darkTheme dark:bg-card-darkTheme bg-card flex flex-col gap-4 rounded border p-3"
+      className="border-border-darkTheme dark:bg-card-darkTheme bg-card flex flex-col gap-4 rounded border p-6"
       key={index}
     >
-      <div className="flex justify-between">
+      <div className="dark:border-border-darkTheme flex justify-between border-b pb-5">
         <div className="text-lg font-bold tracking-wider sm:text-xl">
           {comment.user?.username}
         </div>

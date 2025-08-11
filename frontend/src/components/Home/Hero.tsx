@@ -4,7 +4,7 @@ import { Button } from '@/components/Shared/Button'
 export const Hero = () => {
   const navigate = useNavigate()
   return (
-    <div className="text-text-primary-darkTheme relative">
+    <div className="text-text-primary-darkTheme relative mx-[calc(50%-50vw)] w-screen select-none">
       <img
         src="/hero-1920.jpg"
         alt="Hero"

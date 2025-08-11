@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { Account } from './Account'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Link } from '../Shared/Link'
+import Logo from '@/assets/Postfily-Logo.svg?react'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -17,7 +18,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border/5 flex min-h-18 border-b p-2">
+    <nav className="dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border/5 flex min-h-20 border-b p-2">
       <div className="flex min-h-full grow items-center justify-between">
         <div className="block sm:hidden">
           <Bars3Icon className="w-10" onClick={() => menuToggle()} />
@@ -26,10 +27,13 @@ const Navbar = () => {
           <Menu />
         </div>
         <div
-          className={`font-bol absolute left-1/2 -translate-x-1/2 cursor-pointer self-center text-2xl`}
+          className={`absolute left-1/2 flex -translate-x-1/2 cursor-pointer gap-2 self-center select-none`}
           onClick={() => navigate({ pathname: '/' }, { replace: true })}
         >
-          LOGO
+          <Logo className="text-text-primary dark:text-text-primary-darkTheme h-10" />
+          <span className="self-center text-2xl font-semibold tracking-wider">
+            Postfily
+          </span>
         </div>
         <div className="flex gap-3 text-lg font-bold">
           {authUser && (

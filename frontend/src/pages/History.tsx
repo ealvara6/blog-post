@@ -17,7 +17,7 @@ const options = [
 export const History = () => {
   const [selectedOption, setSelectedOption] = useState(() => {
     const saved = localStorage.getItem('historyView')
-    const id = saved || 'posts'
+    const id = saved || 1
     return options.find((option) => option.id === Number(id)) ?? options[0]
   })
 
