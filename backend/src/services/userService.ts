@@ -70,6 +70,7 @@ export const findUser = async (
       blogAuthor: true,
       posts: true,
       comments: true,
+      profilePictureUrl: true,
     },
   });
 };
@@ -88,6 +89,7 @@ export const findUserOnEmail = async (
       password: true,
       posts: true,
       comments: true,
+      profilePictureUrl: true,
     },
   });
 };
@@ -150,6 +152,7 @@ export const getUserCommentsService = async (
       user: {
         select: {
           username: true,
+          profilePictureUrl: true,
         },
       },
     },
@@ -183,5 +186,16 @@ export const getLikedCommentsService = async ({
     include: { comment: { include: { user: true } } },
     skip,
     take: limit,
+  });
+};
+
+export const updateUserAvatarUrlService = async (
+  prisma: PrismaClient,
+  id: number,
+  url: string
+) => {
+  return await prisma.user.update({
+    where: { id },
+    data: { profilePictureUrl: url },
   });
 };

@@ -10,9 +10,12 @@ import {
   getUserCommentsService,
   getLikedPostsService,
   getLikedCommentsService,
+  updateUserAvatarUrlService,
 } from '../services/userService';
 import { handleError } from '../utils/errorhandler';
 import hashPassword from '../utils/hashPassword';
+import { publicUrlToAbsolutePath } from '../utils/paths';
+import fs from 'fs/promises';
 
 export const getAuthUser = async (
   req: Request,
@@ -63,7 +66,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 export const getUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const prisma = req.prisma;
-    const id = Number(req.params.id);
+    const id = Number(req.user?.id);
     const user = await findUser(prisma, id);
 
     if (!user) {
@@ -256,6 +259,46 @@ export const getLikedComments = async (
   } catch (err) {
     handleError(err, res, {
       errorMessage: 'Failed to get user liked comments',
+    });
+  }
+};
+
+export const uploadUserAvatar = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = req.user?.id;
+
+    if (!userId) {
+      res.status(400).json({ message: 'invalid userId' });
+      return;
+    }
+
+    const prisma = req.prisma;
+
+    if (!req.file) {
+      res.status(400).json({ message: 'No file uploaded' });
+      return;
+    }
+
+    const user = await findUser(prisma, userId);
+
+    const newUrl = `/uploads/profile-pictures/${req.file.filename}`;
+
+    const oldUrl = user.profilePictureUrl;
+    const updated = await updateUserAvatarUrlService(prisma, userId, newUrl);
+
+    const isCustomOld = oldUrl && !oldUrl.endsWith('/default.png');
+    if (isCustomOld) {
+      const oldAbs = publicUrlToAbsolutePath(oldUrl);
+      fs.unlink(oldAbs).catch(() => {});
+    }
+
+    res.status(200).json({ updated });
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to upload new profile picture',
     });
   }
 };

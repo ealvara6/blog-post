@@ -18,7 +18,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border/5 flex min-h-20 border-b p-2">
+    <nav className="dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border/5 flex min-h-24 border-b p-2">
       <div className="flex min-h-full grow items-center justify-between">
         <div className="block sm:hidden">
           <Bars3Icon className="w-10" onClick={() => menuToggle()} />
@@ -31,7 +31,7 @@ const Navbar = () => {
           onClick={() => navigate({ pathname: '/' }, { replace: true })}
         >
           <Logo className="text-text-primary dark:text-text-primary-darkTheme h-10" />
-          <span className="self-center text-2xl font-semibold tracking-wider">
+          <span className="self-center text-2xl font-semibold tracking-widest">
             Postfily
           </span>
         </div>

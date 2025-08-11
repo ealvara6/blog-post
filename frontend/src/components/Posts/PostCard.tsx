@@ -14,7 +14,6 @@ import { DeletePostModal } from '@/components/Posts/DeletePostModal'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Hearts } from '@/components/Shared/Hearts'
 import { useComments } from '@/hooks/useComments'
-import { PostCardSkeleton } from './PostCardSkeleton'
 
 export const PostCard = ({
   post,

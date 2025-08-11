@@ -20,6 +20,7 @@ export interface Comment {
 }
 
 export interface User {
+  profilePictureUrl?: string
   id: number
   username: string
 }

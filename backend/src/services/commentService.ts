@@ -21,6 +21,7 @@ export const getCommentsService = async (
       user: {
         select: {
           username: true,
+          profilePictureUrl: true,
         },
       },
     },

@@ -5,7 +5,10 @@ import { UserNameModal } from './Modals/UsernameModal'
 import { EmailModal } from './Modals/EmailModal'
 import { PasswordModal } from './Modals/PasswordModal'
 import { DeleteAccountModal } from './Modals/DeleteAccountModal'
-import { ChevronRightIcon } from '@heroicons/react/24/outline'
+import { ChevronRightIcon, PencilIcon } from '@heroicons/react/24/outline'
+import { API_BASE_URL } from '@/api/axios'
+import { toImageUrl } from '@/utils/imageUrl'
+import { EditAvatar } from './EditAvatar'
 
 export const AccountInfo = () => {
   const { authUser } = useAuth()
@@ -72,6 +75,13 @@ export const AccountInfo = () => {
 
   return (
     <div className="flex flex-col items-center gap-5 sm:gap-8">
+      <div className="flex gap-4 self-center sm:self-start">
+        <EditAvatar />
+        <div className="self-center text-2xl font-semibold">
+          {authUser?.username}
+        </div>
+      </div>
+
       <Tabs />
       {isOpen && (
         <Modal onClose={() => setIsOpen(null)}>

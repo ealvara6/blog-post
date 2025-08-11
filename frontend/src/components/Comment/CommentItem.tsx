@@ -17,6 +17,7 @@ import {
 } from '@/hooks/useLikes'
 import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
 import { useDeleteComment } from '@/hooks/useComments'
+import { toImageUrl } from '@/utils/imageUrl'
 
 export const CommentItem = ({
   comment,
@@ -84,6 +85,7 @@ export const CommentItem = ({
       </Menu>
     )
   }
+  console.log(comment)
 
   return (
     <div
@@ -91,8 +93,15 @@ export const CommentItem = ({
       key={index}
     >
       <div className="dark:border-border-darkTheme flex justify-between border-b pb-5">
-        <div className="text-lg font-bold tracking-wider sm:text-xl">
-          {comment.user?.username}
+        <div className="flex gap-5">
+          <img
+            src={toImageUrl(comment.user.profilePictureUrl)}
+            alt=""
+            className="h-12 w-12 rounded-full object-cover"
+          />
+          <div className="self-center text-lg font-bold tracking-wider sm:text-xl">
+            {comment.user?.username}
+          </div>
         </div>
         <Auth />
       </div>

@@ -6,6 +6,7 @@ export type User = {
   username: string
   email: string
   password?: string
+  profilePictureUrl?: string
 } | null
 
 interface AuthContextType {

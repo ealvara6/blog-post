@@ -17,7 +17,7 @@ export const PostCard = ({
 
   return (
     <div
-      className="dark:border-border-darkTheme dark:bg-card-darkTheme bg-card flex h-[400px] w-full flex-col gap-8 overflow-hidden rounded border px-3 py-5"
+      className="dark:border-border-darkTheme dark:bg-card-darkTheme bg-card flex h-[400px] w-full cursor-default flex-col gap-8 overflow-hidden rounded border px-3 py-5"
       onClick={() => navigate(`/posts/${id}`)}
     >
       <div className="text-2xl md:text-3xl">{title}</div>

@@ -2,8 +2,10 @@ import {
   deleteUser,
   getLikedComments,
   getLikedPosts,
+  getUser,
   getUserComments,
   getUserPosts,
+  updateAvatar,
   updateUser,
 } from '@/api/userApi'
 import { EditUser } from '@/types/user'
@@ -14,6 +16,14 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
+
+export const useGetUser = () => {
+  return useQuery({
+    queryKey: ['me'],
+    queryFn: () => getUser(),
+    staleTime: 1000 * 60,
+  })
+}
 
 export const useUserComments = (userId?: number) => {
   return useQuery({
@@ -72,5 +82,19 @@ export const useLikedComments = () => {
     initialPageParam: null,
     queryFn: ({ pageParam }) => getLikedComments(pageParam),
     getNextPageParam: (last) => (last.hasMore ? last.page + 1 : undefined),
+  })
+}
+
+export const useUpdateAvatar = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (file: File) => updateAvatar(file),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['me'] })
+    },
+    onError: (err) => {
+      throw parseErrorMessage(err)
+    },
   })
 }
