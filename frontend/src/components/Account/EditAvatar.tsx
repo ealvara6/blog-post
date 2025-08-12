@@ -5,6 +5,12 @@ import React, { useRef, useState } from 'react'
 import { Modal } from '../Shared/Modal'
 import { Button } from '../Shared/Button'
 import { useGetUser, useUpdateAvatar } from '@/hooks/useUser'
+import { Error } from '../Shared/Error'
+import Cropper from 'react-easy-crop'
+import { blobToFile, cropToBlob } from '@/utils/cropToBlob'
+
+const MAX_BYTES = 2 * 1024 * 1024 //2MB
+const ALLOWED_MIME = new Set(['image/png', 'image/jpeg'])
 
 export const EditAvatar = () => {
   const { authUser } = useAuth()
@@ -12,9 +18,25 @@ export const EditAvatar = () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [file, setFile] = useState<File | null>(null)
   const [tempUrl, setTempUrl] = useState<string | null>(null)
-  const { mutate: changeAvatar, isPending } = useUpdateAvatar()
+  const { mutateAsync: changeAvatar, isPending } = useUpdateAvatar()
+  const [fileError, setFileError] = useState<string | null>(null)
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<{
+    x: number
+    y: number
+    width: number
+    height: number
+  } | null>(null)
 
   const openPicker = () => inputRef.current?.click()
+
+  const onCropComplete = (
+    croppedArea: unknown,
+    croppedAreaPixels: { x: number; y: number; width: number; height: number },
+  ) => {
+    setCroppedAreaPixels(croppedAreaPixels)
+  }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
@@ -23,9 +45,26 @@ export const EditAvatar = () => {
     setTempUrl(URL.createObjectURL(f))
   }
 
-  const onSave = () => {
-    if (!file) return
-    changeAvatar(file, {
+  const onSave = async () => {
+    if (!file || !croppedAreaPixels) return
+
+    setFileError(null)
+
+    const blob = await cropToBlob(file, croppedAreaPixels, 512)
+
+    if (blob.size > MAX_BYTES) {
+      setFileError('Image must be 2MB or smaller')
+      return
+    }
+
+    if (!ALLOWED_MIME.has(file.type)) {
+      setFileError('Only PNG or JPEG images are allowed')
+      return
+    }
+
+    const croppedFile = blobToFile(blob)
+
+    changeAvatar(croppedFile, {
       onSuccess: () => {
         setTempUrl(null)
         setFile(null)
@@ -35,6 +74,7 @@ export const EditAvatar = () => {
 
   const onClose = () => {
     setTempUrl(null)
+    setFile(null)
   }
 
   if (isFetching) return <div>Loading...</div>
@@ -53,8 +93,8 @@ export const EditAvatar = () => {
           alt={`${authUser?.username}'s avatar`}
           className="h-18 w-18 rounded-full object-cover"
         />
-        <div className="absolute inset-0 z-10 h-full w-full rounded-4xl bg-black/20" />
-        <div className="absolute inset-0 z-20 flex justify-center">
+        <div className="pointer-events-none absolute inset-0 z-10 h-full w-full rounded-4xl bg-black/20" />
+        <div className="pointer-events-none absolute inset-0 z-20 flex justify-center">
           <PencilIcon className="w-7" />
         </div>
 
@@ -69,18 +109,38 @@ export const EditAvatar = () => {
       {tempUrl && (
         <Modal onClose={onClose} className="!max-w-fit p-6">
           <div className="flex flex-col gap-4">
-            <img
-              src={src}
-              alt={`${authUser?.username}'s avatar`}
-              className="h-52 w-52 self-center rounded-full object-cover"
+            <div className="text-center text-2xl font-semibold">
+              Profile Picture
+            </div>
+            <div className="relative h-[60svh] w-[80vw] max-w-[420px] overflow-hidden">
+              <Cropper
+                image={src}
+                crop={crop}
+                zoom={zoom}
+                aspect={1}
+                cropShape="round"
+                onCropChange={setCrop}
+                onCropComplete={onCropComplete}
+                onZoomChange={setZoom}
+              />
+            </div>
+            <input
+              type="range"
+              min={1}
+              max={3}
+              step={0.01}
+              value={zoom}
+              onChange={(e) => setZoom(Number(e.target.value))}
             />
-            <div className="flex gap-5">
+            {fileError && <Error>{fileError}</Error>}
+            <div className="flex justify-end gap-5">
               <Button variant="dangerTransparent" onClick={() => onClose()}>
                 Cancel
               </Button>
               <Button
-                variant="transparent"
+                variant="primary"
                 className="dark:border-accent-darkTheme border-accent"
+                isInactive={isPending}
                 onClick={() => onSave()}
               >
                 {isPending ? 'Saving...' : 'Save'}
