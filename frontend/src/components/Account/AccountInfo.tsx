@@ -5,9 +5,7 @@ import { UserNameModal } from './Modals/UsernameModal'
 import { EmailModal } from './Modals/EmailModal'
 import { PasswordModal } from './Modals/PasswordModal'
 import { DeleteAccountModal } from './Modals/DeleteAccountModal'
-import { ChevronRightIcon, PencilIcon } from '@heroicons/react/24/outline'
-import { API_BASE_URL } from '@/api/axios'
-import { toImageUrl } from '@/utils/imageUrl'
+import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import { EditAvatar } from './EditAvatar'
 
 export const AccountInfo = () => {
