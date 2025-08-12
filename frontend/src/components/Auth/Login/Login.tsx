@@ -18,7 +18,7 @@ const Login = ({ className }: { className?: string }) => {
   const navigate = useNavigate()
   const { authUser } = useAuth()
 
-  if (authUser) navigate(-1)
+  if (authUser) navigate('/')
 
   const {
     register,
