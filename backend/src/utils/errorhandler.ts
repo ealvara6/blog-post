@@ -1,4 +1,6 @@
 import { Response } from 'express';
+import multer from 'multer';
+import { NextFunction } from 'express';
 
 interface errorHandlerOptions {
   defaultMessage?: string;
@@ -12,7 +14,7 @@ export const handleError = (
 ) => {
   const {
     defaultMessage = 'An unknown error occurred',
-    errorMessage = 'An unknown error occured',
+    errorMessage = 'An unknown error occurred',
   } = options;
 
   if (err instanceof Error) {
