@@ -8,6 +8,7 @@ import {
   updateAvatar,
   updateUser,
 } from '@/api/userApi'
+import { User } from '@/types/posts'
 import { EditUser } from '@/types/user'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import {
@@ -90,7 +91,12 @@ export const useUpdateAvatar = () => {
 
   return useMutation({
     mutationFn: (file: File) => updateAvatar(file),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      queryClient.setQueryData(['me'], (old: { user: User }) =>
+        old
+          ? { user: { ...old.user, profilePictureUrl: data.profilePictureUrl } }
+          : old,
+      )
       queryClient.invalidateQueries({ queryKey: ['me'] })
     },
     onError: (err) => {

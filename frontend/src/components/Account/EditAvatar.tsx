@@ -25,9 +25,12 @@ export const EditAvatar = () => {
 
   const onSave = () => {
     if (!file) return
-    changeAvatar(file)
-    setTempUrl(null)
-    setFile(null)
+    changeAvatar(file, {
+      onSuccess: () => {
+        setTempUrl(null)
+        setFile(null)
+      },
+    })
   }
 
   const onClose = () => {
@@ -51,7 +54,7 @@ export const EditAvatar = () => {
           className="h-18 w-18 rounded-full object-cover"
         />
         <div className="absolute inset-0 z-10 h-full w-full rounded-4xl bg-black/20" />
-        <div className="absolute inset-0 z-20 self-center justify-self-center">
+        <div className="absolute inset-0 z-20 flex justify-center">
           <PencilIcon className="w-7" />
         </div>
 
