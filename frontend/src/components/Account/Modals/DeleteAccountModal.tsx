@@ -25,8 +25,11 @@ export const DeleteAccountModal = ({
 
   return (
     <div className="flex w-full flex-col gap-10 p-4">
-      <div className="text-center text-xl font-bold">
+      <div className="text-center text-2xl font-bold">
         Are you sure you want to delete your account?
+        <div className="dark:text-text-muted-darkTheme text-text-muted mt-4 text-center text-base font-semibold tracking-wide">
+          all comments and posts will be lost.
+        </div>
       </div>
       {isError && <Error>{parseErrorMessage(error)}</Error>}
       <div className="flex justify-end gap-4">

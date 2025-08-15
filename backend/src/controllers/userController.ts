@@ -86,6 +86,24 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+export const getUserOnUsername = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const prisma = req.prisma;
+    const username = req.params.username;
+
+    const user = await findUserOnUsername(prisma, username);
+
+    res.status(200).json({ user });
+  } catch (err) {
+    handleError(err, res, {
+      errorMessage: 'Failed to fetch user on username',
+    });
+  }
+};
+
 export const updateUser = async (
   req: Request,
   res: Response

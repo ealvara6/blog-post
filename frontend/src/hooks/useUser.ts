@@ -5,6 +5,7 @@ import {
   getUser,
   getUserComments,
   getUserPosts,
+  getUserProfile,
   updateAvatar,
   updateUser,
 } from '@/api/userApi'
@@ -22,6 +23,14 @@ export const useGetUser = () => {
   return useQuery({
     queryKey: ['me'],
     queryFn: () => getUser(),
+    staleTime: 1000 * 60,
+  })
+}
+
+export const useUserProfile = (username?: string) => {
+  return useQuery({
+    queryKey: ['userProfile', username],
+    queryFn: () => getUserProfile(username),
     staleTime: 1000 * 60,
   })
 }

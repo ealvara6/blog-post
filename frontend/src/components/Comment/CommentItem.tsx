@@ -1,6 +1,6 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Comment } from '@/types/posts'
-import { useState } from 'react'
+import { ButtonHTMLAttributes, useState } from 'react'
 import { UpdateCommentForm } from '@/components/Comment/UpdateCommentForm'
 import {
   Menu,
@@ -19,13 +19,11 @@ import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
 import { useDeleteComment } from '@/hooks/useComments'
 import { toImageUrl } from '@/utils/imageUrl'
 
-export const CommentItem = ({
-  comment,
-  index,
-}: {
+type CommentItemProps = {
   comment: Comment
   index: number
-}) => {
+} & ButtonHTMLAttributes<Comment>
+export const CommentItem = ({ comment, index }: CommentItemProps) => {
   const { id } = comment
   const { authUser } = useAuth()
   const { openLoginModal } = useLoginModal()
@@ -85,7 +83,6 @@ export const CommentItem = ({
       </Menu>
     )
   }
-  console.log(comment)
 
   return (
     <div

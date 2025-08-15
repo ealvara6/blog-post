@@ -105,9 +105,24 @@ export const findUserOnUsername = async (
       username: true,
       email: true,
       blogAuthor: true,
-      password: true,
-      posts: true,
-      comments: true,
+      posts: {
+        select: {
+          user: true,
+          id: true,
+          title: true,
+          content: true,
+        },
+      },
+      comments: {
+        select: {
+          id: true,
+          content: true,
+          userId: true,
+          user: true,
+          postId: true,
+        },
+      },
+      profilePictureUrl: true,
     },
   });
 };

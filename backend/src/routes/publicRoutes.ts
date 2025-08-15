@@ -8,7 +8,11 @@ import {
   validateUser,
 } from '../middleware/validators';
 import { getComment, getComments } from '../controllers/commentController';
-import { getUser, getUsers } from '../controllers/userController';
+import {
+  getUser,
+  getUserOnUsername,
+  getUsers,
+} from '../controllers/userController';
 import { createUser } from '../controllers/authController';
 import { getCategories } from '../controllers/categoryController';
 import {
@@ -36,7 +40,7 @@ export const publicRoutes = (prisma: PrismaClient): Router => {
   );
 
   router.get('/users', getUsers);
-  router.get('/users/:id', validateId, getUser);
+  router.get('/users/:username', getUserOnUsername);
 
   router.get('/categories', getCategories);
 

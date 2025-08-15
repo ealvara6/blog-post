@@ -82,7 +82,7 @@ export const AccountInfo = () => {
 
       <Tabs />
       {isOpen && (
-        <Modal onClose={() => setIsOpen(null)}>
+        <Modal onClose={() => setIsOpen(null)} className="lg:max-w-lg">
           {tabInfo.find((tab) => tab.name === isOpen)?.component}
         </Modal>
       )}

@@ -11,6 +11,15 @@ export const getUser = async () => {
   }
 }
 
+export const getUserProfile = async (username?: string) => {
+  try {
+    const response = await api.get(`/users/${username}`)
+    return response.data
+  } catch (err) {
+    throw parseErrorMessage(err)
+  }
+}
+
 export const getUserComments = async () => {
   try {
     const response = await api.get('/auth/users/comments/me')
