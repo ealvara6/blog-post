@@ -108,6 +108,7 @@ export const useUpdateAvatar = () => {
       )
       queryClient.invalidateQueries({ queryKey: ['me'] })
       queryClient.invalidateQueries({ queryKey: ['userComments'] })
+      queryClient.invalidateQueries({ queryKey: ['userProfile'] })
     },
     onError: (err) => {
       throw parseErrorMessage(err)

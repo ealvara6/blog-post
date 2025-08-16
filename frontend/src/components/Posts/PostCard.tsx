@@ -9,7 +9,7 @@ import {
   MenuItem,
   MenuSeparator,
 } from '@headlessui/react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { DeletePostModal } from '@/components/Posts/DeletePostModal'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Hearts } from '@/components/Shared/Hearts'
@@ -42,6 +42,18 @@ export const PostCard = ({
     } catch (err: unknown) {
       console.log(err)
     }
+  }
+
+  const handleNavigation = (e: React.MouseEvent, url: string) => {
+    e.stopPropagation()
+    const selection = window.getSelection()
+
+    if (selection && selection.toString().length > 0) {
+      // e.stopPropagation()
+      return
+    }
+
+    navigate(url)
   }
 
   const MenuComponent = () => {
@@ -82,8 +94,8 @@ export const PostCard = ({
       className={`dark:bg-card-darkTheme bg-card flex flex-col gap-5 transition-opacity ${isFetching ? 'opacity-50' : 'opacity-100'}`}
     >
       <div
-        className={`border-border-darkTheme flex flex-col rounded border p-3 ${handleNavigate && 'cursor-pointer'}`}
-        onClick={() => handleNavigate && navigate(`/posts/${id}`)}
+        className={`border-border-darkTheme flex flex-col rounded border p-3`}
+        onClick={(e) => handleNavigate && handleNavigation(e, `/posts/${id}`)}
       >
         <div className="dark:border-border-darkTheme flex flex-col gap-2 border-b px-2 pt-2 pb-4 sm:px-3 sm:pt-3">
           <div className="flex justify-between">
@@ -95,7 +107,15 @@ export const PostCard = ({
               {categories && <CategoriesList categories={categories} />}
             </div>
             <div className="text-md hidden font-semibold sm:block md:text-lg">
-              Posted by: <span className="font-thin">{user.username}</span>
+              Posted by:{' '}
+              <span
+                className="cursor-default font-thin underline-offset-4 hover:underline"
+                onClick={(e) =>
+                  handleNavigation(e, `/profile/${post.user.username}`)
+                }
+              >
+                {user.username}
+              </span>
             </div>
           </div>
         </div>

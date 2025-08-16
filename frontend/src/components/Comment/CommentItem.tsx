@@ -1,6 +1,6 @@
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Comment } from '@/types/posts'
-import { ButtonHTMLAttributes, useState } from 'react'
+import React, { ButtonHTMLAttributes, useState } from 'react'
 import { UpdateCommentForm } from '@/components/Comment/UpdateCommentForm'
 import {
   Menu,
@@ -18,6 +18,7 @@ import {
 import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
 import { useDeleteComment } from '@/hooks/useComments'
 import { toImageUrl } from '@/utils/imageUrl'
+import { useNavigate } from 'react-router'
 
 type CommentItemProps = {
   comment: Comment
@@ -32,6 +33,7 @@ export const CommentItem = ({ comment, index }: CommentItemProps) => {
   const { data: likedData } = useUserLikedComment(id)
   const { mutate: deleteComment } = useDeleteComment()
   const toggleLike = useToggleCommentLike(id, likedData?.liked)
+  const navigate = useNavigate()
 
   const onDelete = async () => {
     const deletedComment = deleteComment({
@@ -52,6 +54,17 @@ export const CommentItem = ({ comment, index }: CommentItemProps) => {
       return
     }
     toggleLike.mutate()
+  }
+
+  const handleNavigation = (e: React.MouseEvent<HTMLElement>, url: string) => {
+    const selection = window.getSelection()
+
+    if (selection && selection.toString().length > 0) {
+      e.stopPropagation()
+      return
+    }
+
+    navigate(url)
   }
 
   const Auth = () => {
@@ -96,7 +109,12 @@ export const CommentItem = ({ comment, index }: CommentItemProps) => {
             alt=""
             className="h-12 w-12 rounded-full object-cover"
           />
-          <div className="self-center text-lg font-bold tracking-wider sm:text-xl">
+          <div
+            className="cursor-default self-center text-lg font-bold tracking-wider underline-offset-6 hover:underline sm:text-xl"
+            onClick={(e) =>
+              handleNavigation(e, `/profile/${comment.user.username}`)
+            }
+          >
             {comment.user?.username}
           </div>
         </div>
