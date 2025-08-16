@@ -16,7 +16,7 @@ export const DeletePostModal = ({
 
   const handleDelete = async () => {
     deletePost(id)
-    navigate({ pathname: '/posts' }, { replace: true })
+    navigate(-1)
   }
 
   return (

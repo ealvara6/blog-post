@@ -31,7 +31,12 @@ export const Profile = () => {
   const numOfComments = data.user.comments.length
 
   const Posts = () => {
-    if (data.user.posts.length === 0) return <div>User has no posts</div>
+    if (data.user.posts.length === 0)
+      return (
+        <div className="text-center text-xl font-semibold tracking-wider">
+          User has no posts
+        </div>
+      )
     const postItems = data.user.posts.map((post: Post) => (
       <PostCard post={post} handleNavigate key={post.id} />
     ))
@@ -40,13 +45,18 @@ export const Profile = () => {
   }
 
   const Comments = () => {
-    if (data.user.comments.length === 0) return <div>User has no comments</div>
+    if (data.user.comments.length === 0)
+      return (
+        <div className="text-center text-xl font-semibold tracking-wider">
+          User has no comments
+        </div>
+      )
     const commentItems = data.user.comments.map((comment: Comment) => (
       <div
         key={comment.id}
         onClick={() => navigate(`/posts/${comment.postId}`)}
       >
-        <CommentItem comment={comment} index={comment.id} />
+        <CommentItem comment={comment} index={comment.id} profileView />
       </div>
     ))
 
