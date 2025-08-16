@@ -23,8 +23,13 @@ import { useNavigate } from 'react-router'
 type CommentItemProps = {
   comment: Comment
   index: number
+  profileView?: boolean
 } & ButtonHTMLAttributes<Comment>
-export const CommentItem = ({ comment, index }: CommentItemProps) => {
+export const CommentItem = ({
+  comment,
+  index,
+  profileView = false,
+}: CommentItemProps) => {
   const { id } = comment
   const { authUser } = useAuth()
   const { openLoginModal } = useLoginModal()
@@ -68,7 +73,7 @@ export const CommentItem = ({ comment, index }: CommentItemProps) => {
   }
 
   const Auth = () => {
-    if (comment.userId !== authUser?.id) return ''
+    if (comment.userId !== authUser?.id || profileView) return ''
     return (
       <Menu>
         <MenuButton>
