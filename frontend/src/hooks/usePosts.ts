@@ -47,6 +47,7 @@ export const useCreatePost = () => {
     mutationFn: (data: CreatePostProps) => createPost(data),
     onSuccess: (newPost) => {
       queryClient.invalidateQueries({ queryKey: ['posts'] })
+      queryClient.invalidateQueries({ queryKey: ['userProfile'] })
       navigate({ pathname: `/posts/${newPost.data.id}` }, { replace: true })
     },
     onError: (err) => {
@@ -64,6 +65,7 @@ export const useUpdatePost = () => {
     onSuccess: (updatedPost) => {
       queryClient.invalidateQueries({ queryKey: ['post', updatedPost.data.id] })
       queryClient.invalidateQueries({ queryKey: ['posts'] })
+      queryClient.invalidateQueries({ queryKey: ['userProfile'] })
       navigate({ pathname: `/posts/${updatedPost.data.id}` }, { replace: true })
     },
     onError: (err) => {
@@ -79,6 +81,7 @@ export const useDeletePost = () => {
     mutationFn: (id: number) => deletePost(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] })
+      queryClient.invalidateQueries({ queryKey: ['userProfile'] })
     },
     onError: (err) => {
       throw parseErrorMessage(err)

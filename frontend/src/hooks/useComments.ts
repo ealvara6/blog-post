@@ -83,6 +83,9 @@ export const useCreateComment = () => {
       queryClient.invalidateQueries({
         queryKey: ['comments', variables.postId],
       })
+      queryClient.invalidateQueries({
+        queryKey: ['userProfile'],
+      })
     },
   })
 }
@@ -125,6 +128,7 @@ export const useDeleteComment = () => {
       queryClient.invalidateQueries({
         queryKey: ['comments', variables.postId],
       })
+      queryClient.invalidateQueries({ queryKey: ['userProfile'] })
     },
   })
 }
@@ -164,6 +168,7 @@ export const useUpdateComment = () => {
       queryClient.invalidateQueries({
         queryKey: ['comments', variables.postId],
       })
+      queryClient.invalidateQueries({ queryKey: ['userProfile'] })
     },
   })
 }
