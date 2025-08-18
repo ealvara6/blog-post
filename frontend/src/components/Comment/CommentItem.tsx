@@ -19,12 +19,14 @@ import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
 import { useDeleteComment } from '@/hooks/useComments'
 import { toImageUrl } from '@/utils/imageUrl'
 import { useNavigate } from 'react-router'
+import { Link } from '../Shared/Link'
 
 type CommentItemProps = {
   comment: Comment
   index: number
   profileView?: boolean
 } & ButtonHTMLAttributes<Comment>
+
 export const CommentItem = ({
   comment,
   index,
@@ -84,18 +86,14 @@ export const CommentItem = ({
 
         <MenuItems
           anchor="bottom end"
-          className='dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background sm:w-(--button-width)" w-30 rounded border p-2 text-center text-lg'
+          className='dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background sm:w-(--button-width)" flex w-30 flex-col gap-2 rounded border p-2 text-center text-lg'
         >
           <MenuItem>
-            <button onClick={() => setIsEditing(true)} className="h-12">
-              Edit
-            </button>
+            <Link onClick={() => setIsEditing(true)}>Edit</Link>
           </MenuItem>
           <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
           <MenuItem>
-            <button onClick={() => onDelete()} className="h-12">
-              Delete
-            </button>
+            <Link onClick={() => onDelete()}>Delete</Link>
           </MenuItem>
         </MenuItems>
       </Menu>

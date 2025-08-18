@@ -27,6 +27,22 @@
 
   --color-error: #dc2626;
   --color-error-darkTheme: #f87171;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+
+  --leading-base: 1.6;
+  --leading-2xl: 1.4;
+  --leading-3xl: 1.3;
+  --leading-4xl: 1.2;
+  --leading-5xl: 1.1;
 }
 
 html {
@@ -46,4 +62,8 @@ html {
     box-shadow: 0 0 0 1000px var(--color-card-darkTheme) inset;
     -webkit-text-fill-color: var(--color-text-primary-darkTheme);
   }
+}
+
+body {
+  @apply text-base leading-relaxed;
 }

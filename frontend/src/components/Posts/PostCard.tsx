@@ -14,6 +14,7 @@ import { DeletePostModal } from '@/components/Posts/DeletePostModal'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Hearts } from '@/components/Shared/Hearts'
 import { useComments } from '@/hooks/useComments'
+import { Link } from '../Shared/Link'
 
 export const PostCard = ({
   post,
@@ -49,7 +50,6 @@ export const PostCard = ({
     const selection = window.getSelection()
 
     if (selection && selection.toString().length > 0) {
-      // e.stopPropagation()
       return
     }
 
@@ -65,24 +65,18 @@ export const PostCard = ({
 
         <MenuItems
           anchor="bottom end"
-          className='dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background sm:w-(--button-width)" w-28 rounded border p-2 text-center text-lg tracking-wide sm:w-36'
+          className='dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background sm:w-(--button-width)" flex w-28 flex-col gap-2 rounded border p-2 text-center text-lg tracking-wide sm:w-36'
         >
           <MenuItem>
-            <button
-              onClick={() => handleEdit()}
-              className="h-12 cursor-pointer"
-            >
+            <Link onClick={() => handleEdit()} className="cursor-pointer">
               Edit
-            </button>
+            </Link>
           </MenuItem>
           <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
           <MenuItem>
-            <button
-              onClick={() => handleDelete()}
-              className="h-12 cursor-pointer"
-            >
+            <Link onClick={() => handleDelete()} className="cursor-pointer">
               Delete
-            </button>
+            </Link>
           </MenuItem>
         </MenuItems>
       </Menu>

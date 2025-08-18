@@ -9,6 +9,7 @@ import {
 } from '@headlessui/react'
 import { ChevronDownIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
+import { Link } from '../Shared/Link'
 
 export const Account = () => {
   const { authUser, logout } = useAuth()
@@ -38,51 +39,51 @@ export const Account = () => {
             transition
             anchor="bottom end"
             modal={false}
-            className="dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background z-50 mt-2 w-36 rounded border p-2 text-center text-lg sm:w-(--button-width)"
+            className="dark:text-text-primary-darkTheme text-text-primary dark:border-border-darkTheme dark:bg-background-darkTheme bg-background z-50 mt-2 flex w-36 flex-col gap-2 rounded border p-2 text-center text-lg sm:w-(--button-width)"
           >
             <MenuItem>
-              <button
-                className="h-12 cursor-pointer tracking-wide"
+              <Link
+                className="cursor-pointer text-base tracking-wide sm:text-lg"
                 onClick={() => navigate('/posts/create')}
               >
                 Create Post
-              </button>
+              </Link>
             </MenuItem>
             <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
             <MenuItem>
-              <button
-                className="h-12 cursor-pointer tracking-wide"
+              <Link
+                className="cursor-pointer text-base tracking-wide sm:text-lg"
                 onClick={() => navigate(`/profile/${authUser.username}`)}
               >
                 My Profile
-              </button>
+              </Link>
             </MenuItem>
             <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
             <MenuItem>
-              <button
-                className="h-12 cursor-pointer tracking-wide"
+              <Link
+                className="cursor-pointer text-base tracking-wide sm:text-lg"
                 onClick={() => navigate({ pathname: '/account' })}
               >
                 Account
-              </button>
+              </Link>
             </MenuItem>
             <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
             <MenuItem>
-              <button
-                className="h-12 cursor-pointer tracking-wide"
+              <Link
+                className="cursor-pointer text-base tracking-wide sm:text-lg"
                 onClick={() => navigate({ pathname: '/history' })}
               >
                 History
-              </button>
+              </Link>
             </MenuItem>
             <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
             <MenuItem>
-              <button
-                className="h-12 cursor-pointer tracking-wide"
+              <Link
+                className="cursor-pointer text-base tracking-wide sm:text-lg"
                 onClick={() => handleLogout()}
               >
                 Sign Out
-              </button>
+              </Link>
             </MenuItem>
           </MenuItems>
         </Menu>

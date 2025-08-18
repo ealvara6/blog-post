@@ -33,7 +33,7 @@ export const Profile = () => {
   const Posts = () => {
     if (data.user.posts.length === 0)
       return (
-        <div className="text-center text-xl font-semibold tracking-wider">
+        <div className="text-center text-base font-semibold tracking-wider sm:text-lg md:text-xl">
           User has no posts
         </div>
       )
@@ -47,7 +47,7 @@ export const Profile = () => {
   const Comments = () => {
     if (data.user.comments.length === 0)
       return (
-        <div className="text-center text-xl font-semibold tracking-wider">
+        <div className="text-center text-base font-semibold tracking-wider sm:text-lg md:text-xl">
           User has no comments
         </div>
       )
@@ -84,17 +84,17 @@ export const Profile = () => {
           alt="User's profile picture"
           className="sm:row-span-full2 col-span-full w-52 justify-self-center rounded-full sm:col-span-1"
         />
-        <div className="col-span-full text-center text-2xl font-bold tracking-wider sm:col-start-2 sm:row-start-1 sm:text-4xl">
+        <div className="col-span-full text-center text-2xl font-bold tracking-wider sm:col-start-2 sm:row-start-1 sm:text-3xl md:text-4xl">
           {data.user.username}
         </div>
 
-        <div className="dark:text-text-muted-darkTheme text-text-muted flex flex-col items-center text-center text-xl font-semibold tracking-wider">
+        <div className="dark:text-text-muted-darkTheme text-text-muted flex flex-col items-center text-center text-base font-semibold tracking-wider sm:text-lg md:text-xl">
           <div className="flex gap-2">
             {numOfPosts} <PencilSquareIcon className="w-8" />
           </div>
           <div>Post{numOfPosts !== 1 && 's'}</div>
         </div>
-        <div className="dark:text-text-muted-darkTheme text-text-muted flex flex-col items-center text-center text-xl font-semibold tracking-wider">
+        <div className="dark:text-text-muted-darkTheme text-text-muted flex flex-col items-center text-center text-base font-semibold tracking-wider sm:text-lg md:text-xl">
           <div className="flex gap-2">
             {numOfComments} <ChatBubbleBottomCenterIcon className="w-8" />
           </div>
@@ -106,7 +106,7 @@ export const Profile = () => {
           {options.map((option) => (
             <div
               onClick={() => setSelected(option.id)}
-              className={`${selected === option.id ? 'font-bold' : 'font-light'} cursor-pointer text-lg tracking-wider select-none sm:text-xl`}
+              className={`${selected === option.id ? 'font-bold' : 'font-light'} cursor-pointer text-lg tracking-wider select-none sm:text-xl md:text-2xl`}
               key={option.id}
             >
               {option.name}

@@ -59,7 +59,7 @@ export const PostForm = ({
       className="-mt-5 flex flex-col gap-5 py-5 sm:-mt-20"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="pt-7 text-center text-3xl font-bold tracking-wider">
+      <div className="pt-7 text-center text-xl font-bold tracking-wider sm:text-2xl md:text-3xl">
         {header}
       </div>
       <div className="dark:bg-card-darkTheme bg-card flex flex-col gap-5 rounded px-3 py-5 md:p-7">
@@ -67,7 +67,7 @@ export const PostForm = ({
           {errors['title'] && <Error>{errors['title']?.message}</Error>}
           <input
             {...register('title')}
-            className="rounded border p-2 text-lg"
+            className="rounded border p-2 text-base sm:text-lg md:text-xl"
             type="text"
             id="title"
             placeholder="Title"
@@ -77,7 +77,7 @@ export const PostForm = ({
           {errors['content'] && <Error>{errors['content']?.message}</Error>}
           <textarea
             {...register('content')}
-            className="h-[300px] w-full rounded border p-2 text-lg sm:h-[500px]"
+            className="h-[300px] w-full rounded border p-2 text-base sm:h-[500px] sm:text-lg md:text-xl"
             id="content"
             spellCheck={true}
             placeholder="Content"
@@ -87,7 +87,9 @@ export const PostForm = ({
           <SkeletonCard />
         ) : (
           <div className="flex flex-col items-center gap-6">
-            <div className="text-xl font-bold">Category</div>
+            <div className="text-base font-bold sm:text-lg md:text-xl">
+              Category
+            </div>
             <div className="grid w-full grid-cols-2 justify-items-center gap-5 sm:flex sm:justify-around">
               <Controller
                 name="categoryIds"
@@ -110,7 +112,7 @@ export const PostForm = ({
         <Button
           disabled={isSubmitting}
           isInactive={isSubmitting}
-          className="w-full text-xl font-bold tracking-wider md:h-15"
+          className="w-full text-base font-bold tracking-wider sm:text-lg md:h-15 lg:text-xl"
         >
           {isSubmitting
             ? (submittingLabel ?? 'Submitting...')

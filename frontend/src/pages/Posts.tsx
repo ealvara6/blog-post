@@ -61,7 +61,7 @@ export const Posts = () => {
     <>
       {data.posts ? (
         <div className="mx-3 flex w-full flex-col gap-15 sm:max-w-7xl">
-          <SearchBar className="dark:border-border-darkTheme border-border dark:bg-card-darkTheme bg-card col-span-full border focus:outline" />
+          <SearchBar className="dark:border-border-darkTheme border-border dark:bg-card-darkTheme bg-card col-span-full min-h-12 border focus:outline md:min-h-16" />
           <Filter />
           {data.posts.length !== 0 ? (
             <PageSection />

@@ -8,6 +8,7 @@ import { useGetUser, useUpdateAvatar } from '@/hooks/useUser'
 import { Error } from '../Shared/Error'
 import Cropper from 'react-easy-crop'
 import { blobToFile, cropToBlob } from '@/utils/cropToBlob'
+import { Link } from '../Shared/Link'
 
 const MAX_BYTES = 2 * 1024 * 1024 //2MB
 const ALLOWED_MIME = new Set(['image/png', 'image/jpeg'])
@@ -83,29 +84,37 @@ export const EditAvatar = () => {
 
   return (
     <>
-      <button
-        type="button"
-        className="relative cursor-pointer"
-        onClick={openPicker}
-      >
-        <img
-          src={src}
-          alt={`${authUser?.username}'s avatar`}
-          className="h-18 w-18 rounded-full object-cover"
-        />
-        <div className="pointer-events-none absolute inset-0 z-10 h-full w-full rounded-4xl bg-black/20" />
-        <div className="pointer-events-none absolute inset-0 z-20 flex justify-center">
-          <PencilIcon className="w-7" />
-        </div>
+      <div className="flex flex-col items-center gap-4">
+        <button
+          type="button"
+          className="relative cursor-pointer"
+          onClick={openPicker}
+        >
+          <img
+            src={src}
+            alt={`${authUser?.username}'s avatar`}
+            className="h-18 w-18 rounded-full object-cover"
+          />
+          <div className="bg-background-darkTheme/100 absolute inset-x-12 inset-y-0 h-6 w-6 rounded-full">
+            <PencilIcon className="z-10 h-6" />
+          </div>
 
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/png, image/jpeg"
-          className="hidden"
-          onChange={onChange}
-        />
-      </button>
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/png, image/jpeg"
+            className="hidden"
+            onChange={onChange}
+          />
+        </button>
+        <button
+          className="dark:text-accent-darkTheme text-accent cursor-pointer text-base underline underline-offset-4"
+          type="button"
+          onClick={openPicker}
+        >
+          Update Picture
+        </button>
+      </div>
       {tempUrl && (
         <Modal onClose={onClose} className="!max-w-fit p-6">
           <div className="flex flex-col gap-4">

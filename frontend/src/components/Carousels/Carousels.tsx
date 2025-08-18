@@ -10,7 +10,7 @@ export const Carousels = () => {
     const carousels = data?.map((category, index) => {
       return (
         <div className="flex flex-col 2xl:mx-30" key={index}>
-          <div className="mb-5 text-3xl font-bold tracking-wider">
+          <div className="mb-5 text-2xl font-bold tracking-wider sm:text-3xl md:text-4xl">
             {category.name}
           </div>
           <PostCarousel category={category} index={index} />

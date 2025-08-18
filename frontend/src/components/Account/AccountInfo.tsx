@@ -73,7 +73,7 @@ export const AccountInfo = () => {
 
   return (
     <div className="flex flex-col items-center gap-5 sm:gap-8">
-      <div className="flex gap-4 self-center sm:self-start">
+      <div className="flex gap-4 self-center sm:ml-10 sm:self-start">
         <EditAvatar />
         <div className="self-center text-2xl font-semibold">
           {authUser?.username}
