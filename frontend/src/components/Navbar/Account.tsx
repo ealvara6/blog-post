@@ -30,9 +30,9 @@ export const Account = () => {
         />
       ) : (
         <Menu>
-          <MenuButton className="flex justify-center gap-0 rounded-md sm:w-30">
+          <MenuButton className="flex items-center justify-center gap-0 rounded-md sm:w-30">
             <UserCircleIcon className="w-10 md:w-12" />
-            <ChevronDownIcon className="w-5" />
+            <ChevronDownIcon className="w-5 self-center" />
           </MenuButton>
 
           <MenuItems

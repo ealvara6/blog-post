@@ -55,21 +55,18 @@ const Signup = () => {
       className="dark:border-border-darkTheme dark:bg-card-darkTheme border-border bg-card mx-3 flex size-fit w-full max-w-4xl flex-col gap-2 rounded border-2 p-4 pt-10"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="mb-5 self-center text-3xl font-bold tracking-wide lg:text-5xl">
+      <div className="mb-5 self-center text-xl font-bold tracking-wide sm:text-2xl lg:text-3xl">
         Sign Up
       </div>
-      {fields.map(({ name, label, type }) => {
+      {fields.map(({ name, label, type }, index) => {
         return (
-          <div className="flex flex-col gap-3">
-            <label
-              htmlFor={label}
-              className="text-xl font-semibold lg:text-2xl"
-            >
+          <div className="flex flex-col gap-3" key={index}>
+            <label htmlFor={label} className="text-lg font-semibold lg:text-xl">
               {label}:{' '}
             </label>
             <input
               {...register(name)}
-              className={`dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border-darkTheme rounded border-2 p-2 text-lg lg:p-4 lg:text-xl ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
+              className={`dark:text-text-primary-darkTheme text-text-primary border-border dark:border-border-darkTheme rounded border-2 p-2 text-base lg:p-3 lg:text-lg ${errors[name] ? 'border-red-500' : 'border-gray-300'}`}
               type={type}
               name={name}
               id={name}

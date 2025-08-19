@@ -46,11 +46,11 @@ const Login = ({ className }: { className?: string }) => {
         className,
       )}
     >
-      <div className="self-center text-3xl font-bold tracking-wide lg:text-5xl">
+      <div className="self-center text-2xl font-bold tracking-wide sm:text-3xl lg:text-4xl">
         Sign In
       </div>
       <div className="flex flex-col gap-3">
-        <label htmlFor="email" className="text-xl font-semibold lg:text-2xl">
+        <label htmlFor="email" className="text-lg font-semibold lg:text-xl">
           Email:
         </label>
         <input
@@ -64,13 +64,13 @@ const Login = ({ className }: { className?: string }) => {
         {errors.email && <Error>{errors.email.message}</Error>}
       </div>
       <div className="flex flex-col gap-3">
-        <label htmlFor="password" className="text-xl font-semibold lg:text-2xl">
+        <label htmlFor="password" className="text-lg font-semibold lg:text-xl">
           Password:
         </label>
         <input
           {...register('password')}
           type="password"
-          className={`dark:border-border-darkTheme border-border- rounded border-2 p-2 lg:text-xl ${errors.password ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border text-lg'}`}
+          className={`dark:border-border-darkTheme rounded border-2 p-2 lg:text-xl ${errors.password ? 'dark:border-error-darkTheme border-error' : 'dark:border-border-darkTheme border-border text-lg'}`}
           name="password"
           id="password"
           placeholder="Password"
