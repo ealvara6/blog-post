@@ -3,15 +3,21 @@
     "target": "ESNext",
     "allowSyntheticDefaultImports": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "strict": true,
     "jsx": "react-jsx",
     "types": ["vitest/globals", "@testing-library/jest-dom"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "skipLibCheck": true
   },
-  "include": ["src", "vitest.setup.ts", "src/types"],
-  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/__tests__"]
+  "include": [
+    "src",
+    "vitest.setup.ts",
+    "src/types",
+    "vite.config.ts",
+    "src/vitest-env.d.ts"
+  ]
 }
