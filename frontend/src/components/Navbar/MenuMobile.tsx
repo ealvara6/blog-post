@@ -23,18 +23,20 @@ export const MenuMobile = ({
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        e.preventDefault()
+        e.stopPropagation()
         setIsOpen(false)
       }
     }
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('click', handleClickOutside, true)
     } else {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('click', handleClickOutside, true)
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('click', handleClickOutside, true)
     }
   }, [isOpen, setIsOpen])
 
@@ -58,7 +60,7 @@ export const MenuMobile = ({
     if (!authUser) {
       return (
         <div
-          className="dark:text-accent-darkTheme text-accent dark:hover:text-accent-hover-darkTheme hover:text-accent-hover text-lg font-thin underline"
+          className="dark:text-accent-darkTheme text-accent dark:hover:text-accent-hover-darkTheme hover:text-accent-hover text-base font-thin underline sm:text-lg"
           onClick={() => handleLogin()}
         >
           Sign In
@@ -67,7 +69,7 @@ export const MenuMobile = ({
     } else {
       return (
         <div
-          className="dark:text-accent-darkTheme text-accent dark:hover:text-accent-hover-darkTheme hover:text-accent-hover text-lg font-thin underline"
+          className="dark:text-accent-darkTheme text-accent dark:hover:text-accent-hover-darkTheme hover:text-accent-hover text-base font-thin underline sm:text-lg"
           onClick={() => handleLogout()}
         >
           Sign Out
