@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { Account } from './Account'
 import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Link } from '../Shared/Link'
-import Logo from '@/assets/Postfily-Logo.svg?react'
+import Logo from '@/assets/postifly-logo.svg?react'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -27,12 +27,12 @@ const Navbar = () => {
           <Menu />
         </div>
         <div
-          className={`absolute left-1/2 flex -translate-x-1/2 cursor-pointer gap-2 self-center select-none`}
+          className={`absolute left-1/2 flex -translate-x-1/2 cursor-pointer self-center select-none`}
           onClick={() => navigate({ pathname: '/' }, { replace: true })}
         >
-          <Logo className="text-text-primary dark:text-text-primary-darkTheme h-10" />
-          <span className="text-xxl self-center font-bold tracking-widest sm:text-2xl md:text-3xl">
-            Postfily
+          <Logo className="text-text-primary dark:text-text-primary-darkTheme h-12 w-12 sm:h-14 sm:w-14" />
+          <span className="self-center text-xl font-bold tracking-widest sm:text-2xl md:text-3xl">
+            Postifly
           </span>
         </div>
         <div className="flex gap-3 text-lg font-bold">
