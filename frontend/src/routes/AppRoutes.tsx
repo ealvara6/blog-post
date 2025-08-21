@@ -16,6 +16,7 @@ import { LoginModalProvider } from '@/context/LoginModalProvider/LoginModalProvi
 import { History } from '@/pages/History'
 import { ScrollToTop } from '@/components/Shared/ScrollToTop'
 import { Profile } from '@/pages/Profile'
+import { About } from '@/pages/About'
 
 const AppRoutes = () => {
   return (
@@ -33,6 +34,7 @@ const AppRoutes = () => {
                 <Route path="/posts" element={<Posts />} />
                 <Route path="/browse" element={<Browse />} />
                 <Route path="/history" element={<History />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/profile/:username" element={<Profile />} />
                 <Route path="/posts/:id" element={<Post />} />
                 <Route path="/posts/create" element={<CreatePost />} />

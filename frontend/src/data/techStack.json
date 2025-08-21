@@ -1,0 +1,35 @@
+[
+  { "name": "React", "logo": "/logos/react.svg", "link": "https://react.dev/" },
+  { "name": "Vite", "logo": "/logos/vite.svg", "link": "https://vite.dev/" },
+  {
+    "name": "Typescript",
+    "logo": "/logos/ts.png",
+    "link": "https://www.typescriptlang.org/"
+  },
+  {
+    "name": "ExpressJS",
+    "logo": "/logos/express-js.svg",
+    "link": "https://expressjs.com/"
+  },
+  {
+    "name": "Prisma",
+    "logo": "/logos/prisma.svg",
+    "link": "https://www.prisma.io/"
+  },
+  {
+    "name": "PostgreSQL",
+    "logo": "/logos/psql.png",
+    "link": "https://www.postgresql.org/"
+  },
+  {
+    "name": "React Query",
+    "logo": "/logos/reactQuery.png",
+    "link": "https://www.npmjs.com/package/react-query"
+  },
+  { "name": "Zod", "logo": "/logos/zod.svg", "link": "https://zod.dev/" },
+  {
+    "name": "Tailwindcss",
+    "logo": "/logos/tailwind.svg",
+    "link": "https://tailwindcss.com/"
+  }
+]

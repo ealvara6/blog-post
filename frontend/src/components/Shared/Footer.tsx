@@ -1,8 +1,11 @@
 import clsx from 'clsx'
 import React from 'react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
+import { useNavigate } from 'react-router'
 
 const Footer = () => {
+  const navigate = useNavigate()
+
   const Header = ({ children }: { children: React.ReactNode }) => {
     return <div className="font-semibold tracking-wider">{children}</div>
   }
@@ -48,14 +51,19 @@ const Footer = () => {
   const Link = ({
     children,
     className,
+    route,
   }: {
     children?: React.ReactNode
     className?: string
+    route: string
   }) => {
     return (
-      <div className={clsx('cursor-pointer hover:underline', className)}>
+      <button
+        className={clsx('cursor-pointer hover:underline', className)}
+        onClick={() => navigate(route)}
+      >
         {children}
-      </div>
+      </button>
     )
   }
 
@@ -66,9 +74,9 @@ const Footer = () => {
           <HeaderGroup>
             <Header>Navigation</Header>
             <LinkGroup>
-              <Link>Home</Link>
-              <Link>Posts</Link>
-              <Link>About</Link>
+              <Link route="/">Home</Link>
+              <Link route="/posts">Posts</Link>
+              <Link route="/about">About</Link>
             </LinkGroup>
           </HeaderGroup>
 
@@ -76,14 +84,18 @@ const Footer = () => {
             <Header>Social</Header>
             <LinkGroup className="flex flex-row gap-4 text-2xl">
               <a
-                href="https://github.com"
+                href="https://github.com/ealvara6"
+                rel="noopener noreferrer"
                 className="dark:hover:text-accent-darkTheme hover:text-accent"
+                target="_blank"
               >
                 <FaGithub />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/ealvara6/"
+                rel="noopener noreferrer"
                 className="dark:hover:text-accent-darkTheme hover:text-accent"
+                target="_blank"
               >
                 <FaLinkedin />
               </a>
@@ -93,8 +105,8 @@ const Footer = () => {
           <HeaderGroup className="col-span-full">
             <Header>Legal</Header>
             <LinkGroup>
-              <Link>Privacy Policy</Link>
-              <Link>Terms of Service</Link>
+              <Link route="/">Privacy Policy</Link>
+              <Link route="/">Terms of Service</Link>
             </LinkGroup>
           </HeaderGroup>
         </div>
