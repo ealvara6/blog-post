@@ -16,10 +16,21 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, theme)
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
+
+    document.documentElement.classList.add('theme-transition')
+
+    const id = requestAnimationFrame(() => {
+      if (theme === 'dark') document.documentElement.classList.add('dark')
+      else document.documentElement.classList.remove('dark')
+    })
+
+    const t = setTimeout(
+      () => document.documentElement.classList.remove('theme-transition'),
+      350,
+    )
+    return () => {
+      cancelAnimationFrame(id)
+      clearTimeout(t)
     }
   }, [theme])
 

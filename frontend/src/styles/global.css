@@ -50,20 +50,57 @@ html {
 }
 
 @layer utilities {
-  /* Light mode autofill */
   input:-webkit-autofill {
     box-shadow: 0 0 0 1000px var(--color-card) inset;
     -webkit-text-fill-color: var(--color-text-primary);
     transition: background-color 5000s ease-in-out 0s;
   }
 
-  /* Dark mode autofill */
   .dark input:-webkit-autofill {
     box-shadow: 0 0 0 1000px var(--color-card-darkTheme) inset;
     -webkit-text-fill-color: var(--color-text-primary-darkTheme);
   }
 }
 
+html {
+  @apply bg-background dark:bg-background-darkTheme;
+}
+
 body {
   @apply text-base leading-relaxed;
+}
+
+@layer utilities {
+  input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px var(--color-card) inset;
+    -webkit-text-fill-color: var(--color-text-primary);
+    transition: background-color 5000s ease-in-out 0s;
+  }
+  .dark input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px var(--color-card-darkTheme) inset;
+    -webkit-text-fill-color: var(--color-text-primary-darkTheme);
+  }
+}
+
+.theme-transition,
+.theme-transition::before,
+.theme-transition::after,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition-property:
+    background-color, color, border-color, fill, stroke, box-shadow;
+  transition-duration: 250ms !important;
+  transition-timing-function: ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition,
+  .theme-transition::before,
+  .theme-transition::after,
+  .theme-transition *,
+  .theme-transition *::before,
+  .theme-transition *::after {
+    transition: none !important;
+  }
 }

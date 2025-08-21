@@ -31,7 +31,7 @@ const Navbar = () => {
           onClick={() => navigate({ pathname: '/' }, { replace: true })}
         >
           <Logo className="text-text-primary dark:text-text-primary-darkTheme h-10" />
-          <span className="self-center text-2xl font-bold tracking-widest sm:text-3xl md:text-4xl">
+          <span className="text-xxl self-center font-bold tracking-widest sm:text-2xl md:text-3xl">
             Postfily
           </span>
         </div>
