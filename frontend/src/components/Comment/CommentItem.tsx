@@ -113,7 +113,7 @@ export const CommentItem = ({
             className="h-12 w-12 rounded-full object-cover"
           />
           <div
-            className="cursor-default self-center text-lg font-bold tracking-wider underline-offset-6 hover:underline sm:text-xl"
+            className="dark:text-text-m cursor-default self-center text-lg font-bold tracking-wider underline-offset-6 hover:underline sm:text-xl"
             onClick={(e) =>
               handleNavigation(e, `/profile/${comment.user.username}`)
             }

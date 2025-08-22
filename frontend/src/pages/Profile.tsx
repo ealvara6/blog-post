@@ -77,24 +77,24 @@ export const Profile = () => {
   ]
 
   return (
-    <div className="dark:border-border-darkTheme border-border mx-3 w-full max-w-xl border p-3 py-12 sm:max-w-4xl">
+    <div className="dark:border-border-darkTheme border-border mx-3 w-full max-w-xl border p-3 py-12 sm:max-w-3xl">
       <div className="grid grid-cols-2 grid-rows-[min-content-auto] items-center gap-5 p-3 sm:grid-rows-[2fr_1fr] sm:gap-0 sm:gap-y-5">
         <img
           src={toImageUrl(data.user.profilePictureUrl)}
           alt="User's profile picture"
-          className="sm:row-span-full2 col-span-full w-52 justify-self-center rounded-full sm:col-span-1"
+          className="sm:row-span-full2 col-span-full w-36 justify-self-center rounded-full sm:col-span-1"
         />
-        <div className="col-span-full text-center text-2xl font-bold tracking-wider sm:col-start-2 sm:row-start-1 sm:text-3xl md:text-4xl">
+        <div className="col-span-full text-center text-2xl font-bold tracking-wider sm:col-start-2 sm:row-start-1 sm:text-2xl md:text-3xl">
           {data.user.username}
         </div>
 
-        <div className="dark:text-text-muted-darkTheme text-text-muted flex flex-col items-center text-center text-base font-semibold tracking-wider sm:text-lg md:text-xl">
+        <div className="dark:text-text-muted-darkTheme text-text-muted flex flex-col items-center text-center text-base font-semibold tracking-wider md:text-lg">
           <div className="flex gap-2">
             {numOfPosts} <PencilSquareIcon className="w-8" />
           </div>
           <div>Post{numOfPosts !== 1 && 's'}</div>
         </div>
-        <div className="dark:text-text-muted-darkTheme text-text-muted flex flex-col items-center text-center text-base font-semibold tracking-wider sm:text-lg md:text-xl">
+        <div className="dark:text-text-muted-darkTheme text-text-muted flex flex-col items-center text-center text-base font-semibold tracking-wider md:text-lg">
           <div className="flex gap-2">
             {numOfComments} <ChatBubbleBottomCenterIcon className="w-8" />
           </div>
@@ -106,7 +106,7 @@ export const Profile = () => {
           {options.map((option) => (
             <div
               onClick={() => setSelected(option.id)}
-              className={`${selected === option.id ? 'font-bold' : 'font-light'} cursor-pointer text-lg tracking-wider select-none sm:text-xl md:text-2xl`}
+              className={`${selected === option.id ? 'font-bold' : 'font-light'} cursor-pointer text-base tracking-wider select-none sm:text-lg md:text-xl`}
               key={option.id}
             >
               {option.name}
