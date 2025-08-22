@@ -24,10 +24,10 @@ const LoginModal = () => {
 const MainLayout = () => {
   const { showLoginModal } = useLoginModal()
   return (
-    <div className="dark:bg-background-darkTheme dark:text-text-primary-darkTheme flex min-h-screen flex-col">
+    <div className="dark:bg-background-darkTheme dark:text-text-primary-darkTheme relative flex min-h-screen flex-col">
       {showLoginModal && <LoginModal />}
       <Navbar />
-      <main className="flex grow justify-center pt-4 pb-8 sm:py-20">
+      <main className="mt-18 flex grow justify-center pt-4 pb-8 sm:pb-20">
         <div className="flex w-full max-w-7xl justify-center">
           <Outlet />
         </div>
