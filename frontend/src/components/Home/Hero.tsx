@@ -4,7 +4,7 @@ import { Button } from '@/components/Shared/Button'
 export const Hero = () => {
   const navigate = useNavigate()
   return (
-    <div className="text-text-primary-darkTheme relative mx-[calc(50%-50vw)] my-18 w-screen select-none sm:-my-8">
+    <div className="text-text-primary-darkTheme relative mx-[calc(50%-50vw)] -my-8 w-screen select-none">
       <img
         src="/hero-1920.jpg"
         alt="Hero"
@@ -17,7 +17,7 @@ export const Hero = () => {
       <div className="absolute inset-0 z-10 flex items-center justify-center px-4">
         <div className="z-20 flex flex-col items-center gap-6 rounded-xl border border-white/20 bg-white/10 px-8 py-12 text-center shadow-lg backdrop-blur-md sm:px-8">
           <h1 className="text-5xl leading-tight font-extrabold tracking-tighter md:text-7xl">
-            Welcome to the forum
+            Welcome to Postifly
           </h1>
           <p className="max-w-2xl text-lg text-white/80 md:text-xl">
             Ask questions, explore topics, and grow with the community.

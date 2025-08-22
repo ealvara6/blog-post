@@ -27,7 +27,7 @@ const MainLayout = () => {
     <div className="dark:bg-background-darkTheme dark:text-text-primary-darkTheme relative flex min-h-screen flex-col">
       {showLoginModal && <LoginModal />}
       <Navbar />
-      <main className="my-4 flex grow justify-center sm:my-30">
+      <main className="my-30 flex grow justify-center">
         <div className="flex w-full max-w-7xl justify-center">
           <Outlet />
         </div>
