@@ -33,5 +33,5 @@ export const AccountPosts = () => {
   if (!data.posts || data.posts.length === 0)
     return <div className="text-center">No posts found</div>
 
-  return <div>{fetchPosts()}</div>
+  return <div className="mt-8">{fetchPosts()}</div>
 }

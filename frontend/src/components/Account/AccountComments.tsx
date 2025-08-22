@@ -42,5 +42,9 @@ export const AccountComments = () => {
   if (!data.comments || data.comments.length === 0)
     return <div className="text-center">No comments found</div>
 
-  return <div className="flex flex-col gap-8">{fetchComments()}</div>
+  return (
+    <div className="mt-8">
+      <div className="flex flex-col gap-8">{fetchComments()}</div>
+    </div>
+  )
 }
