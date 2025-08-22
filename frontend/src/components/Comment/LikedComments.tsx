@@ -22,7 +22,8 @@ export const LikedComments = () => {
       </>
     )
 
-  if (status === 'error') return <div>No Liked Comments</div>
+  if (comments.length === 0)
+    return <div className="text-center">No Liked Comments</div>
 
   return (
     <div className="flex flex-col gap-10">
