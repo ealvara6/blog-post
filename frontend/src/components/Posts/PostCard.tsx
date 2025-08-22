@@ -99,20 +99,17 @@ export const PostCard = ({
             <div className="grow text-xl font-bold sm:text-2xl">{title}</div>
             {!handleNavigate && authUser?.id === userId && <MenuComponent />}
           </div>
+          <div
+            className="dark:text-text-muted-darkTheme text-text-muted w-fit cursor-default font-thin underline-offset-4 hover:underline"
+            onClick={(e) =>
+              handleNavigation(e, `/profile/${post.user.username}`)
+            }
+          >
+            {user.username}
+          </div>
           <div className="flex justify-between">
             <div className="flex flex-wrap gap-2">
               {categories && <CategoriesList categories={categories} />}
-            </div>
-            <div className="text-md hidden font-semibold sm:block md:text-lg">
-              Posted by:{' '}
-              <span
-                className="cursor-default font-thin underline-offset-4 hover:underline"
-                onClick={(e) =>
-                  handleNavigation(e, `/profile/${post.user.username}`)
-                }
-              >
-                {user.username}
-              </span>
             </div>
           </div>
         </div>
@@ -123,9 +120,9 @@ export const PostCard = ({
           <div className="dark:text-text-muted-darkTheme text-text-muted flex justify-between gap-2 font-semibold tracking-wider">
             <Hearts id={id} />
             <div className="flex gap-2 select-none">
-              {data.comments?.length === 0 ? '0' : `${data.comments?.length}`}{' '}
+              {data?.comments.length === 0 ? '0' : `${data?.comments.length}`}{' '}
               <span className="hidden sm:block">
-                {data.comments?.length === 1 ? 'Comment' : 'Comments'}
+                {data?.comments.length === 1 ? 'Comment' : 'Comments'}
               </span>{' '}
               <span className="block sm:hidden">
                 <ChatBubbleBottomCenterIcon className="block w-7 sm:hidden" />
