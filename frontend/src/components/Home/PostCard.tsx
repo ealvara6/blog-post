@@ -1,6 +1,7 @@
 import { Comment } from '@/types/posts'
 import { useNavigate } from 'react-router-dom'
 import { Hearts } from '../Shared/Hearts'
+import { ChatBubbleBottomCenterIcon } from '@heroicons/react/24/outline'
 
 export const PostCard = ({
   title,
@@ -26,8 +27,14 @@ export const PostCard = ({
       </div>
       <div className="dark:text-text-muted-darkTheme text-text-muted flex grow items-end justify-between gap-3 font-semibold tracking-wider sm:text-lg">
         <Hearts id={id} />
-        <div className="select-none">
-          {comments?.length === 0 ? '0' : `${comments?.length}`} Comments
+        <div className="flex gap-2 select-none">
+          {comments?.length === 0 ? '0' : `${comments?.length}`}{' '}
+          <span className="hidden sm:block">
+            {comments?.length === 1 ? 'Comment' : 'Comments'}
+          </span>{' '}
+          <span className="block sm:hidden">
+            <ChatBubbleBottomCenterIcon className="block w-7 sm:hidden" />
+          </span>
         </div>
       </div>
     </div>

@@ -1,7 +1,10 @@
 import { Post } from '@/types/posts'
 import { useNavigate } from 'react-router-dom'
 import { CategoriesList } from '@/components/Category/CategoriesList'
-import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
+import {
+  ChatBubbleBottomCenterIcon,
+  EllipsisHorizontalIcon,
+} from '@heroicons/react/24/outline'
 import {
   MenuButton,
   Menu,
@@ -119,8 +122,14 @@ export const PostCard = ({
         <div className="flex flex-col justify-between p-3 text-end font-mono font-thin">
           <div className="dark:text-text-muted-darkTheme text-text-muted flex justify-between gap-2 font-semibold tracking-wider">
             <Hearts id={id} />
-            <div className="select-none">
-              {!data?.comments.length ? '0' : data?.comments.length} Comments
+            <div className="flex gap-2 select-none">
+              {data.comments?.length === 0 ? '0' : `${data.comments?.length}`}{' '}
+              <span className="hidden sm:block">
+                {data.comments?.length === 1 ? 'Comment' : 'Comments'}
+              </span>{' '}
+              <span className="block sm:hidden">
+                <ChatBubbleBottomCenterIcon className="block w-7 sm:hidden" />
+              </span>
             </div>
           </div>
         </div>
