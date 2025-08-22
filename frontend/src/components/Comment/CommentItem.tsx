@@ -131,7 +131,9 @@ export const CommentItem = ({
         />
       ) : (
         <>
-          <div>{comment.content}</div>
+          <div className={`${profileView ? 'line-clamp-4' : ''}`}>
+            {comment.content}
+          </div>
           <div className="dark:text-text-muted-darkTheme text-text-muted flex gap-2 self-end font-mono font-thin select-none">
             {isLoadingLikes ? '0' : <div>{likeData.likeCount}</div>}
             <HeartIcon

@@ -88,7 +88,7 @@ export const PostCard = ({
 
   return (
     <div
-      className={`dark:bg-card-darkTheme bg-card flex h-[400px] flex-col gap-5 transition-opacity ${isFetching ? 'opacity-50' : 'opacity-100'}`}
+      className={`dark:bg-card-darkTheme bg-card flex flex-col gap-5 transition-opacity ${isFetching ? 'opacity-50' : 'opacity-100'}`}
     >
       <div
         className={`border-border-darkTheme flex h-full flex-col rounded border p-3`}
@@ -113,7 +113,9 @@ export const PostCard = ({
             </div>
           </div>
         </div>
-        <div className="dark:text-text-primary-darkTheme/80 text-text-primary/80 line-clamp-3 grow p-3 overflow-ellipsis">
+        <div
+          className={`dark:text-text-primary-darkTheme/80 text-text-primary/80 grow p-1 overflow-ellipsis ${handleNavigate ? 'line-clamp-4' : ''}`}
+        >
           {content}
         </div>
         <div className="flex flex-col justify-between p-3 text-end font-mono font-thin">
