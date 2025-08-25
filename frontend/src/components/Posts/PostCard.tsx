@@ -1,10 +1,7 @@
 import { Post } from '@/types/posts'
 import { useNavigate } from 'react-router-dom'
 import { CategoriesList } from '@/components/Category/CategoriesList'
-import {
-  ChatBubbleBottomCenterIcon,
-  EllipsisHorizontalIcon,
-} from '@heroicons/react/24/outline'
+import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
 import {
   MenuButton,
   Menu,
@@ -18,6 +15,7 @@ import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Hearts } from '@/components/Shared/Hearts'
 import { useComments } from '@/hooks/useComments'
 import { Link } from '../Shared/Link'
+import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/16/solid'
 
 export const PostCard = ({
   post,
@@ -114,7 +112,7 @@ export const PostCard = ({
           </div>
         </div>
         <div
-          className={`dark:text-text-primary-darkTheme/80 text-text-primary/80 grow p-1 overflow-ellipsis ${handleNavigate ? 'line-clamp-4' : ''}`}
+          className={`dark:text-text-primary-darkTheme/80 text-text-primary/80 grow p-1 overflow-ellipsis ${handleNavigate ? 'line-clamp-4' : ''} p-4 indent-2`}
         >
           {content}
         </div>
@@ -127,7 +125,7 @@ export const PostCard = ({
                 {data?.comments.length === 1 ? 'Comment' : 'Comments'}
               </span>{' '}
               <span className="block sm:hidden">
-                <ChatBubbleBottomCenterIcon className="block w-7 sm:hidden" />
+                <ChatBubbleBottomCenterTextIcon className='className="block sm:hidden" w-7' />
               </span>
             </div>
           </div>

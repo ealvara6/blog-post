@@ -1,7 +1,7 @@
 import { Comment } from '@/types/posts'
 import { useNavigate } from 'react-router-dom'
 import { Hearts } from '../Shared/Hearts'
-import { ChatBubbleBottomCenterIcon } from '@heroicons/react/24/outline'
+import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/16/solid'
 
 export const PostCard = ({
   title,
@@ -33,7 +33,7 @@ export const PostCard = ({
             {comments?.length === 1 ? 'Comment' : 'Comments'}
           </span>{' '}
           <span className="block sm:hidden">
-            <ChatBubbleBottomCenterIcon className="block w-7 sm:hidden" />
+            <ChatBubbleBottomCenterTextIcon className='className="block sm:hidden" w-7' />
           </span>
         </div>
       </div>

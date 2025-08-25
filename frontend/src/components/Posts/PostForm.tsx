@@ -67,7 +67,7 @@ export const PostForm = ({
           {errors['title'] && <Error>{errors['title']?.message}</Error>}
           <input
             {...register('title')}
-            className="rounded border p-2 text-base sm:text-lg md:text-xl"
+            className="dark:border-border-darkTheme rounded border p-2 text-base sm:text-lg md:text-xl"
             type="text"
             id="title"
             placeholder="Title"
@@ -77,7 +77,7 @@ export const PostForm = ({
           {errors['content'] && <Error>{errors['content']?.message}</Error>}
           <textarea
             {...register('content')}
-            className="h-[300px] w-full rounded border p-2 text-base sm:h-[500px] sm:text-lg md:text-xl"
+            className="dark:border-border-darkTheme h-[300px] w-full rounded border p-2 text-base sm:h-[500px] sm:text-lg md:text-xl"
             id="content"
             spellCheck={true}
             placeholder="Content"

@@ -43,7 +43,7 @@ export const Account = () => {
           >
             <MenuItem>
               <Link
-                className="cursor-pointer text-base tracking-wide sm:text-lg"
+                className="mt-2 cursor-pointer text-base tracking-wide sm:text-lg"
                 onClick={() => navigate('/posts/create')}
               >
                 Create Post
@@ -52,7 +52,7 @@ export const Account = () => {
             <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
             <MenuItem>
               <Link
-                className="cursor-pointer text-base tracking-wide sm:text-lg"
+                className="mt-2 cursor-pointer text-base tracking-wide sm:text-lg"
                 onClick={() => navigate(`/profile/${authUser.username}`)}
               >
                 My Profile
@@ -61,7 +61,7 @@ export const Account = () => {
             <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
             <MenuItem>
               <Link
-                className="cursor-pointer text-base tracking-wide sm:text-lg"
+                className="mt-2 cursor-pointer text-base tracking-wide sm:text-lg"
                 onClick={() => navigate({ pathname: '/account' })}
               >
                 Account
@@ -70,7 +70,7 @@ export const Account = () => {
             <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
             <MenuItem>
               <Link
-                className="cursor-pointer text-base tracking-wide sm:text-lg"
+                className="mt-2 cursor-pointer text-base tracking-wide sm:text-lg"
                 onClick={() => navigate({ pathname: '/history' })}
               >
                 History
@@ -79,7 +79,7 @@ export const Account = () => {
             <MenuSeparator className="dark:bg-border-darkTheme bg-border my-1 h-px" />
             <MenuItem>
               <Link
-                className="cursor-pointer text-base tracking-wide sm:text-lg"
+                className="mt-2 cursor-pointer text-base tracking-wide sm:text-lg"
                 onClick={() => handleLogout()}
               >
                 Sign Out
