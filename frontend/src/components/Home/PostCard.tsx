@@ -29,11 +29,8 @@ export const PostCard = ({
         <Hearts id={id} />
         <div className="flex gap-2 select-none">
           {comments?.length === 0 ? '0' : `${comments?.length}`}{' '}
-          <span className="hidden sm:block">
-            {comments?.length === 1 ? 'Comment' : 'Comments'}
-          </span>{' '}
-          <span className="block sm:hidden">
-            <ChatBubbleBottomCenterTextIcon className='className="block sm:hidden" w-7' />
+          <span>
+            <ChatBubbleBottomCenterTextIcon className="w-7" />
           </span>
         </div>
       </div>

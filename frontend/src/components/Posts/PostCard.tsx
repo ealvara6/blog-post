@@ -15,7 +15,11 @@ import { useAuth } from '@/context/AuthProvider/useAuth'
 import { Hearts } from '@/components/Shared/Hearts'
 import { useComments } from '@/hooks/useComments'
 import { Link } from '../Shared/Link'
-import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/16/solid'
+import {
+  ArrowUturnRightIcon,
+  ChatBubbleBottomCenterTextIcon,
+} from '@heroicons/react/16/solid'
+import toast from 'react-hot-toast'
 
 export const PostCard = ({
   post,
@@ -55,6 +59,15 @@ export const PostCard = ({
     }
 
     navigate(url)
+  }
+
+  const copyToClipBoard = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+    await toast.promise(navigator.clipboard.writeText(window.location.href), {
+      loading: 'Copying to ClipBoard...',
+      success: 'Copied to clipboard',
+      error: 'Failed to copy to clipboard',
+    })
   }
 
   const MenuComponent = () => {
@@ -116,18 +129,24 @@ export const PostCard = ({
         >
           {content}
         </div>
-        <div className="flex flex-col justify-between p-3 text-end font-mono font-thin">
-          <div className="dark:text-text-muted-darkTheme text-text-muted flex justify-between gap-2 font-semibold tracking-wider">
+        <div className="flex flex-col justify-between py-3 text-end font-mono font-thin">
+          <div className="dark:text-text-muted-darkTheme text-text-muted flex gap-10 font-semibold tracking-wider">
             <Hearts id={id} />
-            <div className="flex gap-2 select-none">
+            <div
+              className={`flex items-center gap-2 select-none ${handleNavigate ? 'block' : 'hidden'}`}
+            >
               {data?.comments.length === 0 ? '0' : `${data?.comments.length}`}{' '}
-              <span className="hidden sm:block">
-                {data?.comments.length === 1 ? 'Comment' : 'Comments'}
-              </span>{' '}
-              <span className="block sm:hidden">
+              <span>
                 <ChatBubbleBottomCenterTextIcon className='className="block sm:hidden" w-7' />
               </span>
             </div>
+            <button
+              className="dark:border-border-darkTheme flex cursor-pointer items-center gap-2 rounded-full border p-2 transition hover:-translate-y-0.5 hover:bg-gray-700 active:-translate-y-0"
+              onClick={(e) => copyToClipBoard(e)}
+            >
+              <ArrowUturnRightIcon className="w-5" />
+              Share
+            </button>
           </div>
         </div>
       </div>
