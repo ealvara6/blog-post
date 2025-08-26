@@ -43,7 +43,7 @@ export const EmailModal = ({
       <div className="flex flex-col gap-2">
         <Input
           defaultValue={authUser?.email}
-          className="border-border-darkTheme text-text-primary-darkTheme rounded border p-3"
+          className="border-border-darkTheme rounded border p-3"
           {...register('email')}
         />
         {errors['email'] && <Error>{errors['email']?.message}</Error>}

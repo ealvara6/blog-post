@@ -41,7 +41,7 @@ export const UserNameModal = ({
       </label>
       <div className="flex flex-col gap-2">
         <Input
-          className="border-border-darkTheme rounded border p-2 py-4 text-white"
+          className="border-border-darkTheme rounded border p-2 py-4"
           defaultValue={authUser?.username}
           {...register('username')}
         />

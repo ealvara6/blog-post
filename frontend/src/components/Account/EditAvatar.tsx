@@ -8,7 +8,6 @@ import { useGetUser, useUpdateAvatar } from '@/hooks/useUser'
 import { Error } from '../Shared/Error'
 import Cropper from 'react-easy-crop'
 import { blobToFile, cropToBlob } from '@/utils/cropToBlob'
-import { Link } from '../Shared/Link'
 
 const MAX_BYTES = 2 * 1024 * 1024 //2MB
 const ALLOWED_MIME = new Set(['image/png', 'image/jpeg'])
@@ -95,8 +94,8 @@ export const EditAvatar = () => {
             alt={`${authUser?.username}'s avatar`}
             className="h-18 w-18 rounded-full object-cover"
           />
-          <div className="bg-background-darkTheme/100 absolute inset-x-12 inset-y-0 h-6 w-6 rounded-full">
-            <PencilIcon className="z-10 h-6" />
+          <div className="dark:bg-background-darkTheme bg-background absolute inset-x-12 inset-y-0 h-6 w-6 rounded-full">
+            <PencilIcon className="dark:text-background z-10 h-6 text-gray-500" />
           </div>
 
           <input
