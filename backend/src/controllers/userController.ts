@@ -111,7 +111,7 @@ export const updateUser = async (
   try {
     const prisma = req.prisma;
     const userId = Number(req.user?.id);
-    const updateData = req.body;
+    const updateData = req.body.data;
 
     if (!req.user) {
       res.status(401).json({ error: 'Unauthorized' });

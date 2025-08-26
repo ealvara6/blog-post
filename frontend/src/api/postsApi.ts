@@ -1,6 +1,7 @@
 import api from '@/api/axios'
 import { Category } from '@/types/posts'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import toast from 'react-hot-toast'
 
 export type GetPostsQuery = {
   page?: string
@@ -47,28 +48,34 @@ export const getPostById = async (postId: number) => {
 }
 
 export const createPost = async (data: CreatePostProps) => {
-  try {
-    const response = await api.post('auth/posts', data)
-    return response.data
-  } catch (err) {
-    throw parseErrorMessage(err)
-  }
+  return await toast.promise(
+    api.post('auth/posts', data).then((res) => res.data),
+    {
+      loading: 'Creating Post...',
+      success: 'Post Successfully Created!',
+      error: 'Failed to create post',
+    },
+  )
 }
 
 export const updatePost = async (data: EditPostProps) => {
-  try {
-    const response = await api.put(`/auth/posts/${data.id}`, data)
-    return response.data
-  } catch (err) {
-    throw parseErrorMessage(err)
-  }
+  return await toast.promise(
+    api.put(`/auth/posts/${data.id}`, data).then((res) => res.data),
+    {
+      loading: 'Updating Post...',
+      success: 'Post Successfully Updated!',
+      error: 'Failed to update post',
+    },
+  )
 }
 
 export const deletePost = async (postId: number) => {
-  try {
-    const response = await api.delete(`auth/posts/${postId}`)
-    return response.data
-  } catch (err) {
-    throw parseErrorMessage(err)
-  }
+  return await toast.promise(
+    api.delete(`auth/posts/${postId}`).then((res) => res.data),
+    {
+      loading: 'Deleting Post...',
+      success: 'Post Successfully Deleted!',
+      error: 'Failed to delete post',
+    },
+  )
 }

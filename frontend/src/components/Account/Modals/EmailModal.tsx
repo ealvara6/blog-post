@@ -24,7 +24,10 @@ export const EmailModal = ({
 
   const onSubmit = async (updateData: { email: string }) => {
     if (!authUser?.id) return
-    const { updatedUser } = await updateUser(updateData)
+    const { updatedUser } = await updateUser({
+      data: updateData,
+      name: 'Email',
+    })
     localStorage.setItem('user', JSON.stringify(updatedUser))
     setAuthUser(updatedUser)
   }

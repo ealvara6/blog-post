@@ -16,6 +16,9 @@ export const PostItem = ({ id }: { id: number }) => {
   const { data: post, isPending } = usePost(id)
   const { data } = useComments(id)
 
+  if (!post)
+    return <div className="text-center text-lg font-bold">Post Not found</div>
+
   const GetComments = () => {
     if (!data) {
       return (

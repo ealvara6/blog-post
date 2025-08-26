@@ -1,6 +1,7 @@
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 import api from './axios'
 import { EditUser } from '@/types/user'
+import toast from 'react-hot-toast'
 
 export const getUser = async () => {
   try {
@@ -48,13 +49,14 @@ export const deleteUser = async () => {
 }
 
 export const updateUser = async (data: EditUser) => {
-  try {
-    console.log(data)
-    const response = await api.put('/auth/users/me', data)
-    return response.data
-  } catch (err) {
-    throw parseErrorMessage(err)
-  }
+  return await toast.promise(
+    api.put(`/auth/users/me`, data).then((res) => res.data),
+    {
+      loading: `Updating ${data.name}`,
+      success: `${data.name} Successfully Updated! `,
+      error: `Failed to update ${data.name}`,
+    },
+  )
 }
 
 export const getLikedPosts = async (pageParam: string | null) => {
@@ -83,13 +85,16 @@ export const updateAvatar = async (file: File) => {
   const formData = new FormData()
   formData.append('avatar', file)
 
-  try {
-    const response = await api.post(`/auth/users/avatar`, formData, {
-      headers: { 'Content-Type': undefined },
-    })
-    console.log(response.data)
-    return response.data
-  } catch (err) {
-    throw parseErrorMessage(err)
-  }
+  return await toast.promise(
+    api
+      .post(`/auth/users/avatar`, formData, {
+        headers: { 'Content-Type': undefined },
+      })
+      .then((res) => res.data),
+    {
+      loading: 'Updating Avatar...',
+      success: 'Avatar Successfully Updated',
+      error: 'Failed to update avatar',
+    },
+  )
 }

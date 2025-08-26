@@ -23,7 +23,12 @@ export const PasswordModal = ({
 
   const onSubmit = async (data: { password: string }) => {
     if (!authUser?.id) return
-    const { updatedUser } = await updateUser({ password: data.password })
+    const { updatedUser } = await updateUser({
+      data: {
+        password: data.password,
+      },
+      name: 'Password',
+    })
     localStorage.setItem('user', JSON.stringify(updatedUser))
     setAuthUser(updatedUser)
   }

@@ -5,6 +5,7 @@ import Login from '@/components/Auth/Login/Login'
 import { Modal } from '@/components/Shared/Modal'
 import { XCircleIcon } from '@heroicons/react/16/solid'
 import { useLoginModal } from '@/context/LoginModalProvider/LoginModalContext'
+import { Toaster } from 'react-hot-toast'
 
 const LoginModal = () => {
   const { closeLoginModal } = useLoginModal()
@@ -32,6 +33,7 @@ const MainLayout = () => {
           <Outlet />
         </div>
       </main>
+      <Toaster position="bottom-center" />
       <Footer />
     </div>
   )
