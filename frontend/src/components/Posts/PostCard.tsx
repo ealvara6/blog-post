@@ -141,10 +141,10 @@ export const PostCard = ({
               </span>
             </div>
             <button
-              className="dark:border-border-darkTheme flex cursor-pointer items-center gap-2 rounded-full border p-2 transition hover:-translate-y-0.5 hover:bg-gray-700 active:-translate-y-0"
+              className="dark:border-border-darkTheme flex cursor-pointer items-center gap-2 rounded-full border p-2 text-sm transition hover:-translate-y-0.5 hover:bg-gray-700 active:-translate-y-0 sm:text-base"
               onClick={(e) => copyToClipBoard(e)}
             >
-              <ArrowUturnRightIcon className="w-5" />
+              <ArrowUturnRightIcon className="w-4 md:w-5" />
               Share
             </button>
           </div>

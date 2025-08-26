@@ -21,7 +21,7 @@ export const SearchBar = ({ className }: SearchBarProps) => {
   return (
     <form className={clsx('flex p-1', className)} onSubmit={handleSubmit}>
       <Input
-        className="dark:bg-card-darkTheme bg-card grow border-none text-xl focus:outline-none sm:text-2xl dark:text-white"
+        className="dark:bg-card-darkTheme bg-card grow border-none text-lg focus:outline-none sm:text-xl dark:text-white"
         placeholder="Search..."
         value={searchTerm}
         name="search"
