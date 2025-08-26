@@ -22,7 +22,6 @@ export const emailSchema = z.object({
 export const usernameSchema = z.object({
   username: z
     .string()
-    .toLowerCase()
     .trim()
     .min(1, 'Username is required')
     .min(4, 'Username must be at least 4 characters long'),
