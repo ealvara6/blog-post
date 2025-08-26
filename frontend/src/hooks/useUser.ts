@@ -69,8 +69,12 @@ export const useDeleteUser = (userId?: number) => {
 }
 
 export const useUpdateUser = () => {
+  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (data: EditUser) => updateUser(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userComments'] })
+    },
     onError: (err) => {
       throw parseErrorMessage(err)
     },
