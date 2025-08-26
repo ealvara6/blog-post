@@ -118,8 +118,8 @@ export const updateUser = async (
       return;
     }
 
-    if (req.body.email) {
-      if (await findUserOnEmail(prisma, req.body.email)) {
+    if (req.body.data.email) {
+      if (await findUserOnEmail(prisma, req.body.data.email)) {
         res.status(409).json({
           error: 'Email is already associated with an existing account',
         });
@@ -127,8 +127,8 @@ export const updateUser = async (
       }
     }
 
-    if (req.body.username) {
-      if ((await findUserOnUsername(prisma, req.body.username)) !== null) {
+    if (req.body.data.username) {
+      if ((await findUserOnUsername(prisma, req.body.data.username)) !== null) {
         res.status(409).json({
           error: 'Username is already associated with an existing account',
         });
@@ -136,8 +136,8 @@ export const updateUser = async (
       }
     }
 
-    if (req.body.password) {
-      req.body.password = await hashPassword(req.body.password);
+    if (req.body.data.password) {
+      req.body.data.password = await hashPassword(req.body.data.password);
     }
 
     const user = await findUser(prisma, userId);
