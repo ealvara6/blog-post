@@ -106,7 +106,7 @@ export const Profile = () => {
           {options.map((option) => (
             <div
               onClick={() => setSelected(option.id)}
-              className={`${selected === option.id ? 'font-bold' : 'font-light'} cursor-pointer text-base tracking-wider select-none sm:text-lg md:text-xl`}
+              className={`${selected === option.id ? 'dark:bg-card-darkTheme bg-card font-bold' : 'font-light'} dark:hover:bg-card-darkTheme hover:bg-card dark:border-border-darkTheme border-border min-w-36 cursor-pointer rounded-xl border p-2 text-center text-base tracking-wider transition-all select-none hover:-translate-y-0.5 active:translate-0 sm:text-lg md:text-xl`}
               key={option.id}
             >
               {option.name}

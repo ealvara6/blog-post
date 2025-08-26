@@ -49,10 +49,10 @@ export const Account = () => {
   const Tabs = () => {
     return (
       <>
-        <div className="text-md flex justify-between border-b p-2 text-center tracking-wide sm:text-xl">
+        <div className="flex justify-between border-b p-2 text-center text-base tracking-wide">
           {tabs.map((tab, index) => (
             <div
-              className={`${isActive.value === tab.value ? 'font-bold' : ''} cursor-pointer`}
+              className={`${isActive.value === tab.value ? 'dark:bg-card-darkTheme bg-card font-bold' : ''} dark:border-border-darkTheme border-border dark:hover:bg-card-darkTheme hover:bg-card min-w-26 cursor-pointer rounded-xl border p-2 transition-all select-none hover:-translate-y-0.5 active:translate-0 sm:min-w-36`}
               onClick={() => setIsActive(tab)}
               key={index}
             >
