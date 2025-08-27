@@ -18,17 +18,39 @@ async function main() {
     skipDuplicates: true,
   });
 
-  const categoryList = await prisma.category.findMany();
+  type UserProps = {
+    username: string;
+    email: string;
+    id: number;
+    password: string;
+    blogAuthor: boolean;
+    profilePictureUrl: string;
+  };
 
-  for (let i = 0; i < NUM_USERS; i++) {
+  type PostProps = {
+    title: string;
+    createdAt: Date;
+    id: number;
+    content: string | null;
+    published: boolean;
+    userId: number;
+  };
+
+  const categoryList = await prisma.category.findMany();
+  const users: UserProps[] = [];
+  const posts: PostProps[] = [];
+
+  for (let i = 1; i <= NUM_USERS; i++) {
     const user = await prisma.user.create({
       data: {
         username: faker.internet.userName(),
         email: faker.internet.email(),
         password: faker.internet.password(),
         blogAuthor: faker.datatype.boolean(),
+        profilePictureUrl: `/uploads/profile-pictures/thumbs/user-${i}.webp`,
       },
     });
+    users.push(user);
 
     for (let j = 0; j < NUM_POSTS_PER_USER; j++) {
       const post = await prisma.post.create({
@@ -44,18 +66,19 @@ async function main() {
           },
         },
       });
-
-      // Add random comments
-      for (let k = 0; k < 3; k++) {
-        await prisma.comment.create({
-          data: {
-            content: faker.lorem.sentences(2),
-            postId: post.id,
-            userId: user.id,
-          },
-        });
-      }
+      posts.push(post);
     }
+  }
+  for (let k = 0; k < 150; k++) {
+    const randomUser = Math.floor(Math.random() * users.length);
+    const randomPost = Math.floor(Math.random() * posts.length);
+    await prisma.comment.create({
+      data: {
+        content: faker.lorem.sentences(2),
+        postId: posts[randomPost].id,
+        userId: users[randomUser].id,
+      },
+    });
   }
 }
 

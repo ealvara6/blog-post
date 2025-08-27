@@ -55,3 +55,15 @@ export default tseslint.config({
 
 Photo by Lisa from Pexels: https://www.pexels.com/photo/photo-of-people-sitting-beside-glass-wall-1833320/
 Photo by fauxels: https://www.pexels.com/photo/colleagues-shaking-each-other-s-hands-3184291/
+Photo by Andrea Piacquadio: https://www.pexels.com/photo/woman-wearing-coat-762020/
+Photo by LinkedIn Sales Navigator: https://www.pexels.com/photo/man-wearing-white-dress-shirt-and-black-blazer-2182970/
+Photo by Thyrone Paas: https://www.pexels.com/photo/portrait-photo-of-man-1722198/
+Photo by Simon Robben: https://www.pexels.com/photo/man-in-brown-polo-shirt-614810/
+Photo by mododeolhar: https://www.pexels.com/photo/man-wearing-white-crew-neck-long-sleeved-top-3474629/
+Photo by Andrea Piacquadio: https://www.pexels.com/photo/smiling-woman-in-gray-tank-top-3812720/
+Photo by Jenna Hamra: https://www.pexels.com/photo/grayscale-photo-of-a-woman-1001180/
+Photo by Andrea Piacquadio: https://www.pexels.com/photo/man-in-blue-crew-neck-shirt-3768689/
+Photo by Anna Shvets: https://www.pexels.com/photo/positive-black-woman-looking-at-camera-5325840/
+Photo by Muhd Emir: https://www.pexels.com/photo/woman-in-black-shirt-wearing-sunglasses-3796217/
+Photo by Olena Bohovyk: https://www.pexels.com/photo/woman-with-nose-ring-3646160/
+Photo by arwin waworuntu: https://www.pexels.com/photo/gothic-style-portrait-of-young-woman-in-bandung-33620754/

@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const ALLOWED_MIME = new Set(['image/png', 'image/jpeg']);
+const ALLOWED_MIME = new Set(['image/png', 'image/jpeg', 'image/webp']);
 
 export const avatarUpload = multer({
   storage,

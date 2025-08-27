@@ -82,7 +82,10 @@ export const Profile = () => {
         <img
           src={toImageUrl(data.user.profilePictureUrl)}
           alt="User's profile picture"
-          className="sm:row-span-full2 col-span-full w-36 justify-self-center rounded-full sm:col-span-1"
+          className="sm:row-span-full2 col-span-full aspect-square w-36 justify-self-center rounded-full object-cover sm:col-span-1"
+          loading="lazy"
+          decoding="async"
+          referrerPolicy="no-referrer"
         />
         <div className="col-span-full text-center text-2xl font-bold tracking-wider sm:col-start-2 sm:row-start-1 sm:text-2xl md:text-3xl">
           {data.user.username}

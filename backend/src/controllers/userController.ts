@@ -14,8 +14,10 @@ import {
 } from '../services/userService';
 import { handleError } from '../utils/errorhandler';
 import hashPassword from '../utils/hashPassword';
-import { publicUrlToAbsolutePath } from '../utils/paths';
+import { publicUrlToAbsolutePath, UPLOAD_DIR } from '../utils/paths';
 import fs from 'fs/promises';
+import path from 'path';
+import sharp from 'sharp';
 
 export const getAuthUser = async (
   req: Request,
@@ -302,12 +304,21 @@ export const uploadUserAvatar = async (
 
     const user = await findUser(prisma, userId);
 
-    const newUrl = `/uploads/profile-pictures/${req.file.filename}`;
+    const base = path.parse(req.file.filename).name; // e.g., "user-1-1712345678"
+    const thumbName = `${base}.webp`;
+    const thumbAbs = path.join(UPLOAD_DIR, thumbName);
+    const thumbUrl = `/uploads/profile-pictures/thumbs/${thumbName}`;
+
+    sharp(req.file.path)
+      .rotate()
+      .resize(128, 128, { fit: 'cover', withoutEnlargement: true })
+      .webp({ quality: 80 })
+      .toFile(thumbAbs);
 
     const oldUrl = user.profilePictureUrl;
-    const updated = await updateUserAvatarUrlService(prisma, userId, newUrl);
+    const updated = await updateUserAvatarUrlService(prisma, userId, thumbUrl);
 
-    const isCustomOld = oldUrl && !oldUrl.endsWith('/default.png');
+    const isCustomOld = oldUrl && !oldUrl.endsWith('/default.webp');
     if (isCustomOld) {
       const oldAbs = publicUrlToAbsolutePath(oldUrl);
       fs.unlink(oldAbs).catch(() => {});

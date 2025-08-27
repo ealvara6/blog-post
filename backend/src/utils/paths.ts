@@ -6,7 +6,8 @@ export const UPLOAD_DIR = path.join(
   '..',
   'public',
   'uploads',
-  'profile-pictures'
+  'profile-pictures',
+  'thumbs'
 );
 
 export const publicUrlToAbsolutePath = (publicUrl: string) => {
