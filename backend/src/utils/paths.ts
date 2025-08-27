@@ -11,5 +11,5 @@ export const UPLOAD_DIR = path.join(
 );
 
 export const publicUrlToAbsolutePath = (publicUrl: string) => {
-  return path.join(__dirname, '..', '..', 'public', publicUrl);
+  return path.join(process.cwd(), '..', '..', 'public', publicUrl);
 };
