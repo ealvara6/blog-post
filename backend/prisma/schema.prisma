@@ -17,7 +17,7 @@ model User {
   id            Int             @id @default(autoincrement())
   username      String          @unique
   email         String          @unique
-  profilePictureUrl String   @default("/uploads/profile-pictures/default.png")
+  profilePictureUrl String   @default("/uploads/profile-pictures/thumbs/default.webp")
   password      String
   createdAt     DateTime        @default(now())
   blogAuthor    Boolean         @default(false)
