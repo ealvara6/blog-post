@@ -77,7 +77,7 @@ export const Profile = () => {
   ]
 
   return (
-    <div className="dark:border-border-darkTheme border-border mx-3 w-full max-w-xl border p-3 py-12 sm:max-w-3xl">
+    <div className="dark:border-border-darkTheme border-border mx-3 w-full max-w-xl border p-3 py-12 sm:max-w-7xl">
       <div className="grid grid-cols-2 grid-rows-[min-content-auto] items-center gap-5 p-3 sm:grid-rows-[2fr_1fr] sm:gap-0 sm:gap-y-5">
         <img
           src={toImageUrl(data.user.profilePictureUrl)}
@@ -109,14 +109,14 @@ export const Profile = () => {
           {options.map((option) => (
             <div
               onClick={() => setSelected(option.id)}
-              className={`${selected === option.id ? 'dark:bg-card-darkTheme bg-card font-bold' : 'font-light'} dark:hover:bg-card-darkTheme hover:bg-card dark:border-border-darkTheme border-border min-w-36 cursor-pointer rounded-xl border p-2 text-center text-base tracking-wider transition-all select-none hover:-translate-y-0.5 active:translate-0 sm:text-lg md:text-xl`}
+              className={`${selected === option.id ? 'dark:bg-card-darkTheme bg-card -translate-y-0.5 font-bold' : 'font-light'} dark:hover:bg-card-darkTheme hover:bg-card dark:border-border-darkTheme border-border w-full max-w-24 min-w-36 cursor-pointer rounded-xl border p-2 text-center text-base tracking-wider transition-all select-none hover:-translate-y-0.5 sm:max-w-64 sm:text-lg md:text-xl`}
               key={option.id}
             >
               {option.name}
             </div>
           ))}
         </div>
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-8">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
           {options.find((option) => option.id === selected)?.component}
         </div>
       </div>
