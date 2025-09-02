@@ -37,10 +37,9 @@ describe('Comment Routes', () => {
           `/api/posts/${TEST_POST_ID}/comments`
         );
         expect(res.statusCode).toBe(200);
-        expect(res.body).toHaveProperty('data');
-        expect(Array.isArray(res.body.data)).toBe(true);
-        expect(res.body.data.length).toBeGreaterThan(0);
-        expect(res.body.data[0]).toEqual({
+        expect(Array.isArray(res.body.comments)).toBe(true);
+        expect(res.body.comments.length).toBeGreaterThan(0);
+        expect(res.body.comments[0]).toEqual({
           id: expect.any(Number),
           postId: expect.any(Number),
           content: expect.any(String),
@@ -60,9 +59,8 @@ describe('Comment Routes', () => {
         );
 
         expect(res.statusCode).toBe(200);
-        expect(res.body).toHaveProperty('data');
-        expect(Array.isArray(res.body.data)).toBe(true);
-        expect(res.body.data.length).toEqual(0);
+        expect(Array.isArray(res.body.comments)).toBe(true);
+        expect(res.body.comments.length).toEqual(0);
       });
     });
 

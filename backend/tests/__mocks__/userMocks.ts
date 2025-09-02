@@ -9,6 +9,7 @@ export const createmockUser = async () => {
     password: hashedPassword,
     createdAt: new Date(),
     blogAuthor: false,
+    profilePictureUrl: '/public/avatar.png',
     posts: [
       {
         id: 101,

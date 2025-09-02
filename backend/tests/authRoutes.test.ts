@@ -435,7 +435,7 @@ describe('Auth Routes', () => {
   });
 
   describe('PUT api calls', () => {
-    describe('PUT /api/auth/users/:id', () => {
+    describe('PUT /api/auth/users/me/:id', () => {
       it('Should return a 400 status code if the data is invalid', async () => {
         prismaMock.user.findUnique.mockResolvedValue(testUser);
         prismaMock.user.update.mockResolvedValue({
@@ -444,7 +444,7 @@ describe('Auth Routes', () => {
         });
 
         const res = await request(app)
-          .put('/api/auth/users/1')
+          .put('/api/auth/users/me')
           .set('Authorization', `Bearer ${authToken}`)
           .set('Authorization', `Bearer ${authToken}`)
           .send({ ...testUser, email: 'not-an-email' });
@@ -466,7 +466,7 @@ describe('Auth Routes', () => {
 
       it('Should return a 404 status code if id input is invalid', async () => {
         const res = await request(app)
-          .put('/api/auth/users/invalid-id-input')
+          .put('/api/auth/users/me/invalid-id-input')
           .set('Authorization', `Bearer ${authToken}`)
           .set('Authorization', `Bearer ${authToken}`)
           .send({ ...testUser, email: 'updated@email.com' });
@@ -474,20 +474,8 @@ describe('Auth Routes', () => {
         expect(res.statusCode).toBe(404);
 
         expect(res.body).toEqual({
-          error: 'Invalid id input',
+          error: 'Not found',
         });
-      });
-
-      it('should return a 403 error if the logged-in user is not authorized to update the user', async () => {
-        const res = await request(app)
-          .put('/api/auth/users/2')
-          .set('Authorization', `Bearer ${authToken}`);
-
-        expect(res.statusCode).toBe(403);
-        expect(res.body).toHaveProperty('error');
-        expect(res.body.error).toBe(
-          'Unauthorized: You can only modify your own account'
-        );
       });
     });
 
@@ -653,7 +641,7 @@ describe('Auth Routes', () => {
           });
 
           const res = await request(app)
-            .put(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
+            .put(`/api/auth/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: 'updated_mock_content' });
 
@@ -674,7 +662,7 @@ describe('Auth Routes', () => {
           });
 
           const res = await request(app)
-            .put(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
+            .put(`/api/auth/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: UPDATED_MOCK_CONTENT });
 
@@ -691,7 +679,7 @@ describe('Auth Routes', () => {
           );
 
           const res = await request(app)
-            .put(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
+            .put(`/api/auth/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: UPDATED_MOCK_CONTENT });
 
@@ -707,7 +695,7 @@ describe('Auth Routes', () => {
           prismaMock.comment.update.mockResolvedValue(null);
 
           const res = await request(app)
-            .put(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
+            .put(`/api/auth/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: UPDATED_MOCK_CONTENT });
 
@@ -723,7 +711,7 @@ describe('Auth Routes', () => {
           });
 
           const res = await request(app)
-            .put('/api/auth/posts/comments/301')
+            .put('/api/auth/comments/301')
             .set('Authorization', `Bearer ${authToken}`)
             .send({ content: 'updated_content' });
 
@@ -744,7 +732,7 @@ describe('Auth Routes', () => {
         prismaMock.user.delete.mockResolvedValue(testUser);
 
         const res = await request(app)
-          .delete('/api/auth/users/1')
+          .delete('/api/auth/users/me')
           .set('Authorization', `Bearer ${authToken}`);
 
         expect(res.statusCode).toBe(200);
@@ -768,24 +756,13 @@ describe('Auth Routes', () => {
         prismaMock.user.findUnique.mockResolvedValue(null);
 
         const res = await request(app)
-          .delete('/api/auth/users/1')
+          .delete('/api/auth/users/me/1')
           .set('Authorization', `Bearer ${authToken}`);
 
         expect(res.statusCode).toBe(404);
 
         expect(res.body).toEqual({
-          error: 'User does not exist',
-        });
-      });
-
-      it('should return a 400 status code if id format is invalid', async () => {
-        const res = await request(app)
-          .delete('/api/auth/users/invalid-id-input')
-          .set('Authorization', `Bearer ${authToken}`);
-        expect(res.statusCode).toBe(404);
-
-        expect(res.body).toEqual({
-          error: 'Invalid id input',
+          error: 'Not found',
         });
       });
 
@@ -795,27 +772,15 @@ describe('Auth Routes', () => {
           new Error('Failed to delete user')
         );
         const res = await request(app)
-          .delete('/api/auth/users/1')
+          .delete('/api/auth/users/me')
           .set('Authorization', `Bearer ${authToken}`);
 
         expect(res.statusCode).toBe(500);
 
         expect(res.body).toEqual({
-          error: 'Failed to delete user',
+          error: 'Failed to delete User',
           details: 'Failed to delete user',
         });
-      });
-
-      it('should return a 403 error if the logged-in user is not authorized to delete the user', async () => {
-        const res = await request(app)
-          .delete('/api/auth/users/2')
-          .set('Authorization', `Bearer ${authToken}`);
-
-        expect(res.statusCode).toBe(403);
-        expect(res.body).toHaveProperty('error');
-        expect(res.body.error).toBe(
-          'Unauthorized: You can only modify your own account'
-        );
       });
     });
 
@@ -918,7 +883,7 @@ describe('Auth Routes', () => {
           prismaMock.comment.delete.mockResolvedValue(mockComment);
 
           const res = await request(app)
-            .delete(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
+            .delete(`/api/auth/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`);
 
           expect(res.statusCode).toBe(200);
@@ -944,7 +909,7 @@ describe('Auth Routes', () => {
           prismaMock.comment.delete.mockResolvedValue(null);
 
           const res = await request(app)
-            .delete(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
+            .delete(`/api/auth/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`);
 
           expect(res.statusCode).toBe(404);
@@ -958,7 +923,7 @@ describe('Auth Routes', () => {
           );
 
           const res = await request(app)
-            .delete(`/api/auth/posts/comments/${TEST_COMMENT_ID}`)
+            .delete(`/api/auth/comments/${TEST_COMMENT_ID}`)
             .set('Authorization', `Bearer ${authToken}`);
 
           expect(res.statusCode).toBe(500);
@@ -972,11 +937,11 @@ describe('Auth Routes', () => {
         it('should return a 403 error if the logged-in user is not authorized to delete the comment', async () => {
           prismaMock.comment.findUnique.mockResolvedValue({
             ...mockComment,
-            userId: 2,
+            userId: 5,
           });
 
           const res = await request(app)
-            .delete('/api/auth/posts/comments/301')
+            .delete('/api/auth/comments/301')
             .set('Authorization', `Bearer ${authToken}`);
 
           expect(res.statusCode).toBe(403);

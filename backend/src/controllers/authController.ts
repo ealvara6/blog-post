@@ -82,7 +82,6 @@ export const verifyLogin = async (req: Request, res: Response) => {
       password: user.password,
       profilePictureUrl: user.profilePictureUrl,
     };
-    console.log(payload);
     const token = sign(payload, process.env.JWT_SECRET || 'jwt_secret', {
       expiresIn: '1h',
     });

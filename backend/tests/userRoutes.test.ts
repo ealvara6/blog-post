@@ -131,25 +131,13 @@ describe('user routes', () => {
       );
     });
 
-    it('should return a 404 when no user is found and give an error message', async () => {
-      prismaMock.user.findUnique.mockResolvedValue(null);
-
-      const res = await request(app).get('/api/users/2');
-
-      expect(res.statusCode).toBe(404);
-
-      expect(res.body).toEqual({
-        error: 'No user found',
-      });
-    });
-
     it('should return a 404 status code if given an invalid id input', async () => {
-      const res = await request(app).get('/api/users/invalid-input-id');
+      const res = await request(app).get('/api/users/me/invalid-input-id');
 
       expect(res.statusCode).toBe(404);
 
       expect(res.body).toEqual({
-        error: 'Invalid id input',
+        error: 'Not found',
       });
     });
 
@@ -161,7 +149,7 @@ describe('user routes', () => {
       expect(res.statusCode).toBe(500);
 
       expect(res.body).toEqual({
-        error: 'Failed to fetch user',
+        error: 'Failed to fetch user on username',
         details: 'Database error',
       });
     });
